@@ -1,13 +1,16 @@
+require('dotenv').config();
 const express = require('express');
-var cors = require('cors')
+const cors = require('cors')
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-const PORT = 5000;
+app.use(express.urlencoded({extended:true}));
 
-app.use('/api/auth/kareerStudios',require('./Routes/auth'))
+const PORT = process.env.PORT||8000;
+
+app.use('/api/auth',require('./routes/auth'))
 
 app.listen(PORT,()=>{
-    console.log(`Successfully started on https://localhost:$(PORT)`)
+    console.log(`Successfully started on https://localhost:${PORT}`)
 })
