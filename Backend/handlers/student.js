@@ -6,8 +6,5 @@ module.exports = {
     },
     getStudent: async (student_id) => {
         return db.query('SELECT * FROM students WHERE id=$1', [student_id]);
-    },
-    getStudentByEmail: async (email) => {
-        return db.query('SELECT * FROM students WHERE email=$1', [email]);
     }
 };
