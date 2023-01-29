@@ -6,5 +6,8 @@ module.exports = {
     },
     getParent: async (parent_id) => {
         return db.query('SELECT * FROM parents WHERE id=$1', [parent_id]);
+    },
+    getParentByEmail: async (email) => {
+        return db.query('SELECT * FROM parents WHERE email=$1', [email]);
     }
 };
