@@ -62,19 +62,3 @@ CREATE TABLE IF NOT EXISTS parents
     REFERENCES students(id)
     ON DELETE SET NULL
 );
-
-CREATE TABLE IF NOT EXISTS rel_coun_stud
-(
-    student_id INTEGER PRIMARY KEY,
-    counsellor_id INTEGER,
-
-    CONSTRAINT fk_counse_id
-    FOREIGN KEY (counsellor_id)
-    REFERENCES counsellors(id)
-    ON DELETE SET NULL,
-
-    CONSTRAINT fk_stude_id
-    FOREIGN KEY (student_id)
-    REFERENCES students(id)
-    ON DELETE SET NULL
-);

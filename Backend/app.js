@@ -1,27 +1,13 @@
-require('dotenv').config();
-require('./db').connect();
-
 const express = require('express');
+var cors = require('cors')
+
 const app = express();
+app.use(cors());
+app.use(express.json());
+const PORT = 5000;
 
-const PORT = process.env.PORT || 8001;
+app.use('/api/auth/kareerStudios',require('./Routes/auth'))
 
-
-
-app.get('/', (req, res) => {
-    res.status(200).send('Hello World!');
-});
-
-
-
-
-/*
-    Not Found Route - Should be bottom of the hierachy
-*/
-app.get('*', (req, res) => {
-    res.status(404).send("Not Found!");
-});
-
-app.listen(PORT, () => {
-    console.log(`Successfuly started on http://localhost:${PORT}`);
-});
+app.listen(PORT,()=>{
+    console.log(`Successfully started on https://localhost:$(PORT)`)
+})
