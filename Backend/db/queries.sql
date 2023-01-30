@@ -8,9 +8,10 @@ CREATE TABLE IF NOT EXISTS admins
 
 CREATE TABLE IF NOT EXISTS counsellors
 (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     email TEXT UNIQUE,
     password TEXT,
+    name TEXT,
     salary INTEGER,
     address TEXT,
     bank_name TEXT,

@@ -70,7 +70,7 @@ router.post('/login', async (req, res) => {
         else if (role === "parent") {
             result = await parent_Handler.getParentByEmail(email);
         }
-        else if (role === 'consellor') {
+        else if (role === 'counsellor') {
             result = await counsellor_Handler.getCounsellorByEmail(email);
         } else {
             return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
@@ -91,6 +91,7 @@ router.post('/login', async (req, res) => {
         delete user.password;
 
         const authtoken = jwt.sign(user, process.env.JWT_SECRET);
+        res.setHeader('auth-token', authtoken);
         res.status(202).json({ token: authtoken });
     }
     catch (err) {
