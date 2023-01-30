@@ -2,6 +2,7 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
+const redisClient = require('./redis');
 dotenv.config();
 
 const { DATABASE_URL } = process.env;
@@ -39,8 +40,10 @@ module.exports = {
                 executeQueries();
             }
         });
+        redisClient.connect();
     },
     query: (text, params, callback) => {
         return pool.query(text, params, callback);
-    }
+    },
+    redisClient
 };

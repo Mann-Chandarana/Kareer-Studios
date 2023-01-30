@@ -1,8 +1,8 @@
-const db = require('../db')
+const db = require('../db');
 const express = require('express');
 const router = express.Router();
 
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 
@@ -24,7 +24,7 @@ router.post('/createUser', async (req, res) => {
         const results = await admin_Handler.getAdminByEmail(email);
 
         if (results.rowCount > 0) {
-            return res.status(409).json({ error: 'User already exists' })
+            return res.status(409).json({ error: 'User already exists' });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -36,17 +36,17 @@ router.post('/createUser', async (req, res) => {
         const data = {
             email,
             role: "admin"
-        }
+        };
 
         const authtoken = jwt.sign(data, process.env.JWT_SECRET);
         res.json({ authtoken });
     } catch (err) {
         console.log("Hello");
-        console.log(err.message)
+        console.log(err.message);
         res.status(500).send({ error: err.message });
     }
 
-})
+});
 
 
 // Route-2 /api/auth/login --- for login
@@ -91,7 +91,7 @@ router.post('/login', async (req, res) => {
         delete user.password;
 
         const authtoken = jwt.sign(user, process.env.JWT_SECRET);
-        res.json({ token: authtoken });
+        res.status(202).json({ token: authtoken });
     }
     catch (err) {
         console.log(err.message);
@@ -107,12 +107,12 @@ router.post('/verify', (req, res) => {
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-            res.status(401).send({ error: err.message })
+            res.status(401).send({ error: err.message });
         }
         else {
             res.status(202).send({ ...decoded });
         }
-    })
-})
+    });
+});
 
 module.exports = router;
