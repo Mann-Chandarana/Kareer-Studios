@@ -1,7 +1,7 @@
 require('dotenv').config();
 require('./db').connect();
 
-require('./twilio').sendOtp("7203088769");
+// require('./twilio').sendOtp("7203088769");
 
 const express = require('express');
 const cors = require('cors');
