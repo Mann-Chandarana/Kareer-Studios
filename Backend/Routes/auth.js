@@ -91,7 +91,7 @@ router.post('/login', async (req, res) => {
         delete user.password;
 
         const authtoken = jwt.sign(user, process.env.JWT_SECRET);
-        res.setHeader('auth-token', authtoken);
+        res.cookie('token', authtoken);
         res.status(202).json({ token: authtoken });
     }
     catch (err) {
@@ -102,9 +102,8 @@ router.post('/login', async (req, res) => {
 
 
 // Route -3 /api/auth/verify --- for token verification
-
 router.post('/verify', (req, res) => {
-    const { token } = req.body;
+    const { token } = req.cookies;
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
@@ -114,6 +113,11 @@ router.post('/verify', (req, res) => {
             res.status(202).send({ ...decoded });
         }
     });
+});
+
+router.post('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.status(200).end();
 });
 
 module.exports = router;

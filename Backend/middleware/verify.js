@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 /***** Verify Students  *****/
 
 const verifyStudents = (req, res, next) => {
-    const token  = req.header('auth-token');
+    const { token } = req.cookies;
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
@@ -22,7 +22,7 @@ const verifyStudents = (req, res, next) => {
 /***** Verify Parents  *****/
 
 const verifyParents = (req, res, next) => {
-    const token  = req.header('auth-token');
+    const { token } = req.cookies;
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
@@ -40,7 +40,7 @@ const verifyParents = (req, res, next) => {
 /***** Verify Counsellors  *****/
 
 const verifyCounsellors = (req, res, next) => {
-    const token  = req.header('auth-token');
+    const { token } = req.cookies;
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
@@ -52,13 +52,13 @@ const verifyCounsellors = (req, res, next) => {
                 res.status(403).send({ error: 'Unauthorized!' });
             }
         }
-    })
-}
+    });
+};
 
 /***** Verify Admin  *****/
 
 const verifyAdmin = (req, res, next) => {
-    const token  = req.header('auth-token');
+    const { token } = req.cookies;
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
@@ -67,10 +67,10 @@ const verifyAdmin = (req, res, next) => {
                 req.user = decoded;
                 next();
             } else {
-                res.status(403).send({ error: 'Unauthorized!' })
+                res.status(403).send({ error: 'Unauthorized!' });
             }
         }
-    })
-}
+    });
+};
 
-module.exports = { verifyStudents, verifyParents,verifyCounsellors,verifyAdmin };
+module.exports = { verifyStudents, verifyParents, verifyCounsellors, verifyAdmin };
