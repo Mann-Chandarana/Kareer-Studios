@@ -102,7 +102,7 @@ router.post('/login', async (req, res) => {
 
 
 // Route -3 /api/auth/verify --- for token verification
-router.post('/verify', (req, res) => {
+router.get('/verify', (req, res) => {
     const { token } = req.cookies;
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -115,7 +115,7 @@ router.post('/verify', (req, res) => {
     });
 });
 
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     res.clearCookie('token');
     res.status(200).end();
 });
