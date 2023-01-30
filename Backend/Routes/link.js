@@ -17,7 +17,7 @@ router.post('/generate', verifyCounsellors, async (req, res) => {
         const encryptedId = cipher.encrypt(uniqueKey);
         const encodedURI = encodeURIComponent(encryptedId);
 
-        const generatedLink = `http://localhost:8000/api/link/register/${encodedURI}`;
+        const generatedLink = `http://localhost:3000/link/register/${encodedURI}`;
 
         await db.redisClient.SETEX(uniqueKey, 60 * 60, counsellorId);
 
@@ -29,7 +29,8 @@ router.post('/generate', verifyCounsellors, async (req, res) => {
 });
 
 
-router.get('/register/:id', async (req, res) => {
+router.post('/register/:id', async (req, res) => {
+    const { name, email, phone } = req.body;
     const encryptedId = req.params.id;
 
     try {
@@ -41,6 +42,7 @@ router.get('/register/:id', async (req, res) => {
         const isValid = counsellorId === result;
 
         if (isValid) {
+            //create student
             res.status(200).send('Signup!');
         } else {
             res.status(400).send({ error: 'Invaild link!' });
