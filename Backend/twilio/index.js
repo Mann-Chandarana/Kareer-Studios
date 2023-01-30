@@ -17,8 +17,7 @@ const sendOtp = (phoneNumber) => {
             messagingServiceSid,
             to: IND_STD_CODE + phoneNumber
         })
-        .then(() => console.log(`OTP: ${otp} sent to ${phoneNumber}`))
-        .done();
+        .then(() => console.log(`OTP: ${otp} sent to ${phoneNumber}`));
 
 
     return otp;
