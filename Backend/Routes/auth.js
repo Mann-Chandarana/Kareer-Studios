@@ -101,7 +101,7 @@ router.get('/verify', (req, res) => {
             res.status(401).send({ error: err.message });
         }
         else {
-            res.status(202).send({ ...decoded });
+            res.status(202).send(decoded);
         }
     });
 });
