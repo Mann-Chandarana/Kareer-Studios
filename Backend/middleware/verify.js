@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 /***** Verify Students  *****/
 
 const verifyStudents = (req, res, next) => {
-    const { token } = req.body;
+    const token  = req.header('auth-token');
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
@@ -22,7 +22,7 @@ const verifyStudents = (req, res, next) => {
 /***** Verify Parents  *****/
 
 const verifyParents = (req, res, next) => {
-    const { token } = req.body;
+    const token  = req.header('auth-token');
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
@@ -40,7 +40,7 @@ const verifyParents = (req, res, next) => {
 /***** Verify Counsellors  *****/
 
 const verifyCounsellors = (req, res, next) => {
-    const { token } = req.body;
+    const token  = req.header('auth-token');
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
@@ -58,7 +58,7 @@ const verifyCounsellors = (req, res, next) => {
 /***** Verify Admin  *****/
 
 const verifyAdmin = (req, res, next) => {
-    const { token } = req.body;
+    const token  = req.header('auth-token');
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
             res.status(401).send({ error: err.message });
