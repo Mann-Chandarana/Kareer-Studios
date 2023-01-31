@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 
 const encryptPassword = require('../utils/encryptPass');
 
+const { verifyAdmin } = require('../middleware/verify');
 
 const adminHandler = require('../handlers/admin');
 const studentHandler = require('../handlers/student');
@@ -17,24 +18,32 @@ const counsellorHandler = require('../handlers/counsellor');
 
 // Route-1 /api/auth/createUser --- for signup
 
-router.post('/createUser', async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
+router.post('/createUser', verifyAdmin, async (req, res) => {
+    let { email, password, role } = req.body;
+    if (!email || !password || !role) {
         return res.status(400).send({ error: "Invalid request body." });
     }
     try {
-        const { rowCount } = await adminHandler.getAdminByEmail(email);
-
-        if (rowCount > 0) {
-            return res.status(409).json({ error: 'User already exists' });
-        }
-
-        const encryptedPass = await encryptPassword(password);
 
         // Create user
-        await adminHandler.addAdmin(email, encryptedPass);
+        role = role.toLowerCase();
+        const encryptedPass = await encryptPassword(password);
+        if (role === "admin") {
+            await adminHandler.addAdmin(email, encryptPassword);
+        }
+        else if (role === "student") {
+            await studentHandler.addStudent(null, email, null, encryptPassword, null);
+        }
+        else if (role === "parent") {
+            await parentHandler.addParent(null, email, encryptPassword);
+        }
+        else if (role === 'counsellor') {
+            await counsellorHandler.addCounsellor(null, email, encryptPassword);
+        } else {
+            return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
+        }
 
-        res.status(202).json({ email, encryptedPass });
+        res.status(202).json({ email, encryptedPass, role });
     } catch (err) {
         console.log(err.message);
         res.status(500).send({ error: err.message });
