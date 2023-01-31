@@ -22,34 +22,31 @@ router.post('/send', async (req, res) => {
 
 
 // Route-1 /api/auth/verification/:email --- for signup and OTP verification
-router.post('/verification', async (req, res) => {
-    const { name, email, phone, mobileOTP, emailOTP } = req.body;
+router.post('/verify', async (req, res) => {
+    const { name, email, phone, mobileOtp, emailOtp } = req.body;
 
-    const OTP_1 = redish_mobile(email);
-    const OTP_2 = redish_email(email);
+    try {
+        const _emailOtp = await db.redisClient.GET(emailOtp);
+        const _mobileOtp = await db.redisClient.GET(mobileOtp);
 
-    if (OTP_1 != mobileOTP || OTP_2 != emailOTP) {
-        res.status(400).send({ error: 'Invalid link!' });
-    }
-    else {
-        try {
-            const { rowCount } = await studentHandler.getStudentByEmail(email);
-
-            if (rowCount > 0) {
-                return res.status(409).json({ error: 'User already exists' });
-            }
-
-            /// Creating new student entry into the database
-
-            password = "";
-            // We will generate the password randomly
-            await studentHandler.addStudent(name, email, phone, password);
-            // Adding user to the database
-
-        } catch (err) {
-            console.log(err.message);
-            res.status(500).send({ error: err.message });
+        if (emailOtp != _emailOtp || mobileOtp != _mobileOtp) {
+            return res.status(400).send({ error: 'Invaild OTP' });
         }
+
+        const { rowCount } = await studentHandler.getStudentByEmail(email);
+        if (rowCount > 0) {
+            return res.status(409).send({ error: 'User already exists' });
+        }
+
+        //generate password
+        const password = email.split('@')[0] + '@123';
+
+        await studentHandler.addStudent(name, email, phone, password);
+
+        // send email and password to email
+        emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
+    } catch (err) {
+        res.status(500).send({ error: err.message });
     }
 });
 
