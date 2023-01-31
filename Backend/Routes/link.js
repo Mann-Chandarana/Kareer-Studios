@@ -30,10 +30,17 @@ router.post('/generate', verifyCounsellors, async (req, res) => {
 
 
 router.post('/register/:id', async (req, res) => {
-    const { name, email, phone } = req.body;
+    const { name, email, phone, mobileOtp, emailOtp } = req.body;
     const encryptedId = req.params.id;
 
     try {
+        const _emailOtp = await db.redisClient.GET(email);
+        const _mobileOtp = await db.redisClient.GET(phone);
+
+        if (emailOtp != _emailOtp || mobileOtp != _mobileOtp) {
+            return res.status(400).send({ error: 'Invaild OTP' });
+        }
+
         const decodedURI = decodeURIComponent(encryptedId);
         const uniqueKey = cipher.decrypt(decodedURI);
         const counsellorId = uniqueKey.split('@')[0];
@@ -42,8 +49,26 @@ router.post('/register/:id', async (req, res) => {
         const isValid = counsellorId === result;
 
         if (isValid) {
-            //create student
-            res.status(200).send('Signup!');
+            const { rowCount } = await studentHandler.getStudentByEmail(email);
+            if (rowCount > 0) {
+                return res.status(409).send({ error: 'User already exists' });
+            }
+
+            //generate password
+            const password = email.split('@')[0] + '@123';
+
+            // create student
+            await studentHandler.addStudent(name, email, phone, password, counsellorId);
+
+            // clear redis
+            await db.redisClient.DEL(email);
+            await db.redisClient.DEL(phone);
+            await db.redisClient.DEL(uniqueKey);
+
+
+            // send email and password to email
+            emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
+            res.status(202).send({ message: 'Student regsitered!' });
         } else {
             res.status(400).send({ error: 'Invaild link!' });
         }

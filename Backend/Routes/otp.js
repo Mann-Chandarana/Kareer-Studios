@@ -20,34 +20,4 @@ router.post('/send', async (req, res) => {
     }
 });
 
-
-// Route-1 /api/auth/verification/:email --- for signup and OTP verification
-router.post('/verify', async (req, res) => {
-    const { name, email, phone, mobileOtp, emailOtp } = req.body;
-
-    try {
-        const _emailOtp = await db.redisClient.GET(emailOtp);
-        const _mobileOtp = await db.redisClient.GET(mobileOtp);
-
-        if (emailOtp != _emailOtp || mobileOtp != _mobileOtp) {
-            return res.status(400).send({ error: 'Invaild OTP' });
-        }
-
-        const { rowCount } = await studentHandler.getStudentByEmail(email);
-        if (rowCount > 0) {
-            return res.status(409).send({ error: 'User already exists' });
-        }
-
-        //generate password
-        const password = email.split('@')[0] + '@123';
-
-        await studentHandler.addStudent(name, email, phone, password);
-
-        // send email and password to email
-        emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
-    } catch (err) {
-        res.status(500).send({ error: err.message });
-    }
-});
-
 module.exports = router;
