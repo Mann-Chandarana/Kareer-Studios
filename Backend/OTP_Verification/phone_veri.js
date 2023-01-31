@@ -8,12 +8,12 @@ const generateOtp = require('../utils/otpGen');
 const IND_STD_CODE = '+91';
 
 
-const sendOtp = (phoneNumber, body) => {
+const sendOtp = (phoneNumber) => {
     const otp = generateOtp();
 
     client.messages
         .create({
-            body,
+            body: `OTP for Gujarat Police Survey is: ${otp}`,
             messagingServiceSid,
             to: IND_STD_CODE + phoneNumber
         })
