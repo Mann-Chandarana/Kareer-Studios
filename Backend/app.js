@@ -21,6 +21,7 @@ app.use(cookieParser());
 
 app.use(PREFIX + '/auth', require('./routes/auth'));
 app.use(PREFIX + '/link', require('./routes/link'));
+app.use(PREFIX + '/otp', require('./routes/otp'));
 
 app.listen(PORT, () => {
     console.log(`Successfully started on https://localhost:${PORT}`);
