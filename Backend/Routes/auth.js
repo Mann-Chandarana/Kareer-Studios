@@ -1,15 +1,15 @@
-const db = require('../db')
+const db = require('../db');
 const express = require('express');
 const router = express.Router();
 
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 
-const admin_Handler = require('../handlers/Admin');
-const student_Handler = require('../handlers/student');
-const parent_Handler = require('../handlers/parent');
-const counsellor_Handler = require('../handlers/counsellor');
+const adminHandler = require('../handlers/admin');
+const studentHandler = require('../handlers/student');
+const parentHandler = require('../handlers/parent');
+const counsellorHandler = require('../handlers/counsellor');
 
 
 
@@ -21,36 +21,27 @@ router.post('/createUser', async (req, res) => {
         return res.status(400).send({ error: "Invalid request body." });
     }
     try {
-        const results = await admin_Handler.getAdminByEmail(email);
+        const { rowCount } = await adminHandler.getAdminByEmail(email);
 
-        if (results.rowCount > 0) {
-            return res.status(409).json({ error: 'User already exists' })
+        if (rowCount > 0) {
+            return res.status(409).json({ error: 'User already exists' });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const encryptedPass = await bcrypt.hash(req.body.password, salt);
+        const encryptedPass = await bcrypt.hash(req.body.password, 10);
 
         // Create user
-        await admin_Handler(email, encryptedPass);
+        await adminHandler.addAdmin(email, encryptedPass);
 
-        const data = {
-            email,
-            role: "admin"
-        }
-
-        const authtoken = jwt.sign(data, process.env.JWT_SECRET);
-        res.json({ authtoken });
+        res.status(202).json({ email, encryptedPass });
     } catch (err) {
-        console.log("Hello");
-        console.log(err.message)
+        console.log(err.message);
         res.status(500).send({ error: err.message });
     }
 
-})
+});
 
 
 // Route-2 /api/auth/login --- for login
-
 router.post('/login', async (req, res) => {
     let { email, password, role } = req.body;
     if (!email || !password || !role) {
@@ -62,16 +53,16 @@ router.post('/login', async (req, res) => {
         role = role.toLowerCase();
 
         if (role === "admin") {
-            result = await admin_Handler.getAdminByEmail(email);
+            result = await adminHandler.getAdminByEmail(email);
         }
         else if (role === "student") {
-            result = await student_Handler.getStudentByEmail(email);
+            result = await studentHandler.getStudentByEmail(email);
         }
         else if (role === "parent") {
-            result = await parent_Handler.getParentByEmail(email);
+            result = await parentHandler.getParentByEmail(email);
         }
-        else if (role === 'consellor') {
-            result = await counsellor_Handler.getCounsellorByEmail(email);
+        else if (role === 'counsellor') {
+            result = await counsellorHandler.getCounsellorByEmail(email);
         } else {
             return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
         }
@@ -91,7 +82,8 @@ router.post('/login', async (req, res) => {
         delete user.password;
 
         const authtoken = jwt.sign(user, process.env.JWT_SECRET);
-        res.json({ token: authtoken });
+        res.cookie('token', authtoken);
+        res.status(202).json({ token: authtoken });
     }
     catch (err) {
         console.log(err.message);
@@ -101,18 +93,22 @@ router.post('/login', async (req, res) => {
 
 
 // Route -3 /api/auth/verify --- for token verification
-
-router.post('/verify', (req, res) => {
-    const { token } = req.body;
+router.get('/verify', (req, res) => {
+    const { token } = req.cookies;
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
-            res.status(401).send({ error: err.message })
+            res.status(401).send({ error: err.message });
         }
         else {
-            res.status(202).send({ ...decoded });
+            res.status(202).send(decoded);
         }
-    })
-})
+    });
+});
+
+router.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.status(200).end();
+});
 
 module.exports = router;
