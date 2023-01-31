@@ -5,6 +5,8 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+const { encrypt } = require('../utils/encryptPass');
+
 
 const adminHandler = require('../handlers/admin');
 const studentHandler = require('../handlers/student');
@@ -27,7 +29,7 @@ router.post('/createUser', async (req, res) => {
             return res.status(409).json({ error: 'User already exists' });
         }
 
-        const encryptedPass = await bcrypt.hash(req.body.password, 10);
+        const encryptedPass = await encrypt(password);
 
         // Create user
         await adminHandler.addAdmin(email, encryptedPass);

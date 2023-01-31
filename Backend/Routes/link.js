@@ -4,6 +4,10 @@ const db = require('../db');
 const router = express.Router();
 
 const { verifyCounsellors } = require('../middleware/verify');
+const { encrypt } = require('../utils/encryptPass');
+
+const studentHandler = require('../handlers/student');
+const emailService = require('../services/nodemailer');
 
 router.post('/generate', verifyCounsellors, async (req, res) => {
     const counsellor = req.user;
@@ -54,11 +58,12 @@ router.post('/register/:id', async (req, res) => {
                 return res.status(409).send({ error: 'User already exists' });
             }
 
-            //generate password
+            // generate password
             const password = email.split('@')[0] + '@123';
+            const encryptedPass = await encrypt(password);
 
             // create student
-            await studentHandler.addStudent(name, email, phone, password, counsellorId);
+            await studentHandler.addStudent(name, email, phone, encryptedPass, counsellorId);
 
             // clear redis
             await db.redisClient.DEL(email);
@@ -73,6 +78,7 @@ router.post('/register/:id', async (req, res) => {
             res.status(400).send({ error: 'Invaild link!' });
         }
     } catch (err) {
+        console.error(err);
         res.status(400).send({ error: 'Invaild link!' });
     }
 });
