@@ -4,15 +4,17 @@ const Razorpay = require('razorpay');
 // const bodyParser = require('body-parser')
 const express = require('express');
 const router = express.Router();
+const {setvalidStudent} = require('../handlers/student')
 
 const razorpay = new Razorpay({
-	key_id: 'rzp_test_bqKQhG9gQE5YIr',
-	key_secret: 'UlTz2u7X4AKDAu0Hp4F5Y7l7'
+	key_id: process.env.razor_key,
+	key_secret: process.env.razor_secret
 })
 
 
 router.post('/verification', (req, res) => {
 	// do a validation
+	console.log("Hello");
 	const secret = '12345678'
 
 	const crypto = require('crypto')
@@ -25,8 +27,7 @@ router.post('/verification', (req, res) => {
 
 	if (digest === req.headers['x-razorpay-signature']) {
 		console.log('request is legit')
-		// process it
-		require('fs').writeFileSync('payment1.json', JSON.stringify(req.body, null, 4))
+		console.log((req.body).payload.payment.entity.email);
 	} else {
 		// pass it
 	}
