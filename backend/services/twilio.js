@@ -5,7 +5,7 @@ const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
 const client = require('twilio')(accountSid, authToken);
 const generateOtp = require('../utils/otpGen');
 
-const IND_STD_CODE = '+91';
+const STD_CODE = '+91';
 
 
 const sendSMS = (phoneNumber, body) => {
@@ -13,7 +13,7 @@ const sendSMS = (phoneNumber, body) => {
         .create({
             body,
             messagingServiceSid,
-            to: IND_STD_CODE + phoneNumber
+            to: STD_CODE + phoneNumber
         });
 };
 

@@ -1,5 +1,3 @@
-/* Connection of postgrey with nodejs */
-
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');

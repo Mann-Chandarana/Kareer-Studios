@@ -1,4 +1,3 @@
-const db = require('../db');
 const express = require('express');
 const router = express.Router();
 
@@ -17,13 +16,11 @@ const counsellorHandler = require('../handlers/counsellor');
 
 
 // Route-1 /api/auth/createUser --- for signup
-
 router.post('/createUser', verifyAdmin, async (req, res) => {
     let { email, password, role } = req.body;
     if (!email || !password || !role) {
         return res.status(400).send({ error: "Invalid request body." });
     }
-    console.log("Hello")
     try {
         // Create user
         role = role.toLowerCase();
