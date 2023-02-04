@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS students
     pincode INTEGER,
     parent_added BOOLEAN NOT NULL DEFAULT FALSE,
     gender TEXT,
+    paid BOOLEAN NOT NULL DEFAULT FALSE,
     
     CONSTRAINT fk_counsellor_id
     FOREIGN KEY (counsellor_id)

@@ -1,11 +1,10 @@
-import './CSS_Files/App.css';
-import './CSS_Files/Login.css'
-import Login from './Components/Login';
+import './CSS_Files/Login.css';
+import Payement from './Components/Payement';
 
 function App() {
   return (
     <>
-    <Login/>
+      <Payement />
     </>
   );
 }
