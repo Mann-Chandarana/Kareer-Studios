@@ -14,7 +14,6 @@ const razorpay = new Razorpay({
 
 router.post('/verification', (req, res) => {
 	// do a validation
-	console.log("Hello");
 	const secret = '12345678'
 
 	const crypto = require('crypto')
@@ -27,7 +26,7 @@ router.post('/verification', (req, res) => {
 
 	if (digest === req.headers['x-razorpay-signature']) {
 		console.log('request is legit')
-		console.log((req.body).payload.payment.entity.email);
+		setvalidStudent((req.body).payload.payment.entity.email);
 	} else {
 		// pass it
 	}
