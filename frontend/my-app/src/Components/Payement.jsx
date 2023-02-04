@@ -17,6 +17,7 @@ function loadScript(src) {
 
 function Payement() {
   const [amount, setamount] = useState('');
+  const [mail, setmail] = useState('');
   async function displayRazorpay() {
     const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
 
@@ -57,8 +58,11 @@ function Payement() {
       },
       prefill: {
         name: '',
-        email: '',
-        phone_number: '9899999999',
+        phone_number: '',
+        email: mail,
+      },
+      readonly:{
+        email:true
       }
     }
     const paymentObject = new window.Razorpay(options)
@@ -67,7 +71,9 @@ function Payement() {
 
   return (
     <>
+       <h1>Enter your registered email</h1>
       <input type='text' value={amount} placeholder='Enter the amount' onChange={(e)=>{setamount(e.target.value)}}  />
+      <input type='text' value={mail} placeholder='Enter the email' onChange={(e)=>{setmail(e.target.value)}}  />
       <a
         className="App-link"
         onClick={displayRazorpay}
