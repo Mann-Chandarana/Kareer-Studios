@@ -28,7 +28,7 @@ router.post('/verification', (req, res) => {
 		console.log('request is legit')
 		setvalidStudent((req.body).payload.payment.entity.email);
 	} else {
-		// pass it
+		console.log('request is not legit')
 	}
 	res.json({ status: 'ok' })
 })
