@@ -1,7 +1,7 @@
 const db = require('../db');
 
 module.exports = {
-    setvalidStudent: async (email) => {
+    setValidStudent: async (email) => {
         return db.query('UPDATE students SET paid = TRUE WHERE email =$1', [email]);
     },
     addStudent: async (name, email, phone, password, counsellor_id) => {
