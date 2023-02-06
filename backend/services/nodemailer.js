@@ -23,20 +23,32 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = (email, subject, body, attachments = null) => {
-    return transporter.sendMail({
-        to: email,
-        subject,
-        html: body,
-        attachments
+    return new Promise((resolve, reject) => {
+        transporter.sendMail({
+            to: email,
+            subject,
+            html: body,
+            attachments
+        }, (err, info) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(info);
+            }
+        });
     });
 };
 
 const sendOtp = (email) => {
-    let otp = generateOtp();
-    sendEmail(email, 'OTP for verification', `OTP: ${otp}`)
-        .then(() => console.log(`OTP: ${otp} sent to ${email}`))
-        .catch(err => console.error(err));
-    return otp;
+    const otp = generateOtp();
+    return new Promise((resolve, reject) => {
+        sendEmail(email, 'OTP for verification', `OTP: ${otp}`)
+            .then(() => {
+                console.log(`OTP: ${otp} sent to ${email}`);
+                resolve(otp);
+            })
+            .catch(err => reject(err));
+    });
 };
 
 module.exports = { sendEmail, sendOtp };

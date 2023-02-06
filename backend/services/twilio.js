@@ -19,10 +19,14 @@ const sendSMS = (phoneNumber, body) => {
 
 const sendOtp = (phoneNumber) => {
     const otp = generateOtp();
-    sendSMS(phoneNumber, `OTP: ${otp}`)
-        .then(() => console.log(`OTP: ${otp} sent to ${phoneNumber}`))
-        .catch(err => console.error(err));
-    return otp;
+    return new Promise((resolve, reject) => {
+        sendSMS(phoneNumber, `OTP: ${otp}`)
+            .then(() => {
+                console.log(`OTP: ${otp} sent to ${phoneNumber}`);
+                resolve(otp);
+            })
+            .catch(err => reject(err));
+    });
 };
 
 module.exports = { sendSMS, sendOtp };

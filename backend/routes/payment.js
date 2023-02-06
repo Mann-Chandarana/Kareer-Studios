@@ -1,6 +1,7 @@
 const shortid = require('shortid');
 const Razorpay = require('razorpay');
 const express = require('express');
+const crypto = require('crypto');
 
 
 const router = express.Router();
@@ -22,21 +23,14 @@ router.post('/verification', async (req, res) => {
         // do a validation
         const secret = '12345678';
 
-        const crypto = require('crypto');
-
         const shasum = crypto.createHmac('sha256', secret);
         shasum.update(JSON.stringify(req.body));
         const digest = shasum.digest('hex');
 
-        console.log(digest, req.headers['x-razorpay-signature']);
-
         if (digest === req.headers['x-razorpay-signature']) {
-            console.log('request is legit');
             // process it
-            const email = req.body.payload.payment.entity.email;
-            const amount = (req.body.payload.payment.entity.amount) / (100);
-            // const fee = (req.body.payload.payment.entity.amount.fee);
-            // const tax=(req.body.payload.payment.entity.amount.tax)
+            let { email, amount, fee, tax } = req.body.payload.payment.entity;
+            amount = amount / (100);
 
             const { rows, rowCount } = await studentHandler.getStudentByEmail(email);
             if (rowCount <= 0) {
@@ -70,28 +64,26 @@ router.post('/verification', async (req, res) => {
 });
 
 router.post('/razorpay', async (req, res) => {
-    const payment_capture = 1;
-    const amount = req.body.amount;
-    const currency = 'INR';
-    const mail = req.body.mail;
-
-    const { rows, rowCount } = await studentHandler.getStudentByEmail(mail);
-    if (rowCount <= 0) {
-        return res.status(400).send({ error: 'Account don\'t exists' });
-    }
-
-    if(rows[0].paid){
-        return res.status(400).send({error:'Fees already paid!'})
-    }
-
-    const options = {
-        amount: amount * 100,
-        currency,
-        receipt: shortid.generate(),
-        payment_capture
-    };
-
     try {
+        const { mail, amount } = req.body;
+        const payment_capture = 1;
+        const currency = 'INR';
+
+        const { rows, rowCount } = await studentHandler.getStudentByEmail(mail);
+        if (rowCount <= 0) {
+            return res.status(400).send({ error: 'Account don\'t exists' });
+        }
+
+        if (rows[0].paid) {
+            return res.status(400).send({ error: 'Fees already paid!' });
+        }
+
+        const options = {
+            amount: amount * 100,
+            currency,
+            receipt: shortid.generate(),
+            payment_capture
+        };
         const response = await razorpay.orders.create(options);
         // console.log(response);
         res.json({
