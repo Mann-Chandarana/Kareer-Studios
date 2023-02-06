@@ -86,7 +86,7 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'Wrong Credentials!' });
         }
 
-        if (!user.paid) {
+        if (role === 'student' && !user.paid) {
             return res.status(400).json({ error: 'Payment not done!' });
         }
 
