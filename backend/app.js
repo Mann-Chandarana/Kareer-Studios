@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(PREFIX + '/auth', require('./routes/auth'));
 app.use(PREFIX + '/link', require('./routes/link'));
 app.use(PREFIX + '/otp', require('./routes/otp'));
-app.use(PREFIX + '/payement', require('./routes/payement'));
+app.use(PREFIX + '/payment', require('./routes/payment'));
 
 app.listen(PORT, () => {
     console.log(`Successfully started on https://localhost:${PORT}`);

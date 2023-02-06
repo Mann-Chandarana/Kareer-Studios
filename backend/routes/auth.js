@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
         }
 
         if (!user.paid) {
-            return res.status(400).json({error:'Payment not done!'});
+            return res.status(400).json({ error: 'Payment not done!' });
         }
 
         user.role = role;

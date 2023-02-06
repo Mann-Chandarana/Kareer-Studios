@@ -22,11 +22,12 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const sendEmail = (email, subject, body) => {
+const sendEmail = (email, subject, body, attachments = null) => {
     return transporter.sendMail({
         to: email,
         subject,
-        html: body
+        html: body,
+        attachments
     });
 };
 
