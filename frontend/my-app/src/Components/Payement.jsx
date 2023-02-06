@@ -26,11 +26,12 @@ function Payement() {
       return
     }
 
-    const data = await fetch('http://localhost:8000/api/payement/razorpay',
+    const data = await fetch('http://localhost:8000/api/payment/razorpay',
       {
         method: 'POST',
         body: JSON.stringify({
-          amount: amount
+          amount: amount,
+          mail:mail
         }),
         headers: {
           "Content-type": "application/json; charset=UTF-8"
@@ -75,10 +76,9 @@ function Payement() {
       <input type='text' value={amount} placeholder='Enter the amount' onChange={(e)=>{setamount(e.target.value)}}  />
       <input type='text' value={mail} placeholder='Enter the email' onChange={(e)=>{setmail(e.target.value)}}  />
       <a
-        className="App-link"
         onClick={displayRazorpay}
         rel="noopener noreferrer"
-        target="_blank" type="button" class="btn btn-primary my-5 mx-5">Pay Now
+        target="_blank" type="button" className="App-link btn btn-primary my-5 mx-5">Pay Now
       </a>
     </>
   )

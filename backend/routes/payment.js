@@ -11,8 +11,8 @@ const studentHandler = require('../handlers/student');
 const { sendEmail } = require('../services/nodemailer');
 
 const razorpay = new Razorpay({
-    key_id: 'rzp_test_bqKQhG9gQE5YIr',
-    key_secret: 'UlTz2u7X4AKDAu0Hp4F5Y7l7'
+    key_id: process.env.razor_key,
+    key_secret: process.env.razor_secret
 });
 
 
@@ -33,9 +33,10 @@ router.post('/verification', async (req, res) => {
         if (digest === req.headers['x-razorpay-signature']) {
             console.log('request is legit');
             // process it
-
             const email = req.body.payload.payment.entity.email;
-            const amount = 1000;
+            const amount = (req.body.payload.payment.entity.amount) / (100);
+            // const fee = (req.body.payload.payment.entity.amount.fee);
+            // const tax=(req.body.payload.payment.entity.amount.tax)
 
             const { rows, rowCount } = await studentHandler.getStudentByEmail(email);
             if (rowCount <= 0) {
@@ -72,6 +73,16 @@ router.post('/razorpay', async (req, res) => {
     const payment_capture = 1;
     const amount = req.body.amount;
     const currency = 'INR';
+    const mail = req.body.mail;
+
+    const { rows, rowCount } = await studentHandler.getStudentByEmail(mail);
+    if (rowCount <= 0) {
+        return res.status(400).send({ error: 'Account don\'t exists' });
+    }
+
+    if(rows[0].paid){
+        return res.status(400).send({error:'Fees already paid!'})
+    }
 
     const options = {
         amount: amount * 100,
@@ -82,7 +93,7 @@ router.post('/razorpay', async (req, res) => {
 
     try {
         const response = await razorpay.orders.create(options);
-        console.log(response);
+        // console.log(response);
         res.json({
             id: response.id,
             currency: response.currency,
