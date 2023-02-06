@@ -9,7 +9,7 @@ const encryptPassword = require('../utils/encryptPass');
 const studentHandler = require('../handlers/student');
 const emailService = require('../services/nodemailer');
 
-router.post('/generate', verifyCounsellors, async (req, res) => {
+router.get('/generate', verifyCounsellors, async (req, res) => {
     const counsellor = req.user;
 
     const counsellorId = counsellor.id.toString();
