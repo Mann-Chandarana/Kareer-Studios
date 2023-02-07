@@ -38,13 +38,6 @@ router.post('/register/:id', async (req, res) => {
     const encryptedId = req.params.id;
 
     try {
-        const _emailOtp = await db.redisClient.GET(email);
-        const _mobileOtp = await db.redisClient.GET(phone);
-
-        if (emailOtp != _emailOtp || mobileOtp != _mobileOtp) {
-            return res.status(400).send({ error: 'Invaild OTP' });
-        }
-
         const decodedURI = decodeURIComponent(encryptedId);
         const uniqueKey = cipher.decrypt(decodedURI);
         const counsellorId = uniqueKey.split('@')[0];
@@ -53,6 +46,13 @@ router.post('/register/:id', async (req, res) => {
         const isValid = counsellorId === result;
 
         if (isValid) {
+            const _emailOtp = await db.redisClient.GET(email);
+            const _mobileOtp = await db.redisClient.GET(phone);
+
+            if (emailOtp != _emailOtp || mobileOtp != _mobileOtp) {
+                return res.status(400).send({ error: 'Invaild OTP' });
+            }
+
             const { rowCount } = await studentHandler.getStudentByEmail(email);
             if (rowCount > 0) {
                 return res.status(409).send({ error: 'User already exists' });

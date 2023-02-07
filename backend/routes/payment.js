@@ -5,7 +5,6 @@ const crypto = require('crypto');
 
 
 const router = express.Router();
-const { setValidStudent } = require('../handlers/student');
 const { generateReceiptBuffer } = require('../utils/receipt');
 const receiptHandler = require('../handlers/receipt');
 const studentHandler = require('../handlers/student');
@@ -41,7 +40,7 @@ router.post('/verification', async (req, res) => {
 
             const buffer = await generateReceiptBuffer({ name, email, phone, amount });
 
-            await setValidStudent(email);
+            await studentHandler.setValidStudent(email);
             await receiptHandler.addReceipt(id, buffer);
 
             const attachments = [
