@@ -29,10 +29,14 @@ app.use(PREFIX + '/payment', require('./routes/payment'));
 
 if (isDevelopmentMode) {
     app.get('*', (req, res) => {
-        res.status(404).send({ error: 'Resource Not Found!' });
+        res.status(404).send({ error: 'Not Found!' });
     });
 } else {
     app.use(express.static(path.resolve('../frontend/build')));
+
+    app.get(PREFIX + '/*', (req, res) => {
+        res.status(404).send({ error: 'Not Found!' });
+    });
 
     app.get('*', (req, res) => {
         res.status(200).sendFile(path.resolve('../frontend/build', 'index.html'));
