@@ -5,6 +5,7 @@ const router = express.Router();
 
 const { verifyCounsellors } = require('../middleware/verify');
 const encryptPassword = require('../utils/encryptPass');
+const generatePassword = require('../utils/passwordGen');
 
 const studentHandler = require('../handlers/student');
 const emailService = require('../services/nodemailer');
@@ -59,7 +60,7 @@ router.post('/register/:id', async (req, res) => {
             }
 
             // generate password
-            const password = email.split('@')[0] + '@123';
+            const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
             const encryptedPass = await encryptPassword(password);
 
             // create student
