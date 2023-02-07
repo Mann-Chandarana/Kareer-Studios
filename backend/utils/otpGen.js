@@ -1,13 +1,4 @@
-const NUMBERS = "0123456789";
-
-const generateOtp = (length = 4) => {
-    let otp = "";
-
-    for (let i = 0; i < length; i++) {
-        otp += NUMBERS[Math.floor(Math.random() * NUMBERS.length)];
-    }
-
+module.exports = () => {
+    let otp = ((1000+(Math.floor(Math.random() * 10000))).toString()).substr(0,4);
     return otp;
-};
-
-module.exports = generateOtp;
+};;
