@@ -64,11 +64,11 @@ router.post('/verification', async (req, res) => {
 
 router.post('/razorpay', async (req, res) => {
     try {
-        const { mail, amount } = req.body;
+        const { email, amount } = req.body;
         const payment_capture = 1;
         const currency = 'INR';
 
-        const { rows, rowCount } = await studentHandler.getStudentByEmail(mail);
+        const { rows, rowCount } = await studentHandler.getStudentByEmail(email);
         if (rowCount <= 0) {
             return res.status(400).send({ error: 'Account don\'t exists' });
         }
