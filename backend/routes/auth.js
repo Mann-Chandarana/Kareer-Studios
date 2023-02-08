@@ -26,16 +26,16 @@ router.post('/createUser', verifyAdmin, async (req, res) => {
         role = role.toLowerCase();
         const encryptedPass = await encryptPassword(password);
         if (role === "admin") {
-            await adminHandler.addAdmin(email, encryptPassword);
+            await adminHandler.addAdmin(email, encryptedPass);
         }
         else if (role === "student") {
-            await studentHandler.addStudent(null, email, null, encryptPassword, null);
+            await studentHandler.addStudent(null, email, null, encryptedPass, null);
         }
         else if (role === "parent") {
-            await parentHandler.addParent(null, email, encryptPassword);
+            await parentHandler.addParent(null, email, encryptedPass);
         }
         else if (role === 'counsellor') {
-            await counsellorHandler.addCounsellor(null, email, encryptPassword);
+            await counsellorHandler.addCounsellor(null, email, encryptedPass);
         } else {
             return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
         }
