@@ -24,7 +24,7 @@ router.post('/createUser', verifyAdmin, async (req, res) => {
     try {
         // Create user
         role = role.toLowerCase();
-        const encryptedPass = await encryptPassword(password);
+        const encryptedPass = encryptPassword(password);
         if (role === "admin") {
             await adminHandler.addAdmin(email, encryptedPass);
         }
