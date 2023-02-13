@@ -39,7 +39,11 @@ router.post('/verification', async (req, res) => {
                 return res.status(400).send({ error: "Account dosen't exists" });
             }
 
-            const { id: student_id, name, phone } = rows[0];
+            const { id: student_id, name, phone, paid } = rows[0];
+            if (paid) {
+                res.status(202).json({ status: 'ok' });
+                return;
+            }
 
             const buffer = await generateReceiptBuffer({ name, email, phone, amount, order_id });
 
@@ -54,7 +58,7 @@ router.post('/verification', async (req, res) => {
             ];
 
             await sendEmail(email, 'Payment receipt', 'hello', attachments);
-            res.status(202).send({ message: 'Payment done' });
+            res.status(202).json({ status: 'ok' });
         } else {
             // pass it
             console.log('request is not legit');

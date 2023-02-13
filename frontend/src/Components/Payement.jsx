@@ -6,7 +6,8 @@ function Payement() {
     const [amount, setAmount] = useState('');
     const [email, setEmail] = useState('');
 
-    const handlePayment = async () => {
+    const handlePayment = async (e) => {
+        e.preventDefault();
         const data = JSON.stringify({ amount, email });
 
         const order = await fetch('http://localhost:8000/api/payment/razorpay', {
@@ -51,31 +52,32 @@ function Payement() {
     return (
         <>
             <h1>Enter your registered email</h1>
-            <input
-                type="text"
-                value={amount}
-                placeholder="Enter the amount"
-                onChange={(e) => {
-                    setAmount(e.target.value);
-                }}
-            />
-            <input
-                type="text"
-                value={email}
-                placeholder="Enter the email"
-                onChange={(e) => {
-                    setEmail(e.target.value);
-                }}
-            />
-            <button
-                onClick={handlePayment}
-                rel="noopener noreferrer"
-                target="_blank"
-                type="button"
-                className="App-link btn btn-primary my-5 mx-5"
-            >
-                Pay Now
-            </button>
+            <form onSubmit={handlePayment}>
+                <input
+                    type="text"
+                    value={amount}
+                    placeholder="Enter the amount"
+                    onChange={(e) => {
+                        setAmount(e.target.value);
+                    }}
+                />
+                <input
+                    type="text"
+                    value={email}
+                    placeholder="Enter the email"
+                    onChange={(e) => {
+                        setEmail(e.target.value);
+                    }}
+                />
+                <button
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    type="submit"
+                    className="App-link btn btn-primary my-5 mx-5"
+                >
+                    Pay Now
+                </button>
+            </form>
         </>
     );
 }
