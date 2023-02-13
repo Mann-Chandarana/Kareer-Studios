@@ -28,21 +28,23 @@ router.post('/verification', async (req, res) => {
 
         if (digest === req.headers['x-razorpay-signature']) {
             // process it
-            let { email, amount, payment_id } = req.body.payload.payment.entity;
+            let { email, amount, order_id } = req.body.payload.payment.entity;
             amount = amount / (100);
-            payment_id = payment_id.split('_')[1];
+            order_id = order_id || '#2333';
+
+            console.log(email, amount, order_id);
 
             const { rows, rowCount } = await studentHandler.getStudentByEmail(email);
             if (rowCount <= 0) {
-                return res.status(400).send({ error: 'Account don\'t exists' });
+                return res.status(400).send({ error: "Account dosen't exists" });
             }
 
             const { id: student_id, name, phone } = rows[0];
 
-            const buffer = await generateReceiptBuffer({ name, email, phone, amount, payment_id });
+            const buffer = await generateReceiptBuffer({ name, email, phone, amount, order_id });
 
             await studentHandler.setValidStudent(email);
-            await receiptHandler.addReceipt(payment_id, student_id, buffer);
+            await receiptHandler.addReceipt(order_id, student_id, buffer);
 
             const attachments = [
                 {
@@ -59,6 +61,7 @@ router.post('/verification', async (req, res) => {
             throw new Error('request is not legit');
         }
     } catch (err) {
+        console.error(err);
         res.status(500).send({ error: err.message });
     }
 });
