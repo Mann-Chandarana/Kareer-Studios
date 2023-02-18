@@ -1,5 +1,6 @@
 const shortid = require('shortid');
 const Razorpay = require('razorpay');
+const { validatePaymentVerification } = require('razorpay/dist/utils/razorpay-utils');
 const express = require('express');
 const crypto = require('crypto');
 
@@ -17,22 +18,16 @@ const razorpay = new Razorpay({
 
 
 router.post('/verification', async (req, res) => {
+    const secret = process.env.razor_secret;
+    const { order_id, payment_id, signautre } = req.body;
 
     try {
-        // do a validation
-        const secret = '12345678';
-
-        const shasum = crypto.createHmac('sha256', secret);
-        shasum.update(JSON.stringify(req.body));
-        const digest = shasum.digest('hex');
-
-        if (digest === req.headers['x-razorpay-signature']) {
+        const isValid = validatePaymentVerification({ order_id, payment_id }, signautre, secret);
+        if (isValid) {
             // process it
-            let { email, amount, order_id } = req.body.payload.payment.entity;
-            amount = amount / (100);
-            order_id = order_id || '#2333';
-
-            console.log(email, amount, order_id);
+            const orderData = await razorpay.orders.fetchPayments(order_id);
+            let { amount, email, fee, tax } = orderData.items[0];
+            amount = (amount / 100);
 
             const { rows, rowCount } = await studentHandler.getStudentByEmail(email);
             if (rowCount <= 0) {
@@ -40,12 +35,8 @@ router.post('/verification', async (req, res) => {
             }
 
             const { id: student_id, name, phone, paid } = rows[0];
-            if (paid) {
-                res.status(202).json({ status: 'ok' });
-                return;
-            }
 
-            const buffer = await generateReceiptBuffer({ name, email, phone, amount, order_id });
+            const buffer = await generateReceiptBuffer({ name, email, phone, amount, order_id, fee, tax });
 
             await studentHandler.setValidStudent(email);
             await receiptHandler.addReceipt(order_id, student_id, buffer);
@@ -58,14 +49,12 @@ router.post('/verification', async (req, res) => {
             ];
 
             await sendEmail(email, 'Payment receipt', 'hello', attachments);
-            res.status(202).json({ status: 'ok' });
+            res.status(202).send({ status: 'ok' });
         } else {
-            // pass it
-            console.log('request is not legit');
-            throw new Error('request is not legit');
+            // fail it
+            return res.status(400).send({ error: "request not legit" });
         }
     } catch (err) {
-        console.error(err);
         res.status(500).send({ error: err.message });
     }
 });

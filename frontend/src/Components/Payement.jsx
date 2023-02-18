@@ -33,9 +33,17 @@ function Payement() {
             description: 'Thank you for nothing. Please give us some money',
             image: '',
             handler: function (response) {
-                alert(response.razorpay_payment_id);
-                alert(response.razorpay_order_id);
-                alert(response.razorpay_signature);
+                const payment_id = response.razorpay_payment_id;
+                const order_id = response.razorpay_order_id;
+                const signautre = response.razorpay_signature;
+
+                fetch('http://localhost:8000/api/payment/verification', {
+                    method: 'POST',
+                    body: JSON.stringify({ order_id, payment_id, signautre }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
             },
             prefill: {
                 email,
