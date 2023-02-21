@@ -69,11 +69,11 @@ CREATE TABLE IF NOT EXISTS parents
 CREATE TABLE IF NOT EXISTS receipts (
     id TEXT PRIMARY KEY, 
     student_id INTEGER NOT NULL,
-    pdf OID NOT NULL,
+    pdf BYTEA NOT NULL,
     date_issued TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
     REFERENCES students(id)
     ON DELETE SET NULL
-)
+);
