@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const { verifyAdmin } = require('../middleware/verify');
-const counsellorHandler = require('../handlers/counsellor');
+const parentHandler = require('../handlers/parent');
 
 
-// GET all counsellors
+// GET all parents
 router.get('/', verifyAdmin, async (req, res) => {
     try {
-        const { rowCount, rows } = await counsellorHandler.getAllCounsellors();
+        const { rowCount, rows } = await parentHandler.getAllParents();
         const data = rows.map(row => {
             delete row.password;
             return row;
@@ -21,19 +21,19 @@ router.get('/', verifyAdmin, async (req, res) => {
 });
 
 
-// GET counsellor by id
+// GET parent by id
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
-        const { rowCount, rows } = await counsellorHandler.getCounsellor(id);
+        const { rowCount, rows } = await parentHandler.getParent(id);
         const data = rows.map(row => {
             delete row.password;
             return row;
         });
 
         if (rowCount <= 0) {
-            res.status(404).json({ error: 'Counsellor not found!' });
+            res.status(404).json({ error: 'Parent not found!' });
             return;
         }
 
@@ -43,24 +43,24 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// CREATE counsellor
+// CREATE parent
 router.post('/', verifyAdmin, (req, res) => {
 
 });
 
 
-// UPDATE counsellor
+// UPDATE parent
 router.patch('/:id', (req, res) => {
 
 });
 
 
-// DELETE counsellor
+// DELETE parent
 router.delete('/:id', verifyAdmin, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const data = await counsellorHandler.deleteCounsellor(id);
+        const data = await parentHandler.deleteParent(id);
         console.log(data);
     } catch (err) {
         res.status(500).send({ error: err.message });

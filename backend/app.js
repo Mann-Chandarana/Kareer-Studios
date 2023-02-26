@@ -27,6 +27,8 @@ app.use(PREFIX + '/link', require('./routes/link'));
 app.use(PREFIX + '/otp', require('./routes/otp'));
 app.use(PREFIX + '/payment', require('./routes/payment'));
 app.use(PREFIX + '/counsellors', require('./routes/counsellors'));
+app.use(PREFIX + '/parents', require('./routes/parents'));
+app.use(PREFIX + '/students', require('./routes/students'));
 
 if (isDevelopmentMode) {
     app.get('*', (req, res) => {
