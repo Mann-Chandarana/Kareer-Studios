@@ -14,6 +14,8 @@ router.get('/', verifyAdmin, async (req, res) => {
             return row;
         });
 
+        /// 
+
         res.status(200).json({ rowCount, rows: data });
     } catch (err) {
         res.status(500).send({ error: err.message });

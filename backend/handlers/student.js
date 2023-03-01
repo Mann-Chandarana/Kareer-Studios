@@ -14,7 +14,7 @@ module.exports = {
         return db.query('SELECT * FROM students WHERE email=$1', [email]);
     },
     getAllStudents: async () => {
-        return db.query('SELECT * FROM students');
+        return db.query('SELECT students.*, counsellors.name AS counsellor_name FROM students LEFT JOIN counsellors ON (students.counsellor_id = counsellors.id)');
     },
     deleteStudent: async (student_id) => {
         return db.query('DELETE FROM students WHERE id=$1', [student_id]);

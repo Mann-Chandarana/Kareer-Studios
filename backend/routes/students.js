@@ -3,6 +3,9 @@ const router = express.Router();
 
 const { verifyAdmin } = require('../middleware/verify');
 const studentHandler = require('../handlers/student');
+const generatePassword = require('../utils/passwordGen');
+const encryptPassword = require('../utils/encryptPass');
+const emailService = require('../services/nodemailer');
 
 
 // GET all parents
@@ -43,13 +46,27 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// CREATE parent
-router.post('/', verifyAdmin, (req, res) => {
+// CREATE student
+router.post('/', verifyAdmin, async (req, res) => {
+    try {
+        const { counsellor_id, email, name, paid, phone } = req.body;
 
+        // generate password
+        const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
+        const encryptedPass = await encryptPassword(password);
+
+        await studentHandler.addStudent(name, email, phone, encryptedPass, counsellor_id);
+
+        await emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
+
+        res.status(202).send({ message: 'Student Created!' });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
 });
 
 
-// UPDATE parent
+// UPDATE student
 router.patch('/:id', (req, res) => {
 
 });

@@ -2,7 +2,7 @@ const db = require('../db');
 
 module.exports = {
     getAllCounsellors: async () => {
-        return db.query('SELECT * FROM counsellors');
+        return db.query('SELECT counsellors.*, COUNT(counsellors.id) AS number_of_students FROM counsellors LEFT JOIN students ON (counsellors.id = students.counsellor_id) GROUP BY counsellors.id');
     },
     addCounsellor: async (name, email, password) => {
         return db.query('INSERT INTO counsellors (name, email, password) VALUES ($1, $2, $3)', [name, email, password]);
