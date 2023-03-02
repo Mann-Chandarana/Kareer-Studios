@@ -1,9 +1,28 @@
 const express = require('express');
 const router = express.Router();
 
-const { verifyAdmin } = require('../middleware/verify');
+const { verifyAdmin, verifyStudents } = require('../middleware/verify');
 const counsellorHandler = require('../handlers/counsellor');
+const student = require('../handlers/student');
 
+// Getting counsellor by student id
+
+router.get('/counsellor/:student_id', verifyStudents, async (req, res) => {
+    try {
+        const { rowCount, rows } = await student.getCounsellor(req.params.student_id);
+
+        if (rowCount <= 0) {
+            res.status(404).json({ error: 'Counsellor not found!' })
+            return;
+        }
+        else {
+            delete rows[0].password;
+            res.status(200).json({ rowCount, rows: rows[0] });
+        }
+    } catch (err) {
+        res.status(500).send({error:err.message});
+    }
+})
 
 // GET all counsellors
 router.get('/', verifyAdmin, async (req, res) => {

@@ -1,6 +1,9 @@
 const db = require('../db');
 
 module.exports = {
+    getParentbystudentid:async(student_id)=>{
+       return db.query('SELECT * FROM parents WHERE student_id=$1',[student_id]);
+    },
     addParent: async (name, email, password) => {
         return db.query('INSERT INTO parents (name, email, password) VALUES ($1, $2, $3)', [name, email, password]);
     },

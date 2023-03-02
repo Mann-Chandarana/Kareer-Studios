@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { verifyAdmin } = require('../middleware/verify');
+const { verifyAdmin, verifyCounsellors } = require('../middleware/verify');
 const studentHandler = require('../handlers/student');
 const generatePassword = require('../utils/passwordGen');
 const encryptPassword = require('../utils/encryptPass');
@@ -22,6 +22,24 @@ router.get('/', verifyAdmin, async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 });
+
+// Getting student by parent id
+
+router.get('/student/:parent_id', async (req, res) => {
+    try {
+        const { rowCount, rows } = await studentHandler.getStudentbyparentid(req.params.parent_id)
+
+        if (rowCount <= 0) {
+            res.status(404).json({ error: 'No student found !' })
+        }
+        else {
+            delete rows[0].password
+            res.status(200).json({ rowCount, rows: rows[0] })
+        }
+    } catch (error) {
+        res.status(500).send({ error: error.message })
+    }
+})
 
 
 // GET parent by id
@@ -65,6 +83,27 @@ router.post('/', verifyAdmin, async (req, res) => {
     }
 });
 
+// Getting student using counsellor id in counsellor dashboard
+
+router.get('/counsellor/:counsellor_id', verifyCounsellors, async (req, res) => {
+    try {
+        const { rowCount, rows } = await studentHandler.getStudentbycounsellorid(req.params.counsellor_id);
+        if (rowCount <= 0) {
+            res.status(404).json({ error: 'No Student under this counsellor' })
+            return
+        }
+
+        const data = rows.map(row => {
+            delete row.password;
+            return row;
+        })
+
+        res.status(200).json({rowCount,rows:data});
+
+    } catch (error) {
+        res.status(500).send({error:error.message})
+    }
+})
 
 // UPDATE student
 router.patch('/:id', (req, res) => {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { verifyAdmin } = require('../middleware/verify');
+const { verifyAdmin, verifyStudents } = require('../middleware/verify');
 const parentHandler = require('../handlers/parent');
 
 
@@ -19,6 +19,24 @@ router.get('/', verifyAdmin, async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 });
+
+// Getting parent by student id
+
+router.get('/parent/:student_id', verifyStudents, async (req, res) => {
+    try {
+        const { rowCount, rows } = await parentHandler.getParentbystudentid(req.params.student_id);
+        if (rowCount <= 0) {
+            res.status(404).json({ error: 'Parent not found !' })
+            return;
+        }
+        else {
+            delete rows[0].password
+            res.status(200).json({ rowCount, rows: rows[0] });
+        }
+    } catch (error) {
+        res.status(500).send({ error: error.message });
+    }
+})
 
 
 // GET parent by id
