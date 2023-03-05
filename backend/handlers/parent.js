@@ -1,11 +1,11 @@
 const db = require('../db');
 
 module.exports = {
-    getParentbystudentid:async(student_id)=>{
-       return db.query('SELECT * FROM parents WHERE student_id=$1',[student_id]);
+    getParentbystudentid: async (student_id) => {
+        return db.query('SELECT * FROM parents WHERE student_id=$1', [student_id]);
     },
-    addParent: async (name, email, password) => {
-        return db.query('INSERT INTO parents (name, email, password) VALUES ($1, $2, $3)', [name, email, password]);
+    addParent: async (name, email, password, student_id) => {
+        return db.query('INSERT INTO parents (name, email, password, student_id) VALUES ($1, $2, $3, $4)', [name, email, password, student_id]);
     },
     getParent: async (parent_id) => {
         return db.query('SELECT * FROM parents WHERE id=$1', [parent_id]);

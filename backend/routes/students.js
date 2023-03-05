@@ -27,19 +27,19 @@ router.get('/', verifyAdmin, async (req, res) => {
 
 router.get('/student/:parent_id', async (req, res) => {
     try {
-        const { rowCount, rows } = await studentHandler.getStudentbyparentid(req.params.parent_id)
+        const { rowCount, rows } = await studentHandler.getStudentbyparentid(req.params.parent_id);
 
         if (rowCount <= 0) {
-            res.status(404).json({ error: 'No student found !' })
+            res.status(404).json({ error: 'No student found !' });
         }
         else {
-            delete rows[0].password
-            res.status(200).json({ rowCount, rows: rows[0] })
+            delete rows[0].password;
+            res.status(200).json({ rowCount, rows: rows[0] });
         }
     } catch (error) {
-        res.status(500).send({ error: error.message })
+        res.status(500).send({ error: error.message });
     }
-})
+});
 
 
 // GET parent by id
@@ -68,12 +68,13 @@ router.get('/:id', async (req, res) => {
 router.post('/', verifyAdmin, async (req, res) => {
     try {
         const { counsellor_id, email, name, paid, phone } = req.body;
+        console.log(paid);
 
         // generate password
         const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
         const encryptedPass = await encryptPassword(password);
 
-        await studentHandler.addStudent(name, email, phone, encryptedPass, counsellor_id);
+        await studentHandler.addStudent(name, email, phone, encryptedPass, counsellor_id, paid);
 
         await emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
 
@@ -89,21 +90,21 @@ router.get('/counsellor/:counsellor_id', verifyCounsellors, async (req, res) => 
     try {
         const { rowCount, rows } = await studentHandler.getStudentbycounsellorid(req.params.counsellor_id);
         if (rowCount <= 0) {
-            res.status(404).json({ error: 'No Student under this counsellor' })
-            return
+            res.status(404).json({ error: 'No Student under this counsellor' });
+            return;
         }
 
         const data = rows.map(row => {
             delete row.password;
             return row;
-        })
+        });
 
-        res.status(200).json({rowCount,rows:data});
+        res.status(200).json({ rowCount, rows: data });
 
     } catch (error) {
-        res.status(500).send({error:error.message})
+        res.status(500).send({ error: error.message });
     }
-})
+});
 
 // UPDATE student
 router.patch('/:id', (req, res) => {
@@ -116,9 +117,10 @@ router.delete('/:id', verifyAdmin, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const data = await studentHandler.deleteStudent(id);
-        console.log(data);
+        await studentHandler.deleteStudent(id);
+        res.status(200).send({ message: 'Delete Student!' });
     } catch (err) {
+        console.log(err);
         res.status(500).send({ error: err.message });
     }
 });

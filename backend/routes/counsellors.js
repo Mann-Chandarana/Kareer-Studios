@@ -4,6 +4,9 @@ const router = express.Router();
 const { verifyAdmin, verifyStudents } = require('../middleware/verify');
 const counsellorHandler = require('../handlers/counsellor');
 const student = require('../handlers/student');
+const encryptPassword = require('../utils/encryptPass');
+const generatePassword = require('../utils/passwordGen');
+const emailService = require('../services/nodemailer');
 
 // Getting counsellor by student id
 
@@ -12,7 +15,7 @@ router.get('/counsellor/:student_id', verifyStudents, async (req, res) => {
         const { rowCount, rows } = await student.getCounsellor(req.params.student_id);
 
         if (rowCount <= 0) {
-            res.status(404).json({ error: 'Counsellor not found!' })
+            res.status(404).json({ error: 'Counsellor not found!' });
             return;
         }
         else {
@@ -20,9 +23,9 @@ router.get('/counsellor/:student_id', verifyStudents, async (req, res) => {
             res.status(200).json({ rowCount, rows: rows[0] });
         }
     } catch (err) {
-        res.status(500).send({error:err.message});
+        res.status(500).send({ error: err.message });
     }
-})
+});
 
 // GET all counsellors
 router.get('/', verifyAdmin, async (req, res) => {
@@ -65,8 +68,23 @@ router.get('/:id', async (req, res) => {
 });
 
 // CREATE counsellor
-router.post('/', verifyAdmin, (req, res) => {
+router.post('/', verifyAdmin, async (req, res) => {
+    try {
+        const { name, email, phone, salary } = req.body;
 
+        // generate password
+        const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
+        const encryptedPass = await encryptPassword(password);
+
+        await counsellorHandler.addCounsellor(name, email, encryptPassword, salary, phone);
+
+        await emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
+
+        res.status(202).send({ message: 'Counsellor Created!' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({ error: err.message });
+    }
 });
 
 
@@ -81,9 +99,10 @@ router.delete('/:id', verifyAdmin, async (req, res) => {
     const { id } = req.params;
 
     try {
-        const data = await counsellorHandler.deleteCounsellor(id);
-        console.log(data);
+        await counsellorHandler.deleteCounsellor(id);
+        res.status(200).send({ message: 'Delete Counsellor!' });
     } catch (err) {
+        console.error(err);
         res.status(500).send({ error: err.message });
     }
 });

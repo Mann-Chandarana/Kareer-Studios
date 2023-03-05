@@ -75,5 +75,5 @@ CREATE TABLE IF NOT EXISTS receipts (
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
     REFERENCES students(id)
-    ON DELETE SET NULL
+    ON DELETE CASCADE
 );
