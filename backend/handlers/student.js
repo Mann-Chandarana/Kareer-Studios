@@ -27,5 +27,13 @@ module.exports = {
     },
     deleteStudent: async (student_id) => {
         return db.query('DELETE FROM students WHERE id=$1', [student_id]);
+    },
+    updateStudent: async (student_id, newStudent) => {
+        const { name, email, counsellor_id, phone, whatsapp, city, address, pincode, parent_added, gender, paid } = newStudent;
+
+        return db.query('UPDATE students SET name=$2, email=$3, counsellor_id=$4, phone=$5, whatsapp=$6, city=$7, address=$8, pincode=$9, parent_added=$10, gender=$11, paid=$12 WHERE id=$1', [student_id, name, email, counsellor_id, phone, whatsapp, city, address, pincode, parent_added, gender, paid]);
+    },
+    setAddParent: async (email) => {
+        return db.query('UPDATE students SET parent_added = TRUE WHERE email =$1', [email]);
     }
 };

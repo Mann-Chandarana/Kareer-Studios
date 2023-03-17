@@ -10,7 +10,7 @@ const emailService = require('../services/nodemailer');
 
 // Getting counsellor by student id
 
-router.get('/counsellor/:student_id', verifyStudents, async (req, res) => {
+router.get('/student/:student_id', verifyStudents, async (req, res) => {
     try {
         const { rowCount, rows } = await student.getCounsellor(req.params.student_id);
 
@@ -20,7 +20,7 @@ router.get('/counsellor/:student_id', verifyStudents, async (req, res) => {
         }
         else {
             delete rows[0].password;
-            res.status(200).json({ rowCount, rows: rows[0] });
+            res.status(200).json({ rowCount, rows: rows });
         }
     } catch (err) {
         res.status(500).send({ error: err.message });
@@ -76,7 +76,7 @@ router.post('/', verifyAdmin, async (req, res) => {
         const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
         const encryptedPass = await encryptPassword(password);
 
-        await counsellorHandler.addCounsellor(name, email, encryptPassword, salary, phone);
+        await counsellorHandler.addCounsellor(name, email, encryptedPass, salary, phone);
 
         await emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
 
@@ -89,8 +89,14 @@ router.post('/', verifyAdmin, async (req, res) => {
 
 
 // UPDATE counsellor
-router.patch('/:id', (req, res) => {
+router.patch('/:id', verifyAdmin, (req, res) => {
+    const { id } = req.params;
 
+    try {
+        console.log(req.body);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 

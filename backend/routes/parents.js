@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { verifyAdmin, verifyStudents } = require('../middleware/verify');
 const parentHandler = require('../handlers/parent');
+const studentHandler = require('../handlers/student');
 const encryptPassword = require('../utils/encryptPass');
 const generatePassword = require('../utils/passwordGen');
 const emailService = require('../services/nodemailer');
@@ -25,7 +26,7 @@ router.get('/', verifyAdmin, async (req, res) => {
 
 // Getting parent by student id
 
-router.get('/parent/:student_id', verifyStudents, async (req, res) => {
+router.get('/student/:student_id', verifyStudents, async (req, res) => {
     try {
         const { rowCount, rows } = await parentHandler.getParentbystudentid(req.params.student_id);
         if (rowCount <= 0) {
@@ -34,7 +35,7 @@ router.get('/parent/:student_id', verifyStudents, async (req, res) => {
         }
         else {
             delete rows[0].password;
-            res.status(200).json({ rowCount, rows: rows[0] });
+            res.status(200).json({ rowCount, rows: rows });
         }
     } catch (error) {
         res.status(500).send({ error: error.message });
@@ -65,15 +66,17 @@ router.get('/:id', async (req, res) => {
 });
 
 // CREATE parent
-router.post('/', verifyAdmin, async (req, res) => {
+router.post('/', verifyStudents, async (req, res) => {
     try {
-        const { name, email, student_id } = req.body;
+        const { name, email, student_id, gender } = req.body;
 
         // generate password
         const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
         const encryptedPass = await encryptPassword(password);
+        const student = req.user;
 
-        await parentHandler.addParent(name, email, encryptPassword, student_id);
+        await parentHandler.addParent(name, email, encryptedPass, gender, student_id);
+        await studentHandler.setAddParent(student.email);
 
         await emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
 

@@ -9,7 +9,7 @@ const verifyStudents = (req, res, next) => {
         if (err) {
             res.status(401).send({ error: err.message });
         } else {
-            if (decoded.role === 'student') {
+            if (decoded.role === 'student' || decoded.role === 'admin') {
                 req.user = decoded;
                 next();
             } else {
@@ -27,7 +27,7 @@ const verifyParents = (req, res, next) => {
         if (err) {
             res.status(401).send({ error: err.message });
         } else {
-            if (decoded.role === 'parent') {
+            if (decoded.role === 'parent' || decoded.role === 'admin') {
                 req.user = decoded;
                 next();
             } else {
@@ -45,7 +45,7 @@ const verifyCounsellors = (req, res, next) => {
         if (err) {
             res.status(401).send({ error: err.message });
         } else {
-            if (decoded.role === 'counsellor') {
+            if (decoded.role === 'counsellor' || decoded.role === 'admin') {
                 req.user = decoded;
                 next();
             } else {

@@ -82,8 +82,10 @@ router.post('/login', async (req, res) => {
 
         const user = result.rows[0];
         const isSame = await bcrypt.compare(password, user.password);
+
+
         if (!isSame) {
-            return res.status(400).json({ error: 'Wrong Credentials!' });
+            return res.status(401).json({ error: 'Wrong Credentials!' });
         }
 
         if (role === 'student' && !user.paid) {
