@@ -96,7 +96,6 @@ router.post('/login', async (req, res) => {
         delete user.password;
 
         const authtoken = jwt.sign(user, process.env.JWT_SECRET);
-        res.cookie('token', authtoken);
         res.status(202).json({ token: authtoken });
     }
     catch (err) {
@@ -108,7 +107,7 @@ router.post('/login', async (req, res) => {
 
 // Route -3 /api/auth/verify --- for token verification
 router.get('/verify', (req, res) => {
-    const { token } = req.cookies;
+    const token = req.headers.authorization;
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if (err) {
@@ -120,9 +119,43 @@ router.get('/verify', (req, res) => {
     });
 });
 
-router.get('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.status(200).end();
+router.get('/renew', (req, res) => {
+    const token = req.headers.authorization;
+
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+        if (err) {
+            res.status(401).send({ error: err.message });
+        } else {
+            const role = decoded.role.toLowerCase();
+
+            let result;
+            if (role === "admin") {
+                result = await adminHandler.getAdminByEmail(decoded.email);
+            }
+            else if (role === "student") {
+                result = await studentHandler.getStudentByEmail(decoded.email);
+            }
+            else if (role === "parent") {
+                result = await parentHandler.getParentByEmail(decoded.email);
+            }
+            else if (role === 'counsellor') {
+                result = await counsellorHandler.getCounsellorByEmail(decoded.email);
+            } else {
+                return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
+            }
+
+            if (result.rowCount <= 0) {
+                return res.status(401).json({ error: 'Unknown Token!' });
+            }
+
+            const user = result.rows[0];
+            user.role = role;
+            delete user.password;
+
+            const newAuthtoken = jwt.sign(user, process.env.JWT_SECRET);
+            res.status(202).json({ token: newAuthtoken, user });
+        }
+    });
 });
 
 module.exports = router;

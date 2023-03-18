@@ -107,6 +107,10 @@ router.patch('/:id', verifyCounsellors, async (req, res) => {
 
     try {
         const newStudent = req.body;
+        if (req.user.role === 'counsellor' && (req.user.id != newStudent.counsellor_id)) {
+            return res.status(400).send({ error: 'You cannot change data of another student.' });
+        }
+
         await studentHandler.updateStudent(id, newStudent);
         res.status(200).send({ message: 'Updated Student!' });
     } catch (err) {
