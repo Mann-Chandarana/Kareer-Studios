@@ -119,43 +119,46 @@ router.get('/verify', (req, res) => {
     });
 });
 
-router.get('/renew', (req, res) => {
-    const token = req.headers.authorization;
+router.get('/renew',(req,res)=>{
+ const token = req.headers.authorization;
 
-    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-        if (err) {
-            res.status(401).send({ error: err.message });
-        } else {
-            const role = decoded.role.toLowerCase();
+ jwt.verify(token,process.env.JWT_SECRET,async (err,decoded)=>{
+    if (err) {
+        res.status(401).send({ error: err.message });
+    }else{
+        let role = decoded.role.toLowerCase();
 
-            let result;
-            if (role === "admin") {
-                result = await adminHandler.getAdminByEmail(decoded.email);
-            }
-            else if (role === "student") {
-                result = await studentHandler.getStudentByEmail(decoded.email);
-            }
-            else if (role === "parent") {
-                result = await parentHandler.getParentByEmail(decoded.email);
-            }
-            else if (role === 'counsellor') {
-                result = await counsellorHandler.getCounsellorByEmail(decoded.email);
-            } else {
-                return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
-            }
+        let result;
+        role = role.toLowerCase();
 
-            if (result.rowCount <= 0) {
-                return res.status(401).json({ error: 'Unknown Token!' });
-            }
-
-            const user = result.rows[0];
-            user.role = role;
-            delete user.password;
-
-            const newAuthtoken = jwt.sign(user, process.env.JWT_SECRET);
-            res.status(202).json({ token: newAuthtoken, user });
+        if (role === "admin") {
+            result = await adminHandler.getAdminByEmail(decoded.email);
         }
-    });
-});
+        else if (role === "student") {
+            result = await studentHandler.getStudentByEmail(decoded.email);
+        }
+        else if (role === "parent") {
+            result = await parentHandler.getParentByEmail(decoded.email);
+        }
+        else if (role === 'counsellor') {
+            result = await counsellorHandler.getCounsellorByEmail(decoded.email);
+        } else {
+            return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
+        }
+
+        if (result.rowCount <= 0) {
+            return res.status(401).json({ error: 'Wrong Credentials!' });
+        }
+
+        const user = result.rows[0];
+        user.role = role;
+        delete user.password
+
+        const newAuthtoken = jwt.sign(user,process.env.JWT_SECRET);
+        res.status(202).json({token:newAuthtoken,user});
+
+    }
+ })
+})
 
 module.exports = router;
