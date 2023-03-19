@@ -15,5 +15,8 @@ module.exports = {
     },
     deleteCounsellor: async (id) => {
         return db.query('DELETE FROM counsellors WHERE id=$1', [id]);
+    },
+    changePassword: async (id, newPassword) => {
+        return db.query('UPDATE counsellor SET password=$1 WHERE id=$2', [newPassword, id]);
     }
 };

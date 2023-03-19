@@ -35,5 +35,8 @@ module.exports = {
     },
     setAddParent: async (email) => {
         return db.query('UPDATE students SET parent_added = TRUE WHERE email =$1', [email]);
+    },
+    changePassword: async (id, newPassword) => {
+        return db.query('UPDATE students SET password=$1 WHERE id=$2', [newPassword, id]);
     }
 };

@@ -119,46 +119,102 @@ router.get('/verify', (req, res) => {
     });
 });
 
-router.get('/renew',(req,res)=>{
- const token = req.headers.authorization;
+router.get('/renew', (req, res) => {
+    const token = req.headers.authorization;
 
- jwt.verify(token,process.env.JWT_SECRET,async (err,decoded)=>{
-    if (err) {
-        res.status(401).send({ error: err.message });
-    }else{
-        let role = decoded.role.toLowerCase();
-
-        let result;
-        role = role.toLowerCase();
-
-        if (role === "admin") {
-            result = await adminHandler.getAdminByEmail(decoded.email);
-        }
-        else if (role === "student") {
-            result = await studentHandler.getStudentByEmail(decoded.email);
-        }
-        else if (role === "parent") {
-            result = await parentHandler.getParentByEmail(decoded.email);
-        }
-        else if (role === 'counsellor') {
-            result = await counsellorHandler.getCounsellorByEmail(decoded.email);
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+        if (err) {
+            res.status(401).send({ error: err.message });
         } else {
-            return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
+            let role = decoded.role.toLowerCase();
+            let result;
+
+            if (role === "admin") {
+                result = await adminHandler.getAdminByEmail(decoded.email);
+            }
+            else if (role === "student") {
+                result = await studentHandler.getStudentByEmail(decoded.email);
+            }
+            else if (role === "parent") {
+                result = await parentHandler.getParentByEmail(decoded.email);
+            }
+            else if (role === 'counsellor') {
+                result = await counsellorHandler.getCounsellorByEmail(decoded.email);
+            } else {
+                return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
+            }
+
+            if (result.rowCount <= 0) {
+                return res.status(401).json({ error: 'Wrong Credentials!' });
+            }
+
+            const user = result.rows[0];
+            user.role = role;
+            delete user.password;
+
+            const newAuthtoken = jwt.sign(user, process.env.JWT_SECRET);
+            res.status(202).json({ token: newAuthtoken, user });
+
         }
+    });
+});
 
-        if (result.rowCount <= 0) {
-            return res.status(401).json({ error: 'Wrong Credentials!' });
+router.post('/changepassword', (req, res) => {
+    const token = req.headers.authorization;
+    const { oldPassword, newPassword } = req.body;
+
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+        if (err) {
+            res.status(401).send({ error: err.message });
+        } else {
+            let role = decoded.role.toLowerCase();
+            let result;
+            if (role === "admin") {
+                result = await adminHandler.getAdminByEmail(decoded.email);
+            }
+            else if (role === "student") {
+                result = await studentHandler.getStudentByEmail(decoded.email);
+            }
+            else if (role === "parent") {
+                result = await parentHandler.getParentByEmail(decoded.email);
+            }
+            else if (role === 'counsellor') {
+                result = await counsellorHandler.getCounsellorByEmail(decoded.email);
+            } else {
+                return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
+            }
+
+            if (result.rowCount <= 0) {
+                return res.status(401).json({ error: 'Wrong Credentials!' });
+            }
+
+            const dbPassword = result.rows[0].password;
+
+            const isSame = await bcrypt.compare(oldPassword, dbPassword);
+            if (!isSame) {
+                return res.status(401).json({ error: 'Incorrect Old Password!' });
+            }
+
+            const encryptedPass = encryptPassword(newPassword);
+
+            if (role === "admin") {
+                await adminHandler.changePassword(decoded.id, encryptedPass);
+            }
+            else if (role === "student") {
+                await studentHandler.changePassword(decoded.id, encryptedPass);
+            }
+            else if (role === "parent") {
+                await parentHandler.changePassword(decoded.id, encryptedPass);
+            }
+            else if (role === 'counsellor') {
+                await counsellorHandler.changePassword(decoded.id, encryptedPass);
+            }
+
+
+            res.status(202).json({ message: 'Password Updated!' });
+
         }
-
-        const user = result.rows[0];
-        user.role = role;
-        delete user.password
-
-        const newAuthtoken = jwt.sign(user,process.env.JWT_SECRET);
-        res.status(202).json({token:newAuthtoken,user});
-
-    }
- })
-})
+    });
+});
 
 module.exports = router;

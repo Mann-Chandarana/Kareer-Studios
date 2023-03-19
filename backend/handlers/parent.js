@@ -18,5 +18,8 @@ module.exports = {
     },
     deleteParent: async (parent_id) => {
         return db.query('DELETE FROM parents WHERE id=$1', [parent_id]);
+    },
+    changePassword: async (id, newPassword) => {
+        return db.query('UPDATE parents SET password=$1 WHERE id=$2', [newPassword, id]);
     }
 };
