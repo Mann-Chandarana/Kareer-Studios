@@ -14,6 +14,32 @@ const parentHandler = require('../handlers/parent');
 const counsellorHandler = require('../handlers/counsellor');
 
 
+async function getUserData(email) {
+    let result;
+    result = await adminHandler.getAdminByEmail(email);
+    if (result.rowCount > 0) {
+        return { result, role: 'admin' };
+    }
+
+    result = await studentHandler.getStudentByEmail(email);
+    if (result.rowCount > 0) {
+        return { result, role: 'student' };
+    }
+
+    result = await parentHandler.getParentByEmail(email);
+    if (result.rowCount > 0) {
+        return { result, role: 'parent' };
+    }
+
+    result = await counsellorHandler.getCounsellorByEmail(email);
+    if (result.rowCount > 0) {
+        return { result, role: 'counsellor' };
+    }
+
+    return { result: null, role: null };
+}
+
+
 
 // Route-1 /api/auth/createUser --- for signup
 router.post('/createUser', verifyAdmin, async (req, res) => {
@@ -51,30 +77,17 @@ router.post('/createUser', verifyAdmin, async (req, res) => {
 
 // Route-2 /api/auth/login --- for login
 router.post('/login', async (req, res) => {
-    let { email, password, role } = req.body;
-    if (!email || !password || !role) {
+    let { email, password } = req.body;
+    if (!email || !password) {
         return res.status(400).send({ error: "Invalid request body." });
     }
 
     try {
-        let result;
-        role = role.toLowerCase();
+        let { result, role } = await getUserData(email);
 
-        if (role === "admin") {
-            result = await adminHandler.getAdminByEmail(email);
-        }
-        else if (role === "student") {
-            result = await studentHandler.getStudentByEmail(email);
-        }
-        else if (role === "parent") {
-            result = await parentHandler.getParentByEmail(email);
-        }
-        else if (role === 'counsellor') {
-            result = await counsellorHandler.getCounsellorByEmail(email);
-        } else {
+        if (!role) {
             return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
         }
-
 
         if (result.rowCount <= 0) {
             return res.status(401).json({ error: 'Wrong Credentials!' });
