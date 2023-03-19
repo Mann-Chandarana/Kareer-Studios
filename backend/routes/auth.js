@@ -172,7 +172,7 @@ router.get('/renew', (req, res) => {
     });
 });
 
-router.post('/changepassword', (req, res) => {
+router.patch('/changepassword', (req, res) => {
     const token = req.headers.authorization;
     const { oldPassword, newPassword } = req.body;
 
