@@ -68,7 +68,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', verifyAdmin, async (req, res) => {
     try {
         const { counsellor_id, email, name, paid, phone } = req.body;
-        console.log(paid);
 
         // generate password
         const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
