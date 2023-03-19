@@ -39,7 +39,7 @@ router.post('/verification', async (req, res) => {
             const buffer = await generateReceiptBuffer({ name, email, phone, amount, order_id, fee, tax });
 
             await studentHandler.setValidStudent(email);
-            await receiptHandler.addReceipt(order_id, student_id, buffer);
+            await receiptHandler.addReceipt(order_id, student_id, Number(amount), buffer);
 
             const attachments = [
                 {
