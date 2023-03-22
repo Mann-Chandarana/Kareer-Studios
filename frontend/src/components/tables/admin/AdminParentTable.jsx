@@ -8,7 +8,7 @@ import AddParent from '../../modals/addModals/AddParent';
 import EditParent from '../../modals/editModals/EditParent';
 import { ParentInfo } from '../../modals/infoModals/ParentInfo';
 import { SearchMenu } from '../../SearchMenu';
-import { SmallSpinner } from '../../SmallSpinner';
+import SmallSpinner from '../../SmallSpinner';
 import { TableLoading } from '../../TableLoading';
 
 function AdminParentTable() {

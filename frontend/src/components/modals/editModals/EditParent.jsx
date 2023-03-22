@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import client from '../../../api';
+import SmallSpinner from '../../SmallSpinner';
 
 function EditParent({ callback, parentData }) {
     const closeButton = useRef();
@@ -93,7 +94,13 @@ function EditParent({ callback, parentData }) {
                     Close
                 </button>
                 <button type="submit" className="btn btn-warning" disabled={loading}>
-                    Edit
+                    {loading ? (
+                        <>
+                            Updating <SmallSpinner />
+                        </>
+                    ) : (
+                        'Update'
+                    )}
                 </button>
             </div>
         </form>

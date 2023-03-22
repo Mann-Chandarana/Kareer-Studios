@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import client from '../../../api';
+import SmallSpinner from '../../SmallSpinner';
 
 function EditCounsellor({ callback, counsellorData }) {
     const closeButton = useRef();
@@ -106,7 +107,13 @@ function EditCounsellor({ callback, counsellorData }) {
                     Close
                 </button>
                 <button type="submit" className="btn btn-warning" disabled={loading}>
-                    Edit
+                    {loading ? (
+                        <>
+                            Updating <SmallSpinner />
+                        </>
+                    ) : (
+                        'Update'
+                    )}
                 </button>
             </div>
         </form>

@@ -9,7 +9,7 @@ import { TableLoading } from '../../TableLoading';
 import StudentInfo from '../../modals/infoModals/StudentInfo';
 import { SearchMenu } from '../../SearchMenu';
 import useSearch from '../../../hooks/useSearch';
-import { SmallSpinner } from '../../SmallSpinner';
+import SmallSpinner from '../../SmallSpinner';
 
 function AdminStudentTable() {
     const [students, setStudents] = useState([]);

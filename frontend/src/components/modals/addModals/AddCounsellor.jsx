@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import client from '../../../api';
+import SmallSpinner from '../../SmallSpinner';
 
 function AddCounsellor({ callback }) {
     const closeButton = useRef();
@@ -110,8 +111,14 @@ function AddCounsellor({ callback }) {
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={closeButton}>
                     Close
                 </button>
-                <button type="submit" className="btn btn-primary" disabled={loading}>
-                    ADD
+                <button type="submit" className="btn btn-success" disabled={loading}>
+                    {loading ? (
+                        <>
+                            Creating <SmallSpinner />
+                        </>
+                    ) : (
+                        'ADD'
+                    )}
                 </button>
             </div>
         </form>
