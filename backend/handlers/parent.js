@@ -21,5 +21,11 @@ module.exports = {
     },
     changePassword: async (id, newPassword) => {
         return db.query('UPDATE parents SET password=$1 WHERE id=$2', [newPassword, id]);
+    },
+    updateParent: async (id, newParnet) => {
+        let { student_id, no_of_childs, occupation, family_type, salary, name, gender, phone } = newParnet;
+        no_of_childs = no_of_childs || 0;
+        salary = salary || 0;
+        return db.query('UPDATE parents SET student_id=$1, no_of_childs=$2, occupation=$3, family_type=$4, salary=$5, name=$6, gender=$7, phone=$8 WHERE id=$9', [parseInt(student_id), parseInt(no_of_childs), occupation, family_type, parseInt(salary), name, gender, phone, id]);
     }
 };

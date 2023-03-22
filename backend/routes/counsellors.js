@@ -89,11 +89,14 @@ router.post('/', verifyAdmin, async (req, res) => {
 
 
 // UPDATE counsellor
-router.patch('/:id', verifyAdmin, (req, res) => {
+router.patch('/:id', verifyAdmin, async (req, res) => {
     const { id } = req.params;
 
     try {
-        console.log(req.body);
+
+        const newCounsellor = req.body;
+        await counsellorHandler.updateCounsellor(id, newCounsellor);
+        res.status(200).send({ message: 'Updated Counsellor!' });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

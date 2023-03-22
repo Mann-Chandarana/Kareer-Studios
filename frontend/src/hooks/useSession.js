@@ -15,17 +15,18 @@ function useSession() {
             setStatus('unauthorized');
         }
     };
-    const renewUser = async ()=>{
+    const renewUser = async () => {
         try {
-            const {data} = await client.get('/auth/renew');
-            setUser(data.user)
-            localStorage.setItem('token',data.token)
+            const { data } = await client.get('/auth/renew');
+            setUser(data.user);
+            console.log(data.user);
+            localStorage.setItem('token', data.token);
         } catch (error) {
-            setUser(null)
-            setStatus('unauthorized')
+            setUser(null);
+            setStatus('unauthorized');
         }
-    }
-    
+    };
+
 
     useEffect(() => {
         verifyUser();

@@ -40,7 +40,7 @@ function Navbar({ setToShow }) {
                                 </li>
 
                                 <li>
-                                    <Link className="dropdown-item d-flex align-items-center" to="/">
+                                    <Link className="dropdown-item d-flex align-items-center" to="/profile">
                                         <i className="bi bi-person"></i>
                                         <span>My Profile</span>
                                     </Link>

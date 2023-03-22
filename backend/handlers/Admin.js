@@ -9,5 +9,9 @@ module.exports = {
     },
     changePassword: async (id, newPassword) => {
         return db.query('UPDATE admins SET password=$1 WHERE id=$2', [newPassword, id]);
+    },
+    updateAdmin: async (id, newAdmin) => {
+        const { name } = newAdmin;
+        return db.query('UPDATE admins SET name=$1 WHERE id=$2', [name, id]);
     }
 };

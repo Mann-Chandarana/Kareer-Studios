@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { verifyAdmin, verifyStudents } = require('../middleware/verify');
+const { verifyAdmin, verifyStudents, verifyParents } = require('../middleware/verify');
 const parentHandler = require('../handlers/parent');
 const studentHandler = require('../handlers/student');
 const encryptPassword = require('../utils/encryptPass');
@@ -89,8 +89,16 @@ router.post('/', verifyStudents, async (req, res) => {
 
 
 // UPDATE parent
-router.patch('/:id', (req, res) => {
+router.patch('/:id', verifyAdmin, async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        const newParent = req.body;
+        await parentHandler.updateParent(id, newParent);
+        res.status(200).send({ message: 'Updated Parent!' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 

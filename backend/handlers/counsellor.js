@@ -17,6 +17,10 @@ module.exports = {
         return db.query('DELETE FROM counsellors WHERE id=$1', [id]);
     },
     changePassword: async (id, newPassword) => {
-        return db.query('UPDATE counsellor SET password=$1 WHERE id=$2', [newPassword, id]);
+        return db.query('UPDATE counsellors SET password=$1 WHERE id=$2', [newPassword, id]);
+    },
+    updateCounsellor: async (id, newCounsellor) => {
+        const { name, salary, address, phone, experience, qualifiction, bank_name, bank_ifsc, bank_micr, bank_ac } = newCounsellor;
+        return db.query('UPDATE counsellors SET name=$1, salary=$2, address=$3, phone=$4, experience=$5, qualifiction=$6, bank_name=$7, bank_ifsc=$8, bank_micr=$9, bank_ac=$10 WHERE id=$11', [name, parseInt(salary), address, phone, parseInt(experience), qualifiction, bank_name, bank_ifsc, bank_micr, bank_ac, id]);
     }
 };

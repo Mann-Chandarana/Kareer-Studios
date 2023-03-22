@@ -62,19 +62,6 @@ function EditCounsellor({ callback, counsellorData }) {
                         </div>
 
                         <div className="floating-label-group ">
-                            <label className="floating-label">Email</label>
-                            <input
-                                onChange={handleChange}
-                                value={formState.email}
-                                type="email"
-                                name="email"
-                                className="form-control"
-                                autoComplete="off"
-                                required
-                            />
-                        </div>
-
-                        <div className="floating-label-group ">
                             <label className="floating-label">Phone</label>
                             <input
                                 onChange={handleChange}

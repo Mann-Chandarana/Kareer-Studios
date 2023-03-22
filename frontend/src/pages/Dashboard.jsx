@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { ChangePassword } from '../components/ChangePassword';
+import EditProfile from '../components/EditProfile';
 import SessionContext from '../contexts/SessionContext';
 
 function capitalizeFirstLetter(string) {
@@ -104,79 +105,7 @@ function Dashboard() {
                                         </div>
                                     </div>
 
-                                    <div className="tab-pane fade profile-edit pt-3" id="profile-edit">
-                                        <form>
-                                            <div className="row mb-3">
-                                                <label htmlFor="fullName" className="col-md-4 col-lg-3 col-form-label">
-                                                    Full Name
-                                                </label>
-                                                <div className="col-md-8 col-lg-9">
-                                                    <input
-                                                        name="fullName"
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="fullName"
-                                                        value={user.name}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="row mb-3">
-                                                <label htmlFor="about" className="col-md-4 col-lg-3 col-form-label">
-                                                    About
-                                                </label>
-                                                <div className="col-md-8 col-lg-9">
-                                                    <textarea
-                                                        name="about"
-                                                        className="form-control"
-                                                        id="about"
-                                                        style={{ height: '100px' }}
-                                                    >
-                                                        Sunt est soluta temporibus accusantium neque nam maiores cumque
-                                                        temporibus. Tempora libero non est unde veniam est qui dolor. Ut
-                                                        sunt iure rerum quae quisquam autem eveniet perspiciatis odit.
-                                                        Fuga sequi sed ea saepe at unde.
-                                                    </textarea>
-                                                </div>
-                                            </div>
-
-                                            <div className="row mb-3">
-                                                <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">
-                                                    Phone
-                                                </label>
-                                                <div className="col-md-8 col-lg-9">
-                                                    <input
-                                                        name="phone"
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="Phone"
-                                                        value={user.phone}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="row mb-3">
-                                                <label htmlFor="Email" className="col-md-4 col-lg-3 col-form-label">
-                                                    Email
-                                                </label>
-                                                <div className="col-md-8 col-lg-9">
-                                                    <input
-                                                        name="email"
-                                                        type="email"
-                                                        className="form-control"
-                                                        id="Email"
-                                                        value={user.email}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="text-center">
-                                                <button type="submit" className="btn btn-primary">
-                                                    Save Changes
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    <EditProfile />
 
                                     <div className="tab-pane fade pt-3" id="profile-change-password">
                                         <ChangePassword />

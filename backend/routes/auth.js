@@ -42,7 +42,7 @@ async function getUserData(email) {
 
 
 // Route-1 /api/auth/createUser --- for signup
-router.post('/createUser', verifyAdmin, async (req, res) => {
+router.post('/createUser', async (req, res) => {
     let { email, password, role } = req.body;
     if (!email || !password || !role) {
         return res.status(400).send({ error: "Invalid request body." });
@@ -228,6 +228,34 @@ router.patch('/changepassword', (req, res) => {
 
         }
     });
+});
+
+router.patch('/editprofile', async (req, res) => {
+    try {
+        const token = req.headers.authorization;
+        const newProfile = req.body;
+
+        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+            let role = decoded.role.toLowerCase();
+            if (err) {
+                return res.status(401).send({ error: err.message });
+            }
+            const id = decoded.id;
+
+            if (role === 'admin') {
+                await adminHandler.updateAdmin(id, newProfile);
+            } else if (role === 'counsellor') {
+                await counsellorHandler.updateCounsellor(id, newProfile);
+            } else if (role === 'student') {
+                await studentHandler.updateStudent(id, newProfile);
+            } else if (role === 'parent') {
+                await parentHandler.updateParent(id, newProfile);
+            }
+            res.status(202).json({ message: 'Profile Updated!' });
+        });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
 });
 
 module.exports = router;
