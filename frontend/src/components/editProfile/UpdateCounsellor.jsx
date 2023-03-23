@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import client from '../../api';
 import SessionContext from '../../contexts/SessionContext';
 import SmallSpinner from '../SmallSpinner';
@@ -7,6 +7,7 @@ const UpdateCounsellor = () => {
     const { user, renewUser } = useContext(SessionContext);
     const [loading, setLoading] = useState(false);
     const [formState, setFormState] = useState(user);
+    const formRef = useRef();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -16,8 +17,13 @@ const UpdateCounsellor = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        formRef.current.classList.add('was-validated');
+        if (!formRef.current.checkValidity()) {
+            return;
+        }
+
+        setLoading(true);
         try {
-            setLoading(true);
             await client.patch('/auth/editprofile', formState);
             await renewUser();
         } catch (error) {
@@ -27,7 +33,7 @@ const UpdateCounsellor = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef} noValidate>
             <div className="row mb-3">
                 <label htmlFor="name" className="col-md-4 col-lg-3 col-form-label">
                     Full Name
@@ -37,10 +43,13 @@ const UpdateCounsellor = () => {
                         onChange={handleChange}
                         name="name"
                         type="text"
+                        pattern="^[a-z A-Z]*$"
                         className="form-control"
                         id="name"
                         value={formState.name}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid username.</div>
                 </div>
             </div>
 
@@ -56,7 +65,9 @@ const UpdateCounsellor = () => {
                         className="form-control"
                         id="address"
                         style={{ height: '100px' }}
+                        required
                     ></textarea>
+                    <div class="invalid-feedback">Please enter a valid address.</div>
                 </div>
             </div>
 
@@ -69,10 +80,13 @@ const UpdateCounsellor = () => {
                         onChange={handleChange}
                         name="phone"
                         type="tel"
+                        pattern="[0-9]{10}"
                         className="form-control"
                         id="phone"
                         value={formState.phone}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid phone number.</div>
                 </div>
             </div>
 
@@ -88,7 +102,9 @@ const UpdateCounsellor = () => {
                         className="form-control"
                         id="qualifiction"
                         value={formState.qualifiction}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid qualification.</div>
                 </div>
             </div>
 
@@ -106,7 +122,9 @@ const UpdateCounsellor = () => {
                         className="form-control"
                         id="bank_name"
                         value={formState.bank_name}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid bank name.</div>
                 </div>
             </div>
 
@@ -122,7 +140,9 @@ const UpdateCounsellor = () => {
                         className="form-control"
                         id="bank_ifsc"
                         value={formState.bank_ifsc}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid bank ifsc.</div>
                 </div>
             </div>
 
@@ -135,10 +155,15 @@ const UpdateCounsellor = () => {
                         onChange={handleChange}
                         name="bank_ac"
                         type="text"
+                        minLength={10}
+                        maxLengt={20}
+                        pattern="^[0-9]*$"
                         className="form-control"
                         id="bank_ac"
                         value={formState.bank_ac}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid account number.</div>
                 </div>
             </div>
 
@@ -154,7 +179,9 @@ const UpdateCounsellor = () => {
                         className="form-control"
                         id="bank_micr"
                         value={formState.bank_micr}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid account micr.</div>
                 </div>
             </div>
 

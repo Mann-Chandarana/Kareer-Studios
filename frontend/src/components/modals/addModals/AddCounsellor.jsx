@@ -12,11 +12,17 @@ function AddCounsellor({ callback }) {
         salary: 0,
     });
     const [loading, setLoading] = useState(false);
+    const formRef = useRef();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
 
+        formRef.current.classList.add('was-validated');
+        if (!formRef.current.checkValidity()) {
+            return;
+        }
+
+        setLoading(true);
         try {
             const res = await client.post('/counsellors', formState);
             console.log(res);
@@ -35,7 +41,7 @@ function AddCounsellor({ callback }) {
     };
 
     return (
-        <form className="modal-content" onSubmit={handleSubmit}>
+        <form className="modal-content" onSubmit={handleSubmit} ref={formRef} noValidate>
             <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
                     <p className="h3">Add Counsellor</p>
@@ -58,12 +64,14 @@ function AddCounsellor({ callback }) {
                                 onChange={handleChange}
                                 value={formState.name}
                                 type="text"
+                                pattern="^[a-z A-Z]*$"
                                 name="name"
                                 className="form-control"
                                 autoComplete="off"
                                 autoFocus
                                 required
                             />
+                            <div class="invalid-feedback">Please enter a valid username.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -77,6 +85,7 @@ function AddCounsellor({ callback }) {
                                 autoComplete="off"
                                 required
                             />
+                            <div class="invalid-feedback">Please enter a valid email.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -85,11 +94,13 @@ function AddCounsellor({ callback }) {
                                 onChange={handleChange}
                                 value={formState.phone}
                                 type="text"
+                                pattern="[0-9]{10}"
                                 name="phone"
                                 className="form-control"
                                 autoComplete="off"
                                 required
                             />
+                            <div class="invalid-feedback">Please enter a valid phone.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -98,11 +109,13 @@ function AddCounsellor({ callback }) {
                                 onChange={handleChange}
                                 value={formState.salary}
                                 type="text"
+                                pattern="^[0-9]*$"
                                 name="salary"
                                 className="form-control"
                                 autoComplete="off"
                                 required
                             />
+                            <div class="invalid-feedback">Please enter a valid salary.</div>
                         </div>
                     </div>
                 </div>

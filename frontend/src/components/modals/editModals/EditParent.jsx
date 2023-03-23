@@ -8,8 +8,16 @@ function EditParent({ callback, parentData }) {
     const [formState, setFormState] = useState(parentData);
     const [loading, setLoading] = useState(false);
 
+    const formRef = useRef();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        formRef.current.classList.add('was-validated');
+        if (!formRef.current.checkValidity()) {
+            return;
+        }
+
         setLoading(true);
 
         try {
@@ -30,7 +38,7 @@ function EditParent({ callback, parentData }) {
     };
 
     return (
-        <form className="modal-content" onSubmit={handleSubmit}>
+        <form className="modal-content" onSubmit={handleSubmit} ref={formRef} noValidate>
             <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">
                     <p className="h3">Edit Parent</p>
@@ -53,12 +61,14 @@ function EditParent({ callback, parentData }) {
                                 onChange={handleChange}
                                 value={formState.name}
                                 type="text"
+                                pattern="^[a-z A-Z]*$"
                                 name="name"
                                 className="form-control"
                                 autoComplete="off"
                                 autoFocus
                                 required
                             />
+                            <div class="invalid-feedback">Please enter a valid username.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -67,11 +77,13 @@ function EditParent({ callback, parentData }) {
                                 onChange={handleChange}
                                 value={formState.student_id}
                                 type="text"
+                                pattern="^[0-9]*$"
                                 name="student_id"
                                 className="form-control"
                                 autoComplete="off"
                                 required
                             />
+                            <div class="invalid-feedback">Please enter a valid student id.</div>
                         </div>
                     </div>
                 </div>

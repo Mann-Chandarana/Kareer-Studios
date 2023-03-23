@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import client from '../../api';
 import SessionContext from '../../contexts/SessionContext';
 import SmallSpinner from '../SmallSpinner';
@@ -7,6 +7,7 @@ const UpdateParent = () => {
     const { user, renewUser } = useContext(SessionContext);
     const [loading, setLoading] = useState(false);
     const [formState, setFormState] = useState(user);
+    const formRef = useRef();
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -15,19 +16,24 @@ const UpdateParent = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        formRef.current.classList.add('was-validated');
+        if (!formRef.current.checkValidity()) {
+            return;
+        }
 
+        setLoading(true);
         try {
-            setLoading(true);
             await client.patch('/auth/editprofile', formState);
             await renewUser();
         } catch (error) {
             console.log(error);
         }
         setLoading(false);
+        formRef.current.classList.remove('was-validated');
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} ref={formRef} noValidate>
             <div className="row mb-3">
                 <label htmlFor="name" className="col-md-4 col-lg-3 col-form-label">
                     Full Name
@@ -37,10 +43,13 @@ const UpdateParent = () => {
                         onChange={handleChange}
                         name="name"
                         type="text"
+                        pattern="^[a-z A-Z]*$"
                         className="form-control"
                         id="name"
                         value={formState.name}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid username.</div>
                 </div>
             </div>
 
@@ -53,10 +62,13 @@ const UpdateParent = () => {
                         onChange={handleChange}
                         name="phone"
                         type="tel"
+                        pattern="[0-9]{10}"
                         className="form-control"
                         id="phone"
                         value={formState.phone}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid phone number.</div>
                 </div>
             </div>
 
@@ -72,7 +84,9 @@ const UpdateParent = () => {
                         className="form-control"
                         id="occupation"
                         value={formState.occupation}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid occupation.</div>
                 </div>
             </div>
 
@@ -85,10 +99,13 @@ const UpdateParent = () => {
                         onChange={handleChange}
                         name="salary"
                         type="text"
+                        pattern="^[0-9]*$"
                         className="form-control"
                         id="salary"
                         value={formState.salary}
+                        required
                     />
+                    <div class="invalid-feedback">Please enter a valid salary.</div>
                 </div>
             </div>
 

@@ -1,17 +1,13 @@
 import React, { useContext } from 'react';
 import { ChangePassword } from '../components/ChangePassword';
 import EditProfile from '../components/EditProfile';
+import ProfileOverview from '../components/ProfileOverview';
 import SessionContext from '../contexts/SessionContext';
-
-function capitalizeFirstLetter(string) {
-    if (!string) {
-        return '';
-    }
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+import useCaptialize from '../hooks/useCaptialize';
 
 function Dashboard() {
     const { user } = useContext(SessionContext);
+    const { capitalizeFirstLetter } = useCaptialize();
     return (
         <main id="main" className="main">
             <div className="pagetitle">
@@ -74,36 +70,7 @@ function Dashboard() {
                                     </li>
                                 </ul>
                                 <div className="tab-content pt-2">
-                                    <div className="tab-pane fade show active profile-overview" id="profile-overview">
-                                        <h5 className="card-title">About</h5>
-                                        <p className="small fst-italic">
-                                            Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus.
-                                            Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae
-                                            quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
-                                        </p>
-
-                                        <h5 className="card-title">Profile Details</h5>
-
-                                        <div className="row">
-                                            <div className="col-lg-3 col-md-4 label ">Full Name</div>
-                                            <div className="col-lg-9 col-md-8">{user.name}</div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col-lg-3 col-md-4 label">Role</div>
-                                            <div className="col-lg-9 col-md-8">{capitalizeFirstLetter(user.role)}</div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col-lg-3 col-md-4 label">Phone</div>
-                                            <div className="col-lg-9 col-md-8">{user.phone}</div>
-                                        </div>
-
-                                        <div className="row">
-                                            <div className="col-lg-3 col-md-4 label">Email</div>
-                                            <div className="col-lg-9 col-md-8">{user.email}</div>
-                                        </div>
-                                    </div>
+                                    <ProfileOverview />
 
                                     <EditProfile />
 
