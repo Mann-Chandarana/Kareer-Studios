@@ -46,10 +46,10 @@ const UpdateStudent = () => {
                         pattern="^[a-z A-Z]*$"
                         className="form-control"
                         id="name"
-                        value={formState.name}
+                        value={formState.name || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid username.</div>
+                    <div className="invalid-feedback">Please enter a valid username.</div>
                 </div>
             </div>
 
@@ -60,14 +60,14 @@ const UpdateStudent = () => {
                 <div className="col-md-8 col-lg-9">
                     <textarea
                         onChange={handleChange}
-                        value={formState.address}
+                        value={formState.address || ''}
                         name="address"
                         className="form-control"
                         id="address"
                         style={{ height: '100px' }}
                         required
                     ></textarea>
-                    <div class="invalid-feedback">Please enter a valid address.</div>
+                    <div className="invalid-feedback">Please enter a valid address.</div>
                 </div>
             </div>
 
@@ -78,7 +78,7 @@ const UpdateStudent = () => {
                 <div className="col-md-8 col-lg-9">
                     <input
                         onChange={handleChange}
-                        value={formState.city}
+                        value={formState.city || ''}
                         type="text"
                         pattern="^[a-z A-Z]*$"
                         name="city"
@@ -86,7 +86,7 @@ const UpdateStudent = () => {
                         id="city"
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid city.</div>
+                    <div className="invalid-feedback">Please enter a valid city.</div>
                 </div>
             </div>
 
@@ -102,10 +102,10 @@ const UpdateStudent = () => {
                         pattern="[0-9]{10}"
                         className="form-control"
                         id="phone"
-                        value={formState.phone}
+                        value={formState.phone || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid phone.</div>
+                    <div className="invalid-feedback">Please enter a valid phone.</div>
                 </div>
             </div>
 
@@ -121,10 +121,10 @@ const UpdateStudent = () => {
                         pattern="[0-9]{10}"
                         className="form-control"
                         id="whatsapp"
-                        value={formState.whatsapp}
+                        value={formState.whatsapp || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid whatsapp.</div>
+                    <div className="invalid-feedback">Please enter a valid whatsapp.</div>
                 </div>
             </div>
 
@@ -140,10 +140,10 @@ const UpdateStudent = () => {
                         pattern="[0-9]{6}"
                         className="form-control"
                         id="pincode"
-                        value={formState.pincode}
+                        value={formState.pincode || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid pincode.</div>
+                    <div className="invalid-feedback">Please enter a valid pincode.</div>
                 </div>
             </div>
 

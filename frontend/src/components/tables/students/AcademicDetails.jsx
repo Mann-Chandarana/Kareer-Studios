@@ -12,7 +12,7 @@ export const AcademicDetails = () => {
                 <form className="d-flex flex-column gap-2" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="board">Board:</label>
-                        <select id="board" class="form-select">
+                        <select id="board" className="form-select">
                             <option value="SSC" defaultChecked>
                                 SSC
                             </option>
@@ -21,11 +21,11 @@ export const AcademicDetails = () => {
                             <option value="ICSE">ICSE</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                         <label htmlFor="std">Standard:</label>
                         <input type="number" className="form-control" id="std" placeholder="Enter your std" />
                     </div>
-                    <div class="form-group">
+                    <div className="form-group">
                         <label htmlFor="school-college">School/College:</label>
                         <input
                             type="text"

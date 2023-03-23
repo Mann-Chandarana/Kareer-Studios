@@ -65,7 +65,7 @@ export const ChangePassword = () => {
                             onChange={handleChange}
                             required
                         />
-                        <div class="invalid-feedback">Please enter a old password.</div>
+                        <div className="invalid-feedback">Please enter a old password.</div>
                     </div>
                 </div>
 
@@ -84,7 +84,7 @@ export const ChangePassword = () => {
                             onChange={handleChange}
                             required
                         />
-                        <div class="invalid-feedback">Please enter a valid new password.</div>
+                        <div className="invalid-feedback">Please enter a valid new password.</div>
                     </div>
                 </div>
 
@@ -103,7 +103,7 @@ export const ChangePassword = () => {
                             onChange={handleChange}
                             required
                         />
-                        <div class="invalid-feedback">Please enter a valid confirm new password.</div>
+                        <div className="invalid-feedback">Please enter a valid confirm new password.</div>
                     </div>
                 </div>
 

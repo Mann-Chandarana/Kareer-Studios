@@ -10,7 +10,7 @@ function AddStudent({ callback }) {
         email: '',
         phone: '',
         paid: false,
-        counsellor_id: null,
+        counsellor_id: '',
     });
     const [loading, setLoading] = useState(false);
     const formRef = useRef();
@@ -77,7 +77,7 @@ function AddStudent({ callback }) {
                                 autoFocus
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid username.</div>
+                            <div className="invalid-feedback">Please enter a valid username.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -91,7 +91,7 @@ function AddStudent({ callback }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid email.</div>
+                            <div className="invalid-feedback">Please enter a valid email.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -106,7 +106,7 @@ function AddStudent({ callback }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid counsellor id.</div>
+                            <div className="invalid-feedback">Please enter a valid counsellor id.</div>
                         </div>
                         <div className="floating-label-group ">
                             <label className="floating-label">Phone</label>
@@ -120,7 +120,7 @@ function AddStudent({ callback }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid phone.</div>
+                            <div className="invalid-feedback">Please enter a valid phone.</div>
                         </div>
                         <div className="floating-label-group my-2">
                             <label className="form-check-label">Paid Fees: </label>

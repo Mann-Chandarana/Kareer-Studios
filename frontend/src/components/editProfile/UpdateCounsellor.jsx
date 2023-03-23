@@ -46,10 +46,10 @@ const UpdateCounsellor = () => {
                         pattern="^[a-z A-Z]*$"
                         className="form-control"
                         id="name"
-                        value={formState.name}
+                        value={formState.name || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid username.</div>
+                    <div className="invalid-feedback">Please enter a valid username.</div>
                 </div>
             </div>
 
@@ -60,14 +60,14 @@ const UpdateCounsellor = () => {
                 <div className="col-md-8 col-lg-9">
                     <textarea
                         onChange={handleChange}
-                        value={formState.address}
+                        value={formState.address || ''}
                         name="address"
                         className="form-control"
                         id="address"
                         style={{ height: '100px' }}
                         required
                     ></textarea>
-                    <div class="invalid-feedback">Please enter a valid address.</div>
+                    <div className="invalid-feedback">Please enter a valid address.</div>
                 </div>
             </div>
 
@@ -83,10 +83,10 @@ const UpdateCounsellor = () => {
                         pattern="[0-9]{10}"
                         className="form-control"
                         id="phone"
-                        value={formState.phone}
+                        value={formState.phone || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid phone number.</div>
+                    <div className="invalid-feedback">Please enter a valid phone number.</div>
                 </div>
             </div>
 
@@ -101,10 +101,10 @@ const UpdateCounsellor = () => {
                         type="text"
                         className="form-control"
                         id="qualifiction"
-                        value={formState.qualifiction}
+                        value={formState.qualifiction || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid qualification.</div>
+                    <div className="invalid-feedback">Please enter a valid qualification.</div>
                 </div>
             </div>
 
@@ -121,10 +121,10 @@ const UpdateCounsellor = () => {
                         type="text"
                         className="form-control"
                         id="bank_name"
-                        value={formState.bank_name}
+                        value={formState.bank_name || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid bank name.</div>
+                    <div className="invalid-feedback">Please enter a valid bank name.</div>
                 </div>
             </div>
 
@@ -139,10 +139,10 @@ const UpdateCounsellor = () => {
                         type="text"
                         className="form-control"
                         id="bank_ifsc"
-                        value={formState.bank_ifsc}
+                        value={formState.bank_ifsc || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid bank ifsc.</div>
+                    <div className="invalid-feedback">Please enter a valid bank ifsc.</div>
                 </div>
             </div>
 
@@ -156,14 +156,14 @@ const UpdateCounsellor = () => {
                         name="bank_ac"
                         type="text"
                         minLength={10}
-                        maxLengt={20}
+                        maxLength={20}
                         pattern="^[0-9]*$"
                         className="form-control"
                         id="bank_ac"
-                        value={formState.bank_ac}
+                        value={formState.bank_ac || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid account number.</div>
+                    <div className="invalid-feedback">Please enter a valid account number.</div>
                 </div>
             </div>
 
@@ -178,10 +178,10 @@ const UpdateCounsellor = () => {
                         type="text"
                         className="form-control"
                         id="bank_micr"
-                        value={formState.bank_micr}
+                        value={formState.bank_micr || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid account micr.</div>
+                    <div className="invalid-feedback">Please enter a valid account micr.</div>
                 </div>
             </div>
 

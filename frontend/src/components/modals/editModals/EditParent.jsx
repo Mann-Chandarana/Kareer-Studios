@@ -68,7 +68,7 @@ function EditParent({ callback, parentData }) {
                                 autoFocus
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid username.</div>
+                            <div className="invalid-feedback">Please enter a valid username.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -83,7 +83,7 @@ function EditParent({ callback, parentData }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid student id.</div>
+                            <div className="invalid-feedback">Please enter a valid student id.</div>
                         </div>
                     </div>
                 </div>

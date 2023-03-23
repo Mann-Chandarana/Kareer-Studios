@@ -25,10 +25,10 @@ function Dashboard() {
                     <div className="col-xl-4">
                         <div className="card">
                             <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                                {user.role === 'admin' && <i class="fa-solid fa-user-gear fa-5x mb-4"></i>}
-                                {user.role === 'counsellor' && <i class="fa-regular fa-user-tie fa-5x mb-4"></i>}
-                                {user.role === 'student' && <i class="fa-regular fa-user-graduate fa-5x mb-4"></i>}
-                                {user.role === 'parent' && <i class="fa-solid fa-users fa-5x mb-4"></i>}
+                                {user.role === 'admin' && <i className="fa-solid fa-user-gear fa-5x mb-4"></i>}
+                                {user.role === 'counsellor' && <i className="fa-regular fa-user-tie fa-5x mb-4"></i>}
+                                {user.role === 'student' && <i className="fa-regular fa-user-graduate fa-5x mb-4"></i>}
+                                {user.role === 'parent' && <i className="fa-solid fa-users fa-5x mb-4"></i>}
                                 <h2>{user.name}</h2>
                                 <h3>{capitalizeFirstLetter(user.role)} of Karrer Studios</h3>
                             </div>

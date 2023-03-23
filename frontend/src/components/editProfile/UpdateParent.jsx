@@ -46,10 +46,10 @@ const UpdateParent = () => {
                         pattern="^[a-z A-Z]*$"
                         className="form-control"
                         id="name"
-                        value={formState.name}
+                        value={formState.name || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid username.</div>
+                    <div className="invalid-feedback">Please enter a valid username.</div>
                 </div>
             </div>
 
@@ -65,10 +65,10 @@ const UpdateParent = () => {
                         pattern="[0-9]{10}"
                         className="form-control"
                         id="phone"
-                        value={formState.phone}
+                        value={formState.phone || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid phone number.</div>
+                    <div className="invalid-feedback">Please enter a valid phone number.</div>
                 </div>
             </div>
 
@@ -83,10 +83,10 @@ const UpdateParent = () => {
                         type="text"
                         className="form-control"
                         id="occupation"
-                        value={formState.occupation}
+                        value={formState.occupation || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid occupation.</div>
+                    <div className="invalid-feedback">Please enter a valid occupation.</div>
                 </div>
             </div>
 
@@ -102,10 +102,10 @@ const UpdateParent = () => {
                         pattern="^[0-9]*$"
                         className="form-control"
                         id="salary"
-                        value={formState.salary}
+                        value={formState.salary || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid salary.</div>
+                    <div className="invalid-feedback">Please enter a valid salary.</div>
                 </div>
             </div>
 

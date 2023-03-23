@@ -68,7 +68,7 @@ function EditCounsellor({ callback, counsellorData }) {
                                 autoFocus
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid username.</div>
+                            <div className="invalid-feedback">Please enter a valid username.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -83,7 +83,7 @@ function EditCounsellor({ callback, counsellorData }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid phone.</div>
+                            <div className="invalid-feedback">Please enter a valid phone.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -98,7 +98,7 @@ function EditCounsellor({ callback, counsellorData }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid salary.</div>
+                            <div className="invalid-feedback">Please enter a valid salary.</div>
                         </div>
                     </div>
                 </div>

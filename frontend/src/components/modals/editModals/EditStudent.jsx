@@ -72,7 +72,7 @@ function EditStudent({ callback, studentData }) {
                                 autoFocus
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid username.</div>
+                            <div className="invalid-feedback">Please enter a valid username.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -87,7 +87,7 @@ function EditStudent({ callback, studentData }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid counsellor id.</div>
+                            <div className="invalid-feedback">Please enter a valid counsellor id.</div>
                         </div>
                         <div className="floating-label-group ">
                             <label className="floating-label">Phone</label>
@@ -101,7 +101,7 @@ function EditStudent({ callback, studentData }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid phone.</div>
+                            <div className="invalid-feedback">Please enter a valid phone.</div>
                         </div>
                         <div className="floating-label-group my-2">
                             <label className="form-check-label">Paid Fees: </label>

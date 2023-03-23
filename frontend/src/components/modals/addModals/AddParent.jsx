@@ -8,7 +8,7 @@ function AddParent({ callback }) {
     const [formState, setFormState] = useState({
         name: '',
         email: '',
-        student_id: null,
+        student_id: '',
     });
     const [loading, setLoading] = useState(false);
     const formRef = useRef();
@@ -71,7 +71,7 @@ function AddParent({ callback }) {
                                 autoFocus
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid username.</div>
+                            <div className="invalid-feedback">Please enter a valid username.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -85,7 +85,7 @@ function AddParent({ callback }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid email.</div>
+                            <div className="invalid-feedback">Please enter a valid email.</div>
                         </div>
 
                         <div className="floating-label-group ">
@@ -100,7 +100,7 @@ function AddParent({ callback }) {
                                 autoComplete="off"
                                 required
                             />
-                            <div class="invalid-feedback">Please enter a valid student id.</div>
+                            <div className="invalid-feedback">Please enter a valid student id.</div>
                         </div>
                     </div>
                 </div>

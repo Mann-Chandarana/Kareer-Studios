@@ -44,13 +44,13 @@ export const FeeReceipt = () => {
                         <div className="card-body pb-0">
                             <h5 className="card-title">User Accounts</h5>
 
-                            <table className="table table-borderless">
+                            <table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         {loading || (
                                             <>
                                                 <th scope="col">No</th>
-                                                <th scope="col">Date</th>
+                                                <th scope="col">Date Issued</th>
                                                 <th scope="col">Amount</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Phone</th>

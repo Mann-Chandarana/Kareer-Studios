@@ -46,10 +46,10 @@ const UpdateAdmin = () => {
                         pattern="^[a-z A-Z]*$"
                         className="form-control"
                         id="name"
-                        value={formState.name}
+                        value={formState.name || ''}
                         required
                     />
-                    <div class="invalid-feedback">Please enter a valid username.</div>
+                    <div className="invalid-feedback">Please enter a valid username.</div>
                 </div>
             </div>
 
