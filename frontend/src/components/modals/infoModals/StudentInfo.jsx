@@ -105,14 +105,14 @@ function StudentInfo({ studentData }) {
                                     <hr />
                                     <div class="row">
                                         <div class="col">
-                                            <p class="mb-0">Fees Paid?</p>
+                                            <p class="mb-0">Registration Fees</p>
                                         </div>
                                         <div class="col">
                                             <p class="text-muted mb-0">
                                                 {studentData.paid ? (
-                                                    <i className="fa-solid fa-check"></i>
+                                                    <span class="badge rounded-pill text-bg-success">Paid</span>
                                                 ) : (
-                                                    <i className="fa-solid fa-xmark"></i>
+                                                    <span class="badge rounded-pill text-bg-danger">Pending</span>
                                                 )}
                                             </p>
                                         </div>

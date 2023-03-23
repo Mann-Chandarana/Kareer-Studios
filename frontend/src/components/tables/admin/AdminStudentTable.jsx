@@ -81,7 +81,7 @@ function AdminStudentTable() {
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Phone</th>
                                                     <th scope="col">Counsellor</th>
-                                                    <th scope="col">Paid fees</th>
+                                                    <th scope="col">Reg. fees</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Delete</th>
                                                     <th scope="col">Info</th>
@@ -103,9 +103,13 @@ function AdminStudentTable() {
                                                         <td className="fw-bold">{student.counsellor_name}</td>
                                                         <td>
                                                             {student.paid ? (
-                                                                <i className="fa-solid fa-check"></i>
+                                                                <span class="badge rounded-pill text-bg-success">
+                                                                    Paid
+                                                                </span>
                                                             ) : (
-                                                                <i className="fa-solid fa-xmark"></i>
+                                                                <span class="badge rounded-pill text-bg-danger">
+                                                                    Pending
+                                                                </span>
                                                             )}
                                                         </td>
 

@@ -55,9 +55,13 @@ const StudentProfile = () => {
                 </div>
             </div>
             <div className="row">
-                <div className="col-lg-3 col-md-4 label">Registration Fees Paid</div>
+                <div className="col-lg-3 col-md-4 label">Registration Fees</div>
                 <div className="col-lg-9 col-md-8">
-                    {user.paid ? <i className="fa-solid fa-check"></i> : <i className="fa-solid fa-xmark"></i>}
+                    {user.paid ? (
+                        <span class="badge rounded-pill text-bg-success">Paid</span>
+                    ) : (
+                        <span class="badge rounded-pill text-bg-danger">Pending</span>
+                    )}
                 </div>
             </div>
         </div>

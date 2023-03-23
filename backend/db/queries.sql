@@ -3,7 +3,8 @@ CREATE TABLE IF NOT EXISTS admins
     id SERIAL PRIMARY KEY,
     name TEXT,
     email TEXT UNIQUE,
-    password TEXT
+    password TEXT,
+    createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS counsellors
@@ -20,7 +21,8 @@ CREATE TABLE IF NOT EXISTS counsellors
     bank_micr TEXT,
     phone TEXT,
     experience INTEGER,
-    qualifiction TEXT
+    qualifiction TEXT,
+    createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS students 
@@ -38,6 +40,7 @@ CREATE TABLE IF NOT EXISTS students
     parent_added BOOLEAN NOT NULL DEFAULT FALSE,
     gender TEXT,
     paid BOOLEAN NOT NULL DEFAULT FALSE,
+    createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
     CONSTRAINT fk_counsellor_id
     FOREIGN KEY (counsellor_id)
@@ -58,6 +61,7 @@ CREATE TABLE IF NOT EXISTS parents
     name TEXT,
     gender TEXT,
     phone TEXT,
+    createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)

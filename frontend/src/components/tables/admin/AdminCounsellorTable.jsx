@@ -82,6 +82,7 @@ function AdminCounsellorTable() {
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Email</th>
                                                     <th scope="col">No of Studens</th>
+                                                    <th scope="col">Member since</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Delete</th>
                                                     <th scope="col">Info</th>
@@ -94,12 +95,24 @@ function AdminCounsellorTable() {
                                             <TableLoading />
                                         ) : (
                                             dummy.map((counsellor) => {
+                                                const createdAt = new Date(counsellor.createdat);
+                                                const today = new Date();
+
+                                                var Difference_In_Time = today.getTime() - createdAt.getTime();
+                                                var Difference_In_Days = Math.ceil(
+                                                    Difference_In_Time / (1000 * 3600 * 24)
+                                                );
+
                                                 return (
                                                     <tr key={counsellor.id}>
                                                         <th scope="row">{counsellor.id}</th>
                                                         <td>{counsellor.name}</td>
                                                         <td>{counsellor.email}</td>
                                                         <td className="fw-bold">{counsellor.number_of_students}</td>
+                                                        <td className="fw-bold">
+                                                            {Difference_In_Days}{' '}
+                                                            {Difference_In_Days > 1 ? 'days' : 'day'}
+                                                        </td>
                                                         <td>
                                                             <Modal id={counsellor.id}>
                                                                 <EditCounsellor
