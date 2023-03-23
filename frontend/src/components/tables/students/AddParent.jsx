@@ -110,7 +110,7 @@ function AddParent() {
                                     name="gender"
                                     value="male"
                                 />
-                                <label for="gender-male">Male</label>
+                                <label htmlFor="gender-male">Male</label>
                                 <input
                                     className="input_i"
                                     onClick={handleChange}
@@ -119,7 +119,7 @@ function AddParent() {
                                     name="gender"
                                     value="female"
                                 />
-                                <label for="gender-female">Female</label>
+                                <label htmlFor="gender-female">Female</label>
                             </div>
                         </div>
                     </div>

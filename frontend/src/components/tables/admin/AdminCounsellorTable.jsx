@@ -73,7 +73,7 @@ function AdminCounsellorTable() {
                                     </span>
                                 </h5>
 
-                                <table className="table table-borderless table-hover">
+                                <table className="table table-bordered table-hover">
                                     <thead>
                                         <tr>
                                             {loading || (
@@ -81,7 +81,7 @@ function AdminCounsellorTable() {
                                                     <th scope="col">ID</th>
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Email</th>
-                                                    <th scope="col">No of Studens</th>
+                                                    <th scope="col">No. of Students</th>
                                                     <th scope="col">Member since</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Delete</th>
@@ -114,13 +114,16 @@ function AdminCounsellorTable() {
                                                             {Difference_In_Days > 1 ? 'days' : 'day'}
                                                         </td>
                                                         <td>
-                                                            <Modal id={counsellor.id}>
+                                                            <Modal id={'edit_c_' + counsellor.id}>
                                                                 <EditCounsellor
                                                                     callback={getCounsellors}
                                                                     counsellorData={counsellor}
                                                                 />
                                                             </Modal>
-                                                            <ModalButton id={counsellor.id} className="icon">
+                                                            <ModalButton
+                                                                id={'edit_c_' + counsellor.id}
+                                                                className="icon"
+                                                            >
                                                                 <i className="fa-solid fa-pen-to-square"></i>
                                                             </ModalButton>
                                                         </td>
@@ -142,12 +145,12 @@ function AdminCounsellorTable() {
                                                             </button>
                                                         </td>
                                                         <td>
-                                                            <Modal id={'view_' + counsellor.id} large>
+                                                            <Modal id={'view_c_' + counsellor.id} large>
                                                                 <CounsellorInfo counsellorData={counsellor} />
                                                             </Modal>
                                                             <ModalButton
-                                                                id={'view_' + counsellor.id}
-                                                                className="btn btn-sm btn-warning"
+                                                                id={'view_c_' + counsellor.id}
+                                                                className="btn btn-sm btn-info text-white"
                                                             >
                                                                 View
                                                             </ModalButton>

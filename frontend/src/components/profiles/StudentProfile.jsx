@@ -58,9 +58,9 @@ const StudentProfile = () => {
                 <div className="col-lg-3 col-md-4 label">Registration Fees</div>
                 <div className="col-lg-9 col-md-8">
                     {user.paid ? (
-                        <span class="badge rounded-pill text-bg-success">Paid</span>
+                        <span className="badge rounded-pill text-bg-success">Paid</span>
                     ) : (
-                        <span class="badge rounded-pill text-bg-danger">Pending</span>
+                        <span className="badge rounded-pill text-bg-danger">Pending</span>
                     )}
                 </div>
             </div>

@@ -959,7 +959,7 @@ h6 {
 }
 
 .dashboard .top-selling .table thead th {
-    border: 0;
+    /* border: 0; */
 }
 
 .dashboard .top-selling .table tbody td {

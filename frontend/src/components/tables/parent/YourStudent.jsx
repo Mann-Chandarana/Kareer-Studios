@@ -47,7 +47,7 @@ function YourStudent() {
                         <div className="card-body pb-0">
                             <h5 className="card-title">User Accounts</h5>
 
-                            <table className="table table-borderless table-hover">
+                            <table className="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         {loading || (
@@ -76,12 +76,12 @@ function YourStudent() {
                                                     <td>{student.email}</td>
                                                     <td className="fw-bold">{user.phone}</td>
                                                     <td>
-                                                        <Modal id={'view_' + student.id} large>
+                                                        <Modal id={'view_s_' + student.id} large>
                                                             <StudentInfo studentData={student} />
                                                         </Modal>
                                                         <ModalButton
-                                                            id={'view_' + student.id}
-                                                            className="btn btn-sm btn-warning"
+                                                            id={'view_s_' + student.id}
+                                                            className="btn btn-sm btn-info text-white"
                                                         >
                                                             View
                                                         </ModalButton>

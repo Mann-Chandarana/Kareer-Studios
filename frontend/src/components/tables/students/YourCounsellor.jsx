@@ -47,7 +47,7 @@ function YourCounsellor() {
                         <div className="card-body pb-0">
                             <h5 className="card-title">User Accounts</h5>
 
-                            <table className="table table-borderless table-hover">
+                            <table className="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         {loading || (
@@ -73,15 +73,15 @@ function YourCounsellor() {
                                                     <td>{counsellor.email}</td>
                                                     <td>{counsellor.phone}</td>
                                                     <td>
-                                                        <Modal id={'view_' + counsellor.id} large>
+                                                        <Modal id={'view_c_' + counsellor.id} large>
                                                             <CounsellorInfo
                                                                 counsellorData={counsellor}
                                                                 role="student"
                                                             />
                                                         </Modal>
                                                         <ModalButton
-                                                            id={'view_' + counsellor.id}
-                                                            className="btn btn-sm btn-warning"
+                                                            id={'view_c_' + counsellor.id}
+                                                            className="btn btn-sm btn-info text-white"
                                                         >
                                                             View
                                                         </ModalButton>

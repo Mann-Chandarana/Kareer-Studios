@@ -47,7 +47,7 @@ function Yourparent() {
                         <div className="card-body pb-0">
                             <h5 className="card-title">User Accounts</h5>
 
-                            <table className="table table-borderless table-hover">
+                            <table className="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         {loading || (
@@ -75,12 +75,12 @@ function Yourparent() {
                                                     <td>{parent.gender === 'female' ? 'Mother' : 'Father'}</td>
                                                     <td>{parent.phone}</td>
                                                     <td>
-                                                        <Modal id={'view_' + parent.id} large>
+                                                        <Modal id={'view_p_' + parent.id} large>
                                                             <ParentInfo parentData={parent} />
                                                         </Modal>
                                                         <ModalButton
-                                                            id={'view_' + parent.id}
-                                                            className="btn btn-sm btn-warning"
+                                                            id={'view_p_' + parent.id}
+                                                            className="btn btn-sm btn-info text-white"
                                                         >
                                                             View
                                                         </ModalButton>
