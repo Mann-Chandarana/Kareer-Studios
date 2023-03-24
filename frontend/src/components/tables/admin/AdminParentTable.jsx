@@ -79,6 +79,7 @@ function AdminParentTable() {
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Parent of Student ID</th>
+                                                    <th scope="col">Member since</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Delete</th>
                                                     <th scope="col">Info</th>
@@ -96,7 +97,8 @@ function AdminParentTable() {
                                                         <th scope="row">{parent.id}</th>
                                                         <td>{parent.name}</td>
                                                         <td>{parent.email}</td>
-                                                        <td>{parent.student_id}</td>
+                                                        <td className="fw-bold">{parent.student_id}</td>
+                                                        <td>{new Date(parent.createdat).toLocaleDateString()}</td>
                                                         <td>
                                                             <Modal id={'edit_p_' + parent.id}>
                                                                 <EditParent parentData={parent} callback={getParents} />

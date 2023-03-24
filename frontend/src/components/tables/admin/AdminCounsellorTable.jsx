@@ -95,24 +95,13 @@ function AdminCounsellorTable() {
                                             <TableLoading />
                                         ) : (
                                             dummy.map((counsellor) => {
-                                                const createdAt = new Date(counsellor.createdat);
-                                                const today = new Date();
-
-                                                var Difference_In_Time = today.getTime() - createdAt.getTime();
-                                                var Difference_In_Days = Math.ceil(
-                                                    Difference_In_Time / (1000 * 3600 * 24)
-                                                );
-
                                                 return (
                                                     <tr key={counsellor.id}>
                                                         <th scope="row">{counsellor.id}</th>
                                                         <td>{counsellor.name}</td>
                                                         <td>{counsellor.email}</td>
                                                         <td className="fw-bold">{counsellor.number_of_students}</td>
-                                                        <td className="fw-bold">
-                                                            {Difference_In_Days}{' '}
-                                                            {Difference_In_Days > 1 ? 'days' : 'day'}
-                                                        </td>
+                                                        <td>{new Date(counsellor.createdat).toLocaleDateString()}</td>
                                                         <td>
                                                             <Modal id={'edit_c_' + counsellor.id}>
                                                                 <EditCounsellor

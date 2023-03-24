@@ -16,11 +16,13 @@ function CounsellorStudentTable() {
     const [link, setLink] = useState('');
 
     const fetchLink = async () => {
+        setLink('Generating...');
         try {
             const { data } = await client.get('link/generate');
             setLink(data.link);
         } catch (error) {
             console.log(error);
+            setLink('Error generating link...');
         }
     };
 
@@ -93,6 +95,7 @@ function CounsellorStudentTable() {
                                                     <th scope="col">Name</th>
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Counsellor</th>
+                                                    <th scope="col">Member since</th>
                                                     <th scope="col">Reg. fees</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Info</th>
@@ -112,6 +115,7 @@ function CounsellorStudentTable() {
                                                         <td>{student.name}</td>
                                                         <td>{student.email}</td>
                                                         <td className="fw-bold">{user.name}</td>
+                                                        <td>{new Date(student.createdat).toLocaleDateString()}</td>
                                                         <td>
                                                             {student.paid ? (
                                                                 <span className="badge rounded-pill text-bg-success">

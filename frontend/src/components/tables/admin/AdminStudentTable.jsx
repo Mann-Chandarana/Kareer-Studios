@@ -81,6 +81,7 @@ function AdminStudentTable() {
                                                     <th scope="col">Email</th>
                                                     <th scope="col">Phone</th>
                                                     <th scope="col">Counsellor</th>
+                                                    <th scope="col">Member since</th>
                                                     <th scope="col">Reg. fees</th>
                                                     <th scope="col">Edit</th>
                                                     <th scope="col">Delete</th>
@@ -101,6 +102,7 @@ function AdminStudentTable() {
                                                         <td>{student.email}</td>
                                                         <td>{student.phone}</td>
                                                         <td className="fw-bold">{student.counsellor_name}</td>
+                                                        <td>{new Date(student.createdat).toLocaleDateString()}</td>
                                                         <td>
                                                             {student.paid ? (
                                                                 <span className="badge rounded-pill text-bg-success">
@@ -112,7 +114,6 @@ function AdminStudentTable() {
                                                                 </span>
                                                             )}
                                                         </td>
-
                                                         <td>
                                                             <Modal id={'edit_s_' + student.id}>
                                                                 <EditStudent

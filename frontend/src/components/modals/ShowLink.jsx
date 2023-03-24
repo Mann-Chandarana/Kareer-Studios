@@ -5,7 +5,6 @@ function ShowLink({ link }) {
 
     const copyContent = async () => {
         try {
-            console.log('e');
             await navigator.clipboard.writeText(link);
             setText('Copied!');
             setTimeout(() => {
@@ -34,10 +33,8 @@ function ShowLink({ link }) {
                 </button>
             </div>
             <div className="modal-body">
-                <div className="container">
-                    <div className="mb-3">
-                        <textarea className="form-control" value={link || ''} id="myBox" rows="5" disabled></textarea>
-                    </div>
+                <div className="p-3">
+                    <textarea className="form-control" value={link || ''} id="myBox" rows="5" disabled></textarea>
                 </div>
             </div>
             <div className="modal-footer">

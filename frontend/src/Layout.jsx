@@ -16,6 +16,7 @@ import ParentSidebar from './components/sidebars/ParentSidebar';
 import AddParent from './components/tables/students/AddParent';
 import { FeeReceipt } from './components/tables/students/FeeReceipt';
 import { AcademicDetails } from './components/tables/students/AcademicDetails';
+import Register from './pages/Register';
 
 function Layout() {
     const { user } = useContext(SessionContext);
@@ -70,6 +71,10 @@ function Layout() {
                     </Routes>
                 </>
             )}
+
+            <Routes>
+                <Route path="/link/register/:id" element={<Register />} />
+            </Routes>
         </>
     );
 }
