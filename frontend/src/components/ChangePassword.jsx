@@ -3,6 +3,7 @@ import client from '../api';
 import Modal from './Modal';
 import ModalButton from './ModalButton';
 import PasswordChanged from './modals/PasswordChanged';
+import SmallSpinner from './SmallSpinner';
 
 export const ChangePassword = () => {
     const openButton = useRef();
@@ -12,6 +13,8 @@ export const ChangePassword = () => {
         newPassword: '',
         confirmNewPassword: '',
     });
+
+    const [loading, setLoading] = useState(false);
 
     const formRef = useRef();
 
@@ -29,18 +32,19 @@ export const ChangePassword = () => {
         if (!formRef.current.checkValidity()) {
             return;
         }
-
         const { oldPassword, newPassword, confirmNewPassword } = formState;
         if (newPassword !== confirmNewPassword) {
             return;
         }
 
+        setLoading(true);
         try {
             await client.patch('/auth/changepassword', { oldPassword, newPassword });
             openButton.current.click();
         } catch (err) {
             console.error(err);
         }
+        setLoading(false);
     };
 
     return (
@@ -103,13 +107,20 @@ export const ChangePassword = () => {
                             onChange={handleChange}
                             required
                         />
-                        <div className="invalid-feedback">Please enter a valid confirm new password.</div>
+                        <div className="invalid-feedback">do not match with new password.</div>
                     </div>
                 </div>
 
                 <div className="text-center">
-                    <button type="submit" className="btn btn-primary">
-                        Change Password
+                    <button type="submit" className="btn btn-primary" disabled={loading}>
+                        {loading ? (
+                            <>
+                                <span style={{ marginRight: '10px' }}>Changing...</span>
+                                <SmallSpinner color="white" />
+                            </>
+                        ) : (
+                            'Change Password'
+                        )}
                     </button>
                 </div>
             </form>
