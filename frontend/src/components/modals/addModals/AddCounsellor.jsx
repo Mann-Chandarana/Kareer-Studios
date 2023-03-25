@@ -9,7 +9,7 @@ function AddCounsellor({ callback }) {
         name: '',
         email: '',
         phone: '',
-        salary: 0,
+        salary: '',
     });
     const [loading, setLoading] = useState(false);
     const formRef = useRef();
@@ -46,12 +46,7 @@ function AddCounsellor({ callback }) {
                 <h5 className="modal-title" id="exampleModalLabel">
                     <p className="h3">Add Counsellor</p>
                 </h5>
-                <button
-                    type="button"
-                    className="close btn btn-sm btn-danger"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                >
+                <button type="button" className="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">X</span>
                 </button>
             </div>
@@ -109,7 +104,7 @@ function AddCounsellor({ callback }) {
                                 onChange={handleChange}
                                 value={formState.salary}
                                 type="text"
-                                pattern="^[0-9]*$"
+                                pattern="^[1-9]{1}[0-9]*$"
                                 name="salary"
                                 className="form-control"
                                 autoComplete="off"

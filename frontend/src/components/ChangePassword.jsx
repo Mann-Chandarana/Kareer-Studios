@@ -15,6 +15,7 @@ export const ChangePassword = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const formRef = useRef();
 
@@ -40,9 +41,13 @@ export const ChangePassword = () => {
         setLoading(true);
         try {
             await client.patch('/auth/changepassword', { oldPassword, newPassword });
+            setError('');
             openButton.current.click();
         } catch (err) {
             console.error(err);
+            const msg = err.response?.data?.error || err.message;
+            formRef.current.classList.remove('was-validated');
+            setError(msg);
         }
         setLoading(false);
     };
@@ -70,6 +75,9 @@ export const ChangePassword = () => {
                             required
                         />
                         <div className="invalid-feedback">Please enter a old password.</div>
+                        <p className="text-danger" style={{ fontSize: '14px' }}>
+                            {error}
+                        </p>
                     </div>
                 </div>
 
