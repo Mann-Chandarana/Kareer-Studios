@@ -26,6 +26,7 @@ const UpdateStudent = () => {
         try {
             await client.patch('/auth/editprofile', formState);
             await renewUser();
+            formRef.current.classList.remove('was-validated');
         } catch (error) {
             console.log(error);
         }

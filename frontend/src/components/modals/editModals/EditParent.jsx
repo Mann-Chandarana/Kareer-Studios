@@ -24,6 +24,7 @@ function EditParent({ callback, parentData }) {
             const res = await client.patch('/parents/' + parentData.id, formState);
             console.log(res);
             closeButton.current.click();
+            formRef.current.classList.remove('was-validated');
             if (callback) {
                 callback();
             }
@@ -43,12 +44,7 @@ function EditParent({ callback, parentData }) {
                 <h5 className="modal-title" id="exampleModalLabel">
                     <p className="h3">Edit Parent</p>
                 </h5>
-                <button
-                    type="button"
-                    className="close btn btn-sm btn-danger"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                >
+                <button type="button" className="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">X</span>
                 </button>
             </div>

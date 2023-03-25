@@ -27,6 +27,7 @@ function AddCounsellor({ callback }) {
             const res = await client.post('/counsellors', formState);
             console.log(res);
             closeButton.current.click();
+            formRef.current.classList.remove('was-validated');
             if (callback) {
                 callback();
             }

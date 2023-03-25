@@ -27,6 +27,7 @@ function AddParent({ callback }) {
             const res = await client.post('/parents', formState);
             console.log(res);
             closeButton.current.click();
+            formRef.current.classList.remove('was-validated');
             if (callback) {
                 callback();
             }
@@ -46,12 +47,7 @@ function AddParent({ callback }) {
                 <h5 className="modal-title" id="exampleModalLabel">
                     <p className="h3">Add Parent</p>
                 </h5>
-                <button
-                    type="button"
-                    className="close btn btn-sm btn-danger"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                >
+                <button type="button" className="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">X</span>
                 </button>
             </div>

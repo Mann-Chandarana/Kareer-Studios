@@ -24,6 +24,7 @@ function EditStudent({ callback, studentData }) {
             const res = await client.patch('/students/' + formState.id, formState);
             console.log(res);
             closeButton.current.click();
+            formRef.current.classList.remove('was-validated');
             if (callback) {
                 callback();
             }
@@ -47,12 +48,7 @@ function EditStudent({ callback, studentData }) {
                 <h5 className="modal-title" id="exampleModalLabel">
                     <p className="h3">Edit Student</p>
                 </h5>
-                <button
-                    type="button"
-                    className="close btn btn-sm btn-danger"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                >
+                <button type="button" className="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">X</span>
                 </button>
             </div>

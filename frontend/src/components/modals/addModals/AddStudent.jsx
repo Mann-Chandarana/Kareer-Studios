@@ -29,6 +29,7 @@ function AddStudent({ callback }) {
             const res = await client.post('/students', formState);
             console.log(res);
             closeButton.current.click();
+            formRef.current.classList.remove('was-validated');
             if (callback) {
                 callback();
             }
@@ -52,12 +53,7 @@ function AddStudent({ callback }) {
                 <h5 className="modal-title" id="exampleModalLabel">
                     <p className="h3">Add Student</p>
                 </h5>
-                <button
-                    type="button"
-                    className="close btn btn-sm btn-danger"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                >
+                <button type="button" className="close btn btn-sm btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">X</span>
                 </button>
             </div>
