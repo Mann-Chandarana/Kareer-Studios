@@ -1,69 +1,59 @@
-const shortid = require('shortid');
-const Razorpay = require('razorpay');
-const { validatePaymentVerification } = require('razorpay/dist/utils/razorpay-utils');
 const express = require('express');
-const crypto = require('crypto');
+const Instamojo = require('instamojo-nodejs');
 
 
-const router = express.Router();
 const { generateReceiptBuffer } = require('../utils/receipt');
 const receiptHandler = require('../handlers/receipt');
 const studentHandler = require('../handlers/student');
 const { sendEmail } = require('../services/nodemailer');
+const { json } = require('body-parser');
 
-const razorpay = new Razorpay({
-    key_id: process.env.razor_key,
-    key_secret: process.env.razor_secret
-});
+const router = express.Router();
 
+Instamojo.setKeys(process.env.instamojo_key, process.env.instamojo_secret);
+Instamojo.isSandboxMode(true);
 
-router.post('/verification', async (req, res) => {
-    const secret = process.env.razor_secret;
-    const { order_id, payment_id, signautre } = req.body;
-
+router.post('/verify', async (req, res) => {
     try {
-        const isValid = validatePaymentVerification({ order_id, payment_id }, signautre, secret);
-        if (isValid) {
-            // process it
-            const orderData = await razorpay.orders.fetchPayments(order_id);
-            let { amount, email, fee, tax } = orderData.items[0];
-            amount = (amount / 100);
-
-            const { rows, rowCount } = await studentHandler.getStudentByEmail(email);
-            if (rowCount <= 0) {
-                return res.status(400).send({ error: "Account dosen't exists" });
+        const { payment_id, payment_request_id, student_id } = req.body;
+        Instamojo.getPaymentDetails(payment_request_id, payment_id, async (err, response) => {
+            if (err) {
+                throw err;
             }
+            if (response.success && response.payment_request.status === 'Completed') {
+                try {
+                    const { buyer_email, buyer_phone, buyer_name, amount, fees } = response.payment_request.payment;
+                    const id = response.payment_request.payment.payment_id;
 
-            const { id: student_id, name, phone, paid } = rows[0];
+                    const buffer = await generateReceiptBuffer(id, amount, fees, buyer_name, buyer_email, buyer_phone);
 
-            const buffer = await generateReceiptBuffer({ name, email, phone, amount, order_id, fee, tax });
+                    await studentHandler.setValidStudent(buyer_email);
+                    await receiptHandler.addReceipt(id, student_id, Number(amount), buffer);
 
-            await studentHandler.setValidStudent(email);
-            await receiptHandler.addReceipt(order_id, student_id, Number(amount), buffer);
+                    const attachments = [
+                        {
+                            filename: 'receipt.pdf',
+                            content: buffer
+                        }
+                    ];
 
-            const attachments = [
-                {
-                    filename: 'receipt.pdf',
-                    content: buffer
+                    await sendEmail(buyer_email, 'Payment receipt', 'hello', attachments);
+                    res.status(202).send({ status: 'ok' });
+                } catch (err) {
+                    res.status(500).send({ error: err.message });
                 }
-            ];
-
-            await sendEmail(email, 'Payment receipt', 'hello', attachments);
-            res.status(202).send({ status: 'ok' });
-        } else {
-            // fail it
-            return res.status(400).send({ error: "request not legit" });
-        }
+            } else {
+                return res.status(400).send({ error: "request not legit" });
+            }
+        });
     } catch (err) {
         res.status(500).send({ error: err.message });
     }
 });
 
-router.post('/razorpay', async (req, res) => {
+router.post('/create', async (req, res) => {
     try {
-        const { email, amount } = req.body;
-        const payment_capture = 1;
-        const currency = 'INR';
+        const { email, phone, name, amount, redirect_url, purpose } = req.body;
 
         const { rows, rowCount } = await studentHandler.getStudentByEmail(email);
         if (rowCount <= 0) {
@@ -74,21 +64,27 @@ router.post('/razorpay', async (req, res) => {
             return res.status(400).send({ error: 'Fees already paid!' });
         }
 
-        const options = {
-            amount: amount * 100,
-            currency,
-            receipt: shortid.generate(),
-            payment_capture
-        };
-        const response = await razorpay.orders.create(options);
-        // console.log(response);
-        res.json({
-            id: response.id,
-            currency: response.currency,
-            amount: response.amount
+        const data = new Instamojo.PaymentData();
+        data.purpose = purpose;
+        data.amount = amount;
+        data.email = email;
+        data.phone = phone;
+        data.buyer_name = name;
+        data.allow_repeated_payments = 'False';
+        data.setRedirectUrl(redirect_url);
+        Instamojo.createPayment(data, (err, response) => {
+            if (err) {
+                throw err;
+            }
+            response = JSON.parse(response);
+            if (!response.success) {
+                return res.status(500).send({ error: response.message });
+            }
+            res.status(202).json({ url: response.payment_request.longurl });
         });
-    } catch (error) {
-        console.log(error);
+
+    } catch (err) {
+        res.status(500).send({ error: err.message });
     }
 });
 

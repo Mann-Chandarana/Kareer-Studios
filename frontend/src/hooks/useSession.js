@@ -19,7 +19,6 @@ function useSession() {
         try {
             const { data } = await client.get('/auth/renew');
             setUser(data.user);
-            console.log(data.user);
             localStorage.setItem('token', data.token);
         } catch (error) {
             setUser(null);

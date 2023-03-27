@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const html = fs.readFileSync('./templates/receipt.ejs', 'utf8');
 
-const generateReceiptBuffer = ({ name, amount, email, phone, order_id }) => {
+const generateReceiptBuffer = (order_id, amount, fees, name, email, phone) => {
 
     const date = new Date().toDateString().split(' ').slice(1).join(' ');
 

@@ -6,6 +6,7 @@ import Layout from './Layout';
 import SessionContext from './contexts/SessionContext';
 import { useSession } from './hooks/useSession';
 import Login from './pages/Login';
+import { Payment } from './pages/Payment';
 
 function App() {
 
@@ -19,6 +20,14 @@ function App() {
 
   if (session.status === 'unauthorized') {
     return <Login />;
+  }
+
+  if (session.status === 'authorized' && session.user.role === 'student' && !session.user.paid) {
+    return (
+      <Router>
+        <Payment user={session.user} renewUser={session.renewUser} />
+      </Router>
+    );
   }
 
   return (

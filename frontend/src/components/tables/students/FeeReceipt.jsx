@@ -52,8 +52,8 @@ export const FeeReceipt = () => {
                                                 <th scope="col">No</th>
                                                 <th scope="col">Date Issued</th>
                                                 <th scope="col">Amount</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Phone</th>
+                                                <th scope="col">Payement ID</th>
+                                                {/* <th scope="col">Phone</th> */}
                                                 <th scope="col">Receipt</th>
                                             </>
                                         )}
@@ -73,8 +73,8 @@ export const FeeReceipt = () => {
                                                     <th scope="row">{i + 1}</th>
                                                     <td>{receipt.date_issued.slice(0, 10)}</td>
                                                     <td>&#8377;{receipt.amount}</td>
-                                                    <td>{user.email}</td>
-                                                    <td>{user.phone}</td>
+                                                    <td>{receipt.id}</td>
+                                                    {/* <td>{user.phone}</td> */}
                                                     <td>
                                                         <a href={fileURL} target="_blank" rel="noreferrer">
                                                             <i
