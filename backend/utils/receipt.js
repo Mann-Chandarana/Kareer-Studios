@@ -3,7 +3,7 @@ const ejs = require('ejs');
 const fs = require('fs');
 
 
-const html = fs.readFileSync('receipt_template.ejs', 'utf8');
+const html = fs.readFileSync('./templates/receipt.ejs', 'utf8');
 
 const generateReceiptBuffer = ({ name, amount, email, phone, order_id }) => {
 
