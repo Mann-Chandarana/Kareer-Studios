@@ -21,7 +21,6 @@ const Feedback = () => {
                                 </p>
                             </div>
 
-
                             <form class="px-4" action="">
                                 <p class="text-center"><strong>Your rating:</strong></p>
 
