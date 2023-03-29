@@ -25,7 +25,7 @@ function App() {
   if (session.status === 'authorized' && session.user.role === 'student' && !session.user.paid) {
     return (
       <Router>
-        <Payment user={session.user} renewUser={session.renewUser} />
+        <Payment user={session.user} renewUser={session.renewUser} logout={session.logout} />
       </Router>
     );
   }

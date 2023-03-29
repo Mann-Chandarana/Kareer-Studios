@@ -17,6 +17,7 @@ import AddParent from './components/tables/students/AddParent';
 import { FeeReceipt } from './components/tables/students/FeeReceipt';
 import { AcademicDetails } from './components/tables/students/AcademicDetails';
 import Register from './pages/Register';
+import Feedback from './components/tables/students/Feedback';
 
 function Layout() {
     const { user } = useContext(SessionContext);
@@ -58,6 +59,7 @@ function Layout() {
                         <Route path="/contact" element={<></>} />
                         <Route path="/academic" element={<AcademicDetails />} />
                         <Route path="/non_academic" element={<></>} />
+                        <Route path="/feedback" element={<Feedback />} />
                     </Routes>
                 </>
             )}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import client from '../api';
 
-export const Payment = ({ user, renewUser }) => {
+export const Payment = ({ user, renewUser,logout }) => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -105,11 +105,21 @@ export const Payment = ({ user, renewUser }) => {
                     <button
                         rel="noopener noreferrer"
                         type="button"
-                        className="App-link btn btn-primary"
+                        className="App-link btn btn-primary mx-1"
                         onClick={handleSubmit}
                         disabled={loading}
                     >
                         {loading ? 'Processing...' : 'Make Payment'}
+                    </button>
+
+                    <button
+                        rel="noopener noreferrer"
+                        type="button"
+                        className="App-link btn btn-danger mx-1"
+                        onClick={logout}
+                        disabled={loading}
+                    >
+                        {loading ? 'Processing...' : 'Logout'}
                     </button>
                 </center>
             </form>

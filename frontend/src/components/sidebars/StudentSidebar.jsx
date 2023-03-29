@@ -77,6 +77,17 @@ function StudentSidebar() {
                         </li>
 
                         <li style={{ marginTop: '3rem' }} className="nav-heading">
+                            Feedback
+                        </li>
+
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/feedback">
+                                <i class="fa-solid fa-pen"></i>
+                                <span>Feedback</span>
+                            </NavLink>
+                        </li>
+
+                        <li style={{ marginTop: '3rem' }} className="nav-heading">
                             Other
                         </li>
 
