@@ -18,6 +18,8 @@ import { FeeReceipt } from './components/tables/students/FeeReceipt';
 import { AcademicDetails } from './components/tables/students/AcademicDetails';
 import Register from './pages/Register';
 import Feedback from './components/tables/students/Feedback';
+import ViewFeedback from './components/tables/counsellor/ViewFeedback';
+import GiveFeedback from './components/tables/counsellor/GiveFeedback';
 
 function Layout() {
     const { user } = useContext(SessionContext);
@@ -42,6 +44,8 @@ function Layout() {
                     <Routes>
                         <Route path="/" element={<CounsellorStudentTable />} />
                         <Route path="/profile" element={<Dashboard />} />
+                        <Route path="/viewfeedback" element={<ViewFeedback />} />
+                        <Route path="/givefeedback" element={<GiveFeedback />} />
                     </Routes>
                 </>
             )}

@@ -34,6 +34,24 @@ function CounsellorSidebar() {
                         <span>Contact</span>
                     </NavLink>
                 </li>
+
+                <li style={{ marginTop: '3rem' }} className="nav-heading">
+                    Feedback
+                </li>
+
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/givefeedback">
+                        <i class="fa-solid fa-pen"></i>
+                        <span>Give Feedback</span>
+                    </NavLink>
+                </li>
+
+                <li className="nav-item">
+                    <NavLink className="nav-link" to="/viewfeedback">
+                        <i class="fa-solid fa-street-view"></i>
+                        <span>View Feedback</span>
+                    </NavLink>
+                </li>
             </ul>
         </aside>
     );
