@@ -62,13 +62,13 @@ function AddParent() {
             <div className="container">
                 <h4 style={{ margin: '1rem 0', fontSize: '2rem' }}>Add Parent</h4>
                 <form className="d-flex flex-column gap-2" onSubmit={handleSubmit} ref={formRef} noValidate>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">
+                    <div className="input-group mb-3">
+                        <span className="input-group-text">
                             <i className="fa fa-user icon" style={{ marginRight: '10px' }}></i>
                         </span>
                         <input
                             type="text"
-                            class="form-control"
+                            className="form-control"
                             name="name"
                             pattern="^[a-z A-Z]*$"
                             value={parent.name}
@@ -79,13 +79,13 @@ function AddParent() {
                         <div className="invalid-feedback">Please enter a valid username.</div>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">
+                    <div className="input-group mb-3">
+                        <span className="input-group-text">
                             <i className="fa fa-envelope" style={{ marginRight: '10px' }}></i>
                         </span>
                         <input
                             type="email"
-                            class="form-control"
+                            className="form-control"
                             name="email"
                             value={parent.email}
                             placeholder="Enter your parent email"
@@ -95,13 +95,13 @@ function AddParent() {
                         <div className="invalid-feedback">Please enter a valid email.</div>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">
+                    <div className="input-group mb-3">
+                        <span className="input-group-text">
                             <i className="fa fa-solid fa-phone icon" style={{ marginRight: '10px' }}></i>
                         </span>
                         <input
                             type="tel"
-                            class="form-control"
+                            className="form-control"
                             name="phone"
                             pattern="[0-9]{10}"
                             value={parent.phone}
@@ -113,45 +113,45 @@ function AddParent() {
                     </div>
 
                     <h4>Select Role</h4>
-                    <div class="input-group mb-3">
+                    <div className="input-group mb-3">
                         <br />
-                        <div class="btn-group" role="group">
+                        <div className="btn-group" role="group">
                             <input
                                 type="radio"
-                                class="btn-check"
+                                className="btn-check"
                                 name="gender"
                                 value="father"
                                 id="btnradio1"
                                 onChange={handleChange}
                                 checked={parent.gender === 'father'}
                             />
-                            <label class="btn btn-outline-primary" for="btnradio1">
+                            <label className="btn btn-outline-primary" for="btnradio1">
                                 Father
                             </label>
 
                             <input
                                 type="radio"
-                                class="btn-check"
+                                className="btn-check"
                                 name="gender"
                                 value="mother"
                                 id="btnradio2"
                                 onChange={handleChange}
                                 checked={parent.gender === 'mother'}
                             />
-                            <label class="btn btn-outline-primary" for="btnradio2">
+                            <label className="btn btn-outline-primary" for="btnradio2">
                                 Mother
                             </label>
 
                             <input
                                 type="radio"
-                                class="btn-check"
+                                className="btn-check"
                                 name="gender"
                                 value="guardian"
                                 id="btnradio3"
                                 onChange={handleChange}
                                 checked={parent.gender === 'guardian'}
                             />
-                            <label class="btn btn-outline-primary" for="btnradio3">
+                            <label className="btn btn-outline-primary" for="btnradio3">
                                 Guardian
                             </label>
                         </div>

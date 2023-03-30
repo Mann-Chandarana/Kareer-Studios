@@ -82,7 +82,7 @@ function StudentSidebar() {
 
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/feedback">
-                                <i class="fa-solid fa-pen"></i>
+                                <i className="fa-solid fa-pen"></i>
                                 <span>Feedback</span>
                             </NavLink>
                         </li>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import client from '../../../api';
 
 const Feedback = () => {
     const [feedback, setFeedback] = useState({
-        rating: 1,
+        rating: '1',
         referal: 'Walk in',
         overall_experience: '',
     });
@@ -18,6 +19,9 @@ const Feedback = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        try {
+            await client.post('/feedbacks/student', feedback);
+            console.log('test');
         } catch (err) {
             console.error(err);
         }
@@ -41,20 +45,21 @@ const Feedback = () => {
                     </div>
 
                     <form className="px-4" onSubmit={handleSubmit}>
-                        <div class="mb-3">
-                            <label for="rating" class="form-label d-flex align-items-center">
+                        <div className="mb-3">
+                            <label htmlFor="rating" className="form-label d-flex align-items-center">
                                 Counsellor Rating:
                                 <div className="d-flex justify-content-center align-items-center text-warning mx-2">
-                                    {feedback.rating >= 1 && <i class="fa-solid fa-star"></i>}
-                                    {feedback.rating >= 2 && <i class="fa-solid fa-star"></i>}
-                                    {feedback.rating >= 3 && <i class="fa-solid fa-star"></i>}
-                                    {feedback.rating >= 4 && <i class="fa-solid fa-star"></i>}
-                                    {feedback.rating >= 5 && <i class="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 1 && <i className="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 2 && <i className="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 3 && <i className="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 4 && <i className="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 5 && <i className="fa-solid fa-star"></i>}
                                 </div>
+                                ({feedback.rating} {feedback.rating === '1' ? 'star' : 'stars'})
                             </label>
                             <input
                                 type="range"
-                                class="form-range"
+                                className="form-range"
                                 min="1"
                                 max="5"
                                 step="1"
@@ -64,12 +69,12 @@ const Feedback = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div class="mb-3">
-                            <label for="rating" class="form-label">
+                        <div className="mb-3">
+                            <label htmlFor="rating" className="form-label">
                                 Referal:
                             </label>
                             <select
-                                class="form-select"
+                                className="form-select"
                                 name="referal"
                                 defaultValue={feedback.referal}
                                 onChange={handleChange}
@@ -102,12 +107,12 @@ const Feedback = () => {
                                 required
                             ></textarea>
                         </div>
-                    </form>
-                </div>
-                <div className="card-footer">
+                        <div className="card-footer">
                     <button style={{ background: '#4154f1' }} type="submit" className="btn text-white">
-                        Submit
+                        {loading ? 'Submitting...' : 'Submit'}
                     </button>
+                </div>
+                    </form>
                 </div>
             </div>
         </main>
