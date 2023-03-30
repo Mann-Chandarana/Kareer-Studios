@@ -102,3 +102,22 @@ CREATE TABLE IF NOT EXISTS student_feedbacks (
     REFERENCES counsellors(id)
     ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS counsellor_feedbacks(
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+    counsellor_id INTEGER,
+    performance TEXT,
+    planning TEXT,
+    feedback TEXT,
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE,
+
+    CONSTRAINT fk_counsellor_id
+    FOREIGN KEY (counsellor_id)
+    REFERENCES counsellors(id)
+    ON DELETE CASCADE
+);
