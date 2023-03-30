@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS student_feedbacks (
     counsellor_id INTEGER,
     
     referral TEXT,
-    rating FLOAT4,
+    rating INTEGER,
     overall_experience TEXT,
 
     CONSTRAINT fk_student_id

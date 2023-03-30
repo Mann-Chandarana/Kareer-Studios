@@ -6,12 +6,22 @@ const Feedback = () => {
         referal: 'Walk in',
         overall_experience: '',
     });
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
 
         setFeedback({ ...feedback, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        } catch (err) {
+            console.error(err);
+        }
+        setLoading(false);
     };
 
     return (
@@ -30,10 +40,17 @@ const Feedback = () => {
                         </p>
                     </div>
 
-                    <form className="px-4" action="">
+                    <form className="px-4" onSubmit={handleSubmit}>
                         <div class="mb-3">
-                            <label for="rating" class="form-label">
-                                Counsellor Rating: {feedback.rating} stars
+                            <label for="rating" class="form-label d-flex align-items-center">
+                                Counsellor Rating:
+                                <div className="d-flex justify-content-center align-items-center text-warning mx-2">
+                                    {feedback.rating >= 1 && <i class="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 2 && <i class="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 3 && <i class="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 4 && <i class="fa-solid fa-star"></i>}
+                                    {feedback.rating >= 5 && <i class="fa-solid fa-star"></i>}
+                                </div>
                             </label>
                             <input
                                 type="range"
@@ -88,7 +105,7 @@ const Feedback = () => {
                     </form>
                 </div>
                 <div className="card-footer">
-                    <button style={{ background: '#4154f1' }} type="button" className="btn text-white">
+                    <button style={{ background: '#4154f1' }} type="submit" className="btn text-white">
                         Submit
                     </button>
                 </div>
