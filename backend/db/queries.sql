@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS receipts (
     ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS counsellor_feedbacks (
+CREATE TABLE IF NOT EXISTS student_feedbacks (
     id SERIAL PRIMARY KEY,
     student_id INTEGER,
     counsellor_id INTEGER,

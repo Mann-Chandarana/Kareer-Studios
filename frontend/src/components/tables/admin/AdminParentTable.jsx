@@ -38,7 +38,7 @@ function AdminParentTable() {
     return (
         <>
             <Modal id="add-parent">
-                <AddParent callback={getParents} />
+                <AddParent  />
             </Modal>
             <main id="main" className="main">
                 <div className="pagetitle">
