@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import client from '../api';
 
-export const Payment = ({ user, renewUser,logout }) => {
+export const Payment = ({ user, renewUser, logout }) => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -10,7 +10,7 @@ export const Payment = ({ user, renewUser,logout }) => {
     const verifyPayment = async (payment_id, payment_request_id) => {
         setLoading(true);
         try {
-            const res = await client.post('/payment/verify', { payment_id, payment_request_id, student_id: user.id });
+            await client.post('/payment/verify', { payment_id, payment_request_id, student_id: user.id });
             await renewUser();
             navigate('/profile');
         } catch (err) {

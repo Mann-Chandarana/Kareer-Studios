@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import '../../../styles/feedback.css';
 
 const Feedback = () => {
+    const [feedback, setFeedback] = useState({
+        rating: 1,
+        referal: 'Walk in',
+        overall_experience: '',
+    });
+
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        setFeedback({ ...feedback, [name]: value });
+    };
+
     return (
         <main id="main" className="d-flex align-items-center justify-content-center">
-            <div className="card" style={{ width: '100%', maxWidth: '500px' }}>
+            <div className="card" style={{ width: '100%', maxWidth: '600px' }}>
                 <div style={{ background: '#4154f1' }} className="card-header ">
                     <h5 className="card-title text-white mt-2" id="exampleModalLabel">
-                        Feedback request
+                        Feedback Form
                     </h5>
                 </div>
                 <div className="modal-body">
@@ -15,22 +29,62 @@ const Feedback = () => {
                         <p>
                             <strong>Give counsellor's feedback</strong>
                         </p>
-                        <p>
-                            Have some ideas how to improve our product?
-                            <br />
-                            <strong>Give us your feedback.</strong>
-                        </p>
                     </div>
 
                     <form className="px-4" action="">
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">
+                                Counsellor Rating: {feedback.rating} stars
+                            </label>
+                            <input
+                                type="range"
+                                class="form-range"
+                                min="1"
+                                max="5"
+                                step="1"
+                                id="rating"
+                                name="rating"
+                                value={feedback.rating}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">
+                                Referal:
+                            </label>
+                            <select
+                                class="form-select"
+                                name="referal"
+                                defaultValue={feedback.referal}
+                                onChange={handleChange}
+                            >
+                                <option value="Walk in">Walk in</option>
+                                <option value="YouTube">YouTube</option>
+                                <option value="Staff">Staff</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Friend">Friend</option>
+                                <option value="Event">Event</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
                         <hr />
 
                         <label htmlFor="form4Example3" className="text-center w-100 mb-2">
-                            <strong>What could we improve?</strong>
+                            <strong>How was your overall experience?</strong>
                         </label>
 
                         <div className="form-outline mb-4">
-                            <textarea className="form-control" id="form4Example3" rows="4"></textarea>
+                            <textarea
+                                className="form-control"
+                                style={{ fontSize: '14px', resize: 'vertical', minHeight: '100px' }}
+                                name="overall_experience"
+                                placeholder="Write your feedback here..."
+                                value={feedback.overall_experience}
+                                onChange={handleChange}
+                                required
+                            ></textarea>
                         </div>
                     </form>
                 </div>

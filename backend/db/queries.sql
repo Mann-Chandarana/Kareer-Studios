@@ -83,14 +83,14 @@ CREATE TABLE IF NOT EXISTS receipts (
     ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS counsellor_feedbacks (
+CREATE TABLE IF NOT EXISTS student_feedbacks (
     id SERIAL PRIMARY KEY,
     student_id INTEGER,
     counsellor_id INTEGER,
     
-    rating FLOAT4,
-    feedback TEXT,
     referral TEXT,
+    rating FLOAT4,
+    overall_experience TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
