@@ -4,7 +4,7 @@ const { verifyStudents } = require('../middleware/verify');
 
 const router = express.Router();
 
-router.get('/:counsellor_id', async (req, res) => {
+router.get('/student/:counsellor_id', async (req, res) => {
 	console.log(req.params.counsellor_id);
 	console.log('Hello');
 	try {
