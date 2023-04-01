@@ -1,8 +1,39 @@
-import React from 'react'
+import React, { useRef,useState } from 'react'
+import client from '../../../api'
+import SmallSpinner from '../../SmallSpinner'
 
-const EditFeedback = () => {
+const EditFeedback = ({ id,student_id, Performance, Planning, Feedback,Fetch_Feedback }) => {
+  const closeButton = useRef()
+  const [obj, setobj] = useState({
+    id: id,
+    student_id:student_id,
+    Performance: Performance,
+    Planning: Planning,
+    Feedback: Feedback
+  })
+  const [loading,setloading] = useState(false);
+
+  const handleChange = async (event) => {
+    const { name, value } = event.target;
+    setobj({ ...obj, [name]: value })
+    console.log(obj)
+  }
+
+  const handleSubmit = async(event)=>{
+    event.preventDefault();
+    setloading(true);
+    try {
+      await client.patch('/feedbacks/updateCounsellorFeed',obj);
+      closeButton.current.click();
+      Fetch_Feedback()
+    } catch (err) {
+      console.log({error:err.message})
+    }
+    setloading(false);
+  }
+
   return (
-    <form className="modal-content" noValidate>
+    <form className="modal-content" noValidate onSubmit={handleSubmit}>
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
           <p className="h3">Add Feedback</p>
@@ -19,12 +50,13 @@ const EditFeedback = () => {
               <input
                 type="text"
                 pattern="^[a-z A-Z]*$"
-                name="name"
+                name="student_id"
+                value={obj.student_id}
+                onChange={handleChange}
                 className="form-control"
                 autoComplete="off"
                 autoFocus
                 required
-                value="2"
                 disabled
               />
             </div>
@@ -34,12 +66,12 @@ const EditFeedback = () => {
                 className="form-control"
                 style={{ fontSize: '14px', resize: 'vertical' }}
                 rows="3"
-                name="performance"
+                name="Performance"
+                value={obj.Performance}
+                onChange={handleChange}
                 autoComplete="off"
                 autoFocus
                 required
-                value="Your performance is very poor please improve your performance "
-                disabled
               ></textarea>
             </div>
 
@@ -49,12 +81,12 @@ const EditFeedback = () => {
                 className="form-control"
                 style={{ fontSize: '14px', resize: 'vertical' }}
                 rows="3"
-                name="planning"
+                name="Planning"
+                value={obj.Planning}
+                onChange={handleChange}
                 autoComplete="off"
                 autoFocus
                 required
-                value="You should opt IELTS and should go to Cananda for higher studies"
-                disabled
               ></textarea>
             </div>
 
@@ -64,23 +96,31 @@ const EditFeedback = () => {
                 className="form-control"
                 style={{ fontSize: '14px', resize: 'vertical' }}
                 rows="3"
-                name="feedback"
+                name="Feedback"
+                value={obj.Feedback}
+                onChange={handleChange}
                 autoComplete="off"
                 autoFocus
                 required
-                value="You are very handsome, please don't cut your hairs and your girlfriend is very ugly"
-                disabled
               ></textarea>
             </div>
           </div>
         </div>
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={closeButton}>
           Close
         </button>
-        <button type="submit" className="btn btn-warning" >
-          Update
+        <button type="submit" className="btn btn-warning" disabled={loading} >
+        {loading ?
+                        (
+                            <>
+                                Updating <SmallSpinner />
+                            </>
+                        ) : (
+                            'Update'
+                        )
+                    }
         </button>
       </div>
     </form>
