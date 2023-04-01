@@ -17,72 +17,74 @@ import AddParent from './components/tables/students/AddParent';
 import { FeeReceipt } from './components/tables/students/FeeReceipt';
 import { AcademicDetails } from './components/tables/students/AcademicDetails';
 import Register from './pages/Register';
-import Feedback from './components/tables/students/Feedback';
 import ViewFeedback from './components/tables/counsellor/ViewFeedback';
 import GiveFeedback from './components/tables/counsellor/GiveFeedback';
+import GiveStudentFeedback from './components/tables/students/GiveFeedback';
+import ViewStudentFeedback from './components/tables/students/ViewFeedback';
 
 function Layout() {
-    const { user } = useContext(SessionContext);
+	const { user } = useContext(SessionContext);
 
-    return (
-        <>
-            {user.role === 'admin' && (
-                <>
-                    <AdminSidebar />
-                    <Routes>
-                        <Route path="/" element={<AdminCounsellorTable />} />
-                        <Route path="/students" element={<AdminStudentTable />} />
-                        <Route path="/profile" element={<Dashboard />} />
-                        <Route path="/parents" element={<AdminParentTable />} />
-                    </Routes>
-                </>
-            )}
+	return (
+		<>
+			{user.role === 'admin' && (
+				<>
+					<AdminSidebar />
+					<Routes>
+						<Route path='/' element={<AdminCounsellorTable />} />
+						<Route path='/students' element={<AdminStudentTable />} />
+						<Route path='/profile' element={<Dashboard />} />
+						<Route path='/parents' element={<AdminParentTable />} />
+					</Routes>
+				</>
+			)}
 
-            {user.role === 'counsellor' && (
-                <>
-                    <CounsellorSidebar />
-                    <Routes>
-                        <Route path="/" element={<CounsellorStudentTable />} />
-                        <Route path="/profile" element={<Dashboard />} />
-                        <Route path="/viewfeedback" element={<ViewFeedback />} />
-                        <Route path="/givefeedback" element={<GiveFeedback />} />
-                    </Routes>
-                </>
-            )}
+			{user.role === 'counsellor' && (
+				<>
+					<CounsellorSidebar />
+					<Routes>
+						<Route path='/' element={<CounsellorStudentTable />} />
+						<Route path='/profile' element={<Dashboard />} />
+						<Route path='/viewfeedback' element={<ViewFeedback />} />
+						<Route path='/givefeedback' element={<GiveFeedback />} />
+					</Routes>
+				</>
+			)}
 
-            {user.role === 'student' && (
-                <>
-                    <StudentSidebar />
-                    <Routes>
-                        <Route path="/profile" element={<Dashboard />} />
-                        <Route path="/" element={<YourCounsellor />} />
-                        <Route path="/parent" element={<Yourparent />} />
-                        <Route path="/addparent" element={<AddParent />} />
-                        <Route path="/fees" element={<FeeReceipt />} />
-                        <Route path="/faq" element={<></>} />
-                        <Route path="/contact" element={<></>} />
-                        <Route path="/academic" element={<AcademicDetails />} />
-                        <Route path="/non_academic" element={<></>} />
-                        <Route path="/feedback" element={<Feedback />} />
-                    </Routes>
-                </>
-            )}
+			{user.role === 'student' && (
+				<>
+					<StudentSidebar />
+					<Routes>
+						<Route path='/profile' element={<Dashboard />} />
+						<Route path='/' element={<YourCounsellor />} />
+						<Route path='/parent' element={<Yourparent />} />
+						<Route path='/addparent' element={<AddParent />} />
+						<Route path='/fees' element={<FeeReceipt />} />
+						<Route path='/faq' element={<></>} />
+						<Route path='/contact' element={<></>} />
+						<Route path='/academic' element={<AcademicDetails />} />
+						<Route path='/non_academic' element={<></>} />
+						<Route path='/givefeedback' element={<GiveStudentFeedback />} />
+						<Route path='/viewfeedback' element={<ViewStudentFeedback />} />
+					</Routes>
+				</>
+			)}
 
-            {user.role === 'parent' && (
-                <>
-                    <ParentSidebar />
-                    <Routes>
-                        <Route path="/profile" element={<Dashboard />} />
-                        <Route path="/" element={<YourStudent />} />
-                    </Routes>
-                </>
-            )}
+			{user.role === 'parent' && (
+				<>
+					<ParentSidebar />
+					<Routes>
+						<Route path='/profile' element={<Dashboard />} />
+						<Route path='/' element={<YourStudent />} />
+					</Routes>
+				</>
+			)}
 
-            <Routes>
-                <Route path="/link/register/:id" element={<Register />} />
-            </Routes>
-        </>
-    );
+			<Routes>
+				<Route path='/link/register/:id' element={<Register />} />
+			</Routes>
+		</>
+	);
 }
 
 export default Layout;
