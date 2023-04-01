@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '../../Modal';
 import ModalButton from '../../ModalButton';
-import ViewfeedbackModal from '../../modals/feedbackModals/ViewfeedbackModal';
+import ViewfeedbacModal from '../../modals/feedbackModals/ViewfeedbacModal';
 
 function ViewFeedback() {
 	return (
@@ -12,7 +12,8 @@ function ViewFeedback() {
 					<nav>
 						<ol className='breadcrumb'>
 							<li className='breadcrumb-item'>Dashboard</li>
-							<li className='breadcrumb-item active'>Students</li>
+							<li className='breadcrumb-item'>Feedback</li>
+							<li className='breadcrumb-item active'>View feedback</li>
 						</ol>
 					</nav>
 				</div>
@@ -40,7 +41,7 @@ function ViewFeedback() {
 											<td>mannchandarana@gmail.com</td>
 											<td>
 												<Modal id={'view_s_feedback' + 1} large>
-													<ViewfeedbackModal />
+													<ViewfeedbacModal />
 												</Modal>
 												<ModalButton
 													id={'view_s_feedback' + 1}
