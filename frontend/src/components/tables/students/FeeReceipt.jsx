@@ -17,8 +17,8 @@ export const FeeReceipt = () => {
                     setreceipt(data.rows);
                 }
                 setloading(false);
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                console.error(err);
             }
         }
         fetchreceipt();

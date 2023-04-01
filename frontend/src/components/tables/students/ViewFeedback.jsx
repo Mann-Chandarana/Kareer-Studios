@@ -13,7 +13,6 @@ const ViewFeedback = () => {
 			if (data.rowCount > 0) {
 				setFeedback(data.rows[0]);
 			}
-			console.log(data);
 		} catch (err) {
 			console.error(err);
 		}

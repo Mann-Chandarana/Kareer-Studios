@@ -28,7 +28,7 @@ const UpdateCounsellor = () => {
             await renewUser();
             formRef.current.classList.remove('was-validated');
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
         setLoading(false);
     };

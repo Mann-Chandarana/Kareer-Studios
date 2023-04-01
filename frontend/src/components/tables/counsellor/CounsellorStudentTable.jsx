@@ -21,7 +21,7 @@ function CounsellorStudentTable() {
             const { data } = await client.get('link/generate');
             setLink(data.link);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             setLink('Error generating link...');
         }
     };
