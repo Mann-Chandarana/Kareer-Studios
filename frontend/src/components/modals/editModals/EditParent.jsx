@@ -21,7 +21,7 @@ function EditParent({ callback, parentData }) {
 		setLoading(true);
 
 		try {
-			const res = await client.patch('/parents/' + parentData.id, formState);
+			await client.patch('/parents/' + parentData.id, formState);
 			closeButton.current.click();
 			formRef.current.classList.remove('was-validated');
 			if (callback) {

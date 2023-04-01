@@ -24,8 +24,7 @@ function AddParent({ callback }) {
 		setLoading(true);
 
 		try {
-			const res = await client.post('/parents', formState);
-			console.error(res);
+			await client.post('/parents', formState);
 			closeButton.current.click();
 			formRef.current.classList.remove('was-validated');
 			if (callback) {

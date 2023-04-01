@@ -21,7 +21,7 @@ function EditStudent({ callback, studentData }) {
         setLoading(true);
 
         try {
-            const res = await client.patch('/students/' + formState.id, formState);
+            await client.patch('/students/' + formState.id, formState);
             closeButton.current.click();
             formRef.current.classList.remove('was-validated');
             if (callback) {

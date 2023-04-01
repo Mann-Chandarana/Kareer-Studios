@@ -26,7 +26,7 @@ function AddStudent({ callback }) {
         setLoading(true);
 
         try {
-            const res = await client.post('/students', formState);
+            await client.post('/students', formState);
             closeButton.current.click();
             formRef.current.classList.remove('was-validated');
             if (callback) {

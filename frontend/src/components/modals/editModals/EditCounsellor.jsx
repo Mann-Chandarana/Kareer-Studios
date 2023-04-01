@@ -21,7 +21,7 @@ function EditCounsellor({ callback, counsellorData }) {
 		setLoading(true);
 
 		try {
-			const res = await client.patch('/counsellors/' + counsellorData.id, formState);
+			await client.patch('/counsellors/' + counsellorData.id, formState);
 			closeButton.current.click();
 			formRef.current.classList.remove('was-validated');
 			if (callback) {
