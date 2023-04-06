@@ -1,8 +1,48 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import SmallSpinner from '../../SmallSpinner';
+import client from '../../../api';
 
-const AddFeedback = () => {
+const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
+	const closeButton = useRef();
+
+	const [feedback, setfeedback] = useState({
+		student_id: '',
+		counsellor_id: counsellor_id,
+		performance: '',
+		planning: '',
+		feedback: '',
+	});
+
+	const [loading, setloading] = useState(false);
+
+	const handleChange = (event) => {
+		const { name, value } = event.target;
+
+		setfeedback({ ...feedback, [name]: value });
+	};
+
+	const handlesubmit = async (event) => {
+		event.preventDefault();
+		setloading(true);
+		try {
+			await client.post('/feedbacks/addCounsellorFeed', feedback);
+			closeButton.current.click();
+			Fetch_Feedback();
+			setfeedback({
+				student_id: '',
+				counsellor_id: counsellor_id,
+				performance: '',
+				planning: '',
+				feedback: '',
+			});
+		} catch (error) {
+			console.log(error);
+		}
+		setloading(false);
+	};
+
 	return (
-		<form className='modal-content' noValidate>
+		<form className='modal-content' noValidate onSubmit={handlesubmit}>
 			<div className='modal-header'>
 				<h5 className='modal-title' id='exampleModalLabel'>
 					<p className='h3'>Add Feedback</p>
@@ -24,7 +64,9 @@ const AddFeedback = () => {
 							<input
 								type='text'
 								pattern='^[a-z A-Z]*$'
-								name='name'
+								name='student_id'
+								value={feedback.student_id}
+								onChange={handleChange}
 								className='form-control'
 								autoComplete='off'
 								autoFocus
@@ -38,6 +80,8 @@ const AddFeedback = () => {
 								style={{ fontSize: '14px', resize: 'vertical' }}
 								rows='3'
 								name='performance'
+								value={feedback.performance}
+								onChange={handleChange}
 								autoComplete='off'
 								autoFocus
 								required
@@ -51,6 +95,8 @@ const AddFeedback = () => {
 								style={{ fontSize: '14px', resize: 'vertical' }}
 								rows='3'
 								name='planning'
+								value={feedback.planning}
+								onChange={handleChange}
 								autoComplete='off'
 								autoFocus
 								required
@@ -64,6 +110,8 @@ const AddFeedback = () => {
 								style={{ fontSize: '14px', resize: 'vertical' }}
 								rows='3'
 								name='feedback'
+								value={feedback.feedback}
+								onChange={handleChange}
 								autoComplete='off'
 								autoFocus
 								required
@@ -73,11 +121,17 @@ const AddFeedback = () => {
 				</div>
 			</div>
 			<div className='modal-footer'>
-				<button type='button' className='btn btn-secondary' data-bs-dismiss='modal'>
+				<button type='button' className='btn btn-secondary' data-bs-dismiss='modal' ref={closeButton}>
 					Close
 				</button>
-				<button type='submit' className='btn btn-success'>
-					Add
+				<button type='submit' className='btn btn-success' disabled={loading}>
+					{loading ? (
+						<>
+							Adding <SmallSpinner />
+						</>
+					) : (
+						'ADD'
+					)}
 				</button>
 			</div>
 		</form>

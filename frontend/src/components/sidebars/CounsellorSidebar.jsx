@@ -48,7 +48,7 @@ function CounsellorSidebar() {
 
                 <li className="nav-item">
                     <NavLink className="nav-link" to="/viewfeedback">
-                        <i class="fa-solid fa-street-view"></i>
+                        <i className='fa-regular fa-comments'></i>
                         <span>View Feedback</span>
                     </NavLink>
                 </li>
