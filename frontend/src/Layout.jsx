@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Form, Route, Routes } from 'react-router-dom';
 import AdminSidebar from './components/sidebars/AdminSidebar';
 import SessionContext from './contexts/SessionContext';
 import Dashboard from './pages/Dashboard';
@@ -21,6 +21,8 @@ import ViewFeedback from './components/tables/counsellor/ViewFeedback';
 import GiveFeedback from './components/tables/counsellor/GiveFeedback';
 import GiveStudentFeedback from './components/tables/students/GiveFeedback';
 import ViewStudentFeedback from './components/tables/students/ViewFeedback';
+import Report from './components/report/Report'
+import Assessment from './components/report/Asessment'
 
 function Layout() {
 	const { user } = useContext(SessionContext);
@@ -47,6 +49,8 @@ function Layout() {
 						<Route path='/profile' element={<Dashboard />} />
 						<Route path='/viewfeedback' element={<ViewFeedback />} />
 						<Route path='/givefeedback' element={<GiveFeedback />} />
+						<Route path='/report/:id' element={<Report />} />
+						<Route path='/assessment/:id' element={<Assessment />} />
 					</Routes>
 				</>
 			)}
@@ -66,6 +70,7 @@ function Layout() {
 						<Route path='/non_academic' element={<></>} />
 						<Route path='/givefeedback' element={<GiveStudentFeedback />} />
 						<Route path='/viewfeedback' element={<ViewStudentFeedback />} />
+						<Route path='/report/:id' element={<Report />} />
 					</Routes>
 				</>
 			)}
@@ -76,6 +81,7 @@ function Layout() {
 					<Routes>
 						<Route path='/profile' element={<Dashboard />} />
 						<Route path='/' element={<YourStudent />} />
+						<Route path='/report/:id' element={<Report />} />
 					</Routes>
 				</>
 			)}

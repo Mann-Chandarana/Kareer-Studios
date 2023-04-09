@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function StudentInfo({ studentData }) {
+
     return (
         <div className="modal-content">
             <div className="modal-header">
@@ -31,8 +33,8 @@ function StudentInfo({ studentData }) {
                                     <button type="button" className="btn btn-danger">
                                         Non-Academics
                                     </button>
-                                    <button type="button" className="btn btn-warning">
-                                        Report
+                                    <button type="button" className="btn btn-warning">                                
+                                    <Link to={'/report/'+studentData.id}>Report</Link>
                                     </button>
                                 </div>
                             </div>

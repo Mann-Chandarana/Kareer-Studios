@@ -121,3 +121,53 @@ CREATE TABLE IF NOT EXISTS counsellor_feedbacks(
     REFERENCES counsellors(id)
     ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS reports(
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+
+    scp_leadership FLOAT,
+    scp_management FLOAT,
+    scp_bodybalance FLOAT,
+    scp_logic FLOAT,
+    scp_bodymovement FLOAT,
+    scp_senses FLOAT,
+    scp_rhythm FLOAT,
+    scp_visual FLOAT,
+    scp_observation FLOAT,
+    scp_communication FLOAT,
+
+    tp_right TEXT,   
+    tp_left TEXT,
+
+    as_follower FLOAT,
+    as_experimental FLOAT,
+    as_different FLOAT,
+    as_thoughtful FLOAT,    
+
+    lc_auditory FLOAT,
+    lc_visual FLOAT,
+    lc_physical FLOAT,
+
+    wa_intelligent FLOAT,
+    wa_emotional FLOAT,
+    wa_visionary FLOAT,
+    wa_creative FLOAT,
+    wa_adverse FLOAT,
+
+    pt_name TEXT,
+    pt_info TEXT,
+
+    sc_careers TEXT,
+    sc_stream TEXT,
+    sc_subjects TEXT,
+
+    additional_note TEXT,
+    createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+    
+);

@@ -31,6 +31,8 @@ app.use(PREFIX + '/parents', require('./routes/parents'));
 app.use(PREFIX + '/students', require('./routes/students'));
 app.use(PREFIX + '/fees', require('./routes/fees'));
 app.use(PREFIX + '/feedbacks', require('./routes/feedbacks'));
+app.use(PREFIX + '/reports', require('./routes/report'));
+
 
 if (isDevelopmentMode) {
     app.get('*', (req, res) => {

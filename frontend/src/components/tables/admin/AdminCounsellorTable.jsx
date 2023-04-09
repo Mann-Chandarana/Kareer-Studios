@@ -10,6 +10,7 @@ import { CounsellorInfo } from '../../modals/infoModals/CounsellorInfo';
 import { SearchMenu } from '../../SearchMenu';
 import useSearch from '../../../hooks/useSearch';
 import SmallSpinner from '../../SmallSpinner';
+import Report from '../../report/Report';
 
 function AdminCounsellorTable() {
     const [counsellors, setCounsellors] = useState([]);
@@ -44,6 +45,7 @@ function AdminCounsellorTable() {
             </Modal>
 
             <main id="main" className="main">
+                
                 <div className="pagetitle">
                     <h1>Dashboard</h1>
                     <nav>
