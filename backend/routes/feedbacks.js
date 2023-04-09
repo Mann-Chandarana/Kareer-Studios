@@ -43,6 +43,7 @@ router.get('/counsellor/:counsellor_id',verifyCounsellors,async(req,res)=>{
 })
 
 router.get('/student/:counsellor_id',verifyCounsellors, async (req, res) => {
+
 	try {
 		const { rowCount, rows } = await feedbackHandler.getallfeedback(req.params.counsellor_id);
 

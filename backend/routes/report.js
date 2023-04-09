@@ -41,7 +41,6 @@ const reportHandler = require('../handlers/report');
 router.post('/addReport/:student_id', verifyCounsellors, async(req, res) => {
 
     try {
-
         const { rowCount, rows } = await reportHandler.getReport(req.params.student_id);
         if (rowCount > 0) {
             res.status(404).json({ error: 'Report already exists.' });
@@ -58,15 +57,10 @@ router.post('/addReport/:student_id', verifyCounsellors, async(req, res) => {
             res.status(202).send({ message: 'Report added...' });
             
         }
-
-        
-
     } catch (err) {
         console.error(err);
         res.status(500).send({ error: err.message });
     }
-
-
 })
 
 
@@ -126,9 +120,7 @@ router.get('/report/:student_id', async(req, res) => {
 */
 router.put('/updateReport/:student_id', verifyCounsellors, async(req, res) => {
 
-    try {   
-
-
+    try {  
         const { rowCount, rows } = await reportHandler.getReport(req.params.student_id);
         if (rowCount <= 0) {
             res.status(404).json({ error: 'Report does not exist, please add one.' });
