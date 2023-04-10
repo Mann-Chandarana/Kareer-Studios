@@ -19,8 +19,9 @@ import {
 function Assessment() {
   return (
     <main id="main" className="main">
+        <br></br>
       <center>
-        <h1>Assessment Report</h1>
+        <h2>Assessment Report</h2>
       </center>
       <br></br>
       <CForm>
