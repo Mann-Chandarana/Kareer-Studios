@@ -1,0 +1,32 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+
+@media (min-width: 564px) and (max-width: 986px) {
+    .footer-text{
+        margin-top: 5%;
+    }
+    body {
+      font-size: 14px;
+    }
+    .container {
+      max-width: 80%;
+    }
+    /* etc. */
+  }
+
+.card-body{
+   box-shadow: none;
+}
