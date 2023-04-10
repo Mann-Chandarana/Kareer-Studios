@@ -23,6 +23,7 @@ import GiveStudentFeedback from './components/tables/students/GiveFeedback';
 import ViewStudentFeedback from './components/tables/students/ViewFeedback';
 import Report from './components/report/Report'
 import Assessment from './components/report/Asessment'
+import Register1 from './pages/Register1';
 
 function Layout() {
 	const { user } = useContext(SessionContext);
@@ -85,10 +86,6 @@ function Layout() {
 					</Routes>
 				</>
 			)}
-
-			<Routes>
-				<Route path='/link/register/:id' element={<Register />} />
-			</Routes>
 		</>
 	);
 }

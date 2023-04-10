@@ -6,7 +6,6 @@ const { generateReceiptBuffer } = require('../utils/receipt');
 const receiptHandler = require('../handlers/receipt');
 const studentHandler = require('../handlers/student');
 const { sendEmail } = require('../services/nodemailer');
-const { json } = require('body-parser');
 
 const router = express.Router();
 
