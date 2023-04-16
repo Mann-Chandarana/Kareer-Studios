@@ -137,7 +137,9 @@ export async function lcValidation(errors = {}, values){
 
 export async function waValidation(errors = {}, values){
 
-    if(parseFloat(values.wa_intelligent) + parseFloat(values.wa_emotional) + parseFloat(values.wa_visionary) + parseFloat(values.wa_creative) + parseFloat(values.wa_adverse) != 100) {
+    const sum = (parseFloat(values.wa_intelligent) + parseFloat(values.wa_emotional) + parseFloat(values.wa_visionary) + parseFloat(values.wa_creative) + parseFloat(values.wa_adverse)).toFixed(2);
+
+    if((sum) != 100) {
 
         errors.wa = toast.error("Total of all fields in work ability is not equal to 100.");
     }     
