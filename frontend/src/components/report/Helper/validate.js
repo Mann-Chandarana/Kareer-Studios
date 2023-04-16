@@ -1,9 +1,7 @@
 import toast from 'react-hot-toast';
 
 
-//validate password
 export async function assessmentValidate(values) {
-
 
     console.log(values.scp_leadership);
     
@@ -25,37 +23,37 @@ export async function valueValidation(errors = {}, values) {
         errors.novalue = toast.error("Please fill all fields.");
     }
 
-    else if(!isNaN(parseFloat(values.scp_leadership)) || !isNaN(parseFloat(values.scp_management)) || !isNaN(parseFloat(values.scp_bodybalance)) || !isNaN(parseFloat(values.scp_logic)) || !isNaN(parseFloat(values.scp_bodymovement)) || !isNaN(parseFloat(values.scp_senses)) || !isNaN(parseFloat(values.scp_rhythm)) || !isNaN(parseFloat(values.scp_visual)) || !isNaN(parseFloat(values.scp_observation)) || !isNaN(parseFloat(values.scp_communication))) {
+    else if(isNaN(parseFloat(values.scp_leadership)) || isNaN(parseFloat(values.scp_management)) || isNaN(parseFloat(values.scp_bodybalance)) || isNaN(parseFloat(values.scp_logic)) || isNaN(parseFloat(values.scp_bodymovement)) || isNaN(parseFloat(values.scp_senses)) || isNaN(parseFloat(values.scp_rhythm)) || isNaN(parseFloat(values.scp_visual)) || isNaN(parseFloat(values.scp_observation)) || isNaN(parseFloat(values.scp_communication))) {
 
         errors.invalid = toast.error("Please fill float data in all fields of study and career potential.");
     } 
     
-    else if(isNaN(parseFloat(values.tp_right)) || isNaN(parseFloat(values.tp_left))) {
-        errors.invalid = toast.error("Please fill string data in all fields of thinking pattern.");
-    }
+    // else if(!isNaN(parseFloat(values.tp_right)) || !isNaN(parseFloat(values.tp_left))) {
+    //     errors.invalid = toast.error("Please fill string data in all fields of thinking pattern.");
+    // }
 
-    else if(!isNaN(parseFloat(values.as_follower)) || !isNaN(parseFloat(values.as_experimental)) || !isNaN(parseFloat(values.as_different)) || !isNaN(parseFloat(values.as_thoughtful))) {
+    else if(isNaN(parseFloat(values.as_follower)) || isNaN(parseFloat(values.as_experimental)) || isNaN(parseFloat(values.as_different)) || isNaN(parseFloat(values.as_thoughtful))) {
         errors.invalid = toast.error("Please fill float data in all fields of achievement style.");
     }
 
-    else if(!isNaN(parseFloat(values.lc_auditory)) || !isNaN(parseFloat(values.lc_visual)) || !isNaN(parseFloat(values.lc_physical))) {
+    else if(isNaN(parseFloat(values.lc_auditory)) || isNaN(parseFloat(values.lc_visual)) || isNaN(parseFloat(values.lc_physical))) {
         errors.invalid = toast.error("Please fill float data in all fields of learning & communication.");
     }
 
-    else if(!isNaN(parseFloat(values.wa_intelligent)) || !isNaN(parseFloat(values.wa_emotional)) || !isNaN(parseFloat(values.wa_visionary)) || !isNaN(parseFloat(values.wa_creative)) || !isNaN(parseFloat(values.wa_adverse))) {
+    else if(isNaN(parseFloat(values.wa_intelligent)) || isNaN(parseFloat(values.wa_emotional)) || isNaN(parseFloat(values.wa_visionary)) || isNaN(parseFloat(values.wa_creative)) || isNaN(parseFloat(values.wa_adverse))) {
         errors.invalid = toast.error("Please fill float data in all fields of work ability.");
     }
 
-    else if(isNaN(parseFloat(values.pt_name)) || isNaN(parseFloat(values.pt_info))) {
+    else if(!isNaN(parseFloat(values.pt_name)) || !isNaN(parseFloat(values.pt_info))) {
         errors.invalid = toast.error("Please fill string data in all fields of personality type.");
 
     }
 
-    else if(isNaN(parseFloat(values.sc_career)) || isNaN(parseFloat(values.sc_stream)) || isNaN(parseFloat(values.sc_subjects))) {
+    else if(!isNaN(parseFloat(values.sc_career)) || !isNaN(parseFloat(values.sc_stream)) || !isNaN(parseFloat(values.sc_subjects))) {
         errors.invalid = toast.error("Please fill string data in all fields of suggested careers.");
     }
 
-    else if(isNaN(parseFloat(values.additional_note))) {
+    else if(!isNaN(parseFloat(values.additional_note))) {
         errors.invalid = toast.error("Please fill string data in the field of additional note.");
     }
 
@@ -65,12 +63,10 @@ export async function valueValidation(errors = {}, values) {
 
 export async function scpValidation(errors = {}, values){
 
-    if(!values) {
-        errors.username = toast.error("Username required.");
-    }
-    else if(values.username.includes(" ")){
-        errors.username = toast.error("Invalid username.");
-    }
+    if(parseFloat(values.scp_leadership) + parseFloat(values.scp_management) + parseFloat(values.scp_bodybalance) + parseFloat(values.scp_logic) + parseFloat(values.scp_bodymovement) + parseFloat(values.scp_senses) + parseFloat(values.scp_rhythm) + parseFloat(values.scp_visual) + parseFloat(values.scp_observation) + parseFloat(values.scp_communication) != 100) {
+
+        errors.scp = toast.error("Total of all fields in study and career potential is not equal to 100.");
+    } 
 
     return errors; 
 }
@@ -88,12 +84,21 @@ export async function tpValidation(errors = {}, values){
 
 export async function asValidation(errors = {}, values){
     
+    if(parseFloat(values.as_follower) + parseFloat(values.as_experimental) + parseFloat(values.as_different) + parseFloat(values.as_thoughtful) != 100) {
+
+        errors.as = toast.error("Total of all fields in achievement style is not equal to 100.");
+    } 
 
     return errors;
 }
 
 
 export async function lcValidation(errors = {}, values){
+
+    if(parseFloat(values.scp_leadership) + parseFloat(values.scp_management) + parseFloat(values.scp_bodybalance) + parseFloat(values.scp_logic) + parseFloat(values.scp_bodymovement) + parseFloat(values.scp_senses) + parseFloat(values.scp_rhythm) + parseFloat(values.scp_visual) + parseFloat(values.scp_observation) + parseFloat(values.scp_communication) != 100) {
+
+        errors.invalid = toast.error("Total of all fields in learning and communication is not equal to 100.");
+    } 
     
 
     return errors;
@@ -101,6 +106,11 @@ export async function lcValidation(errors = {}, values){
 
 
 export async function waValidation(errors = {}, values){
+
+    if(parseFloat(values.scp_leadership) + parseFloat(values.scp_management) + parseFloat(values.scp_bodybalance) + parseFloat(values.scp_logic) + parseFloat(values.scp_bodymovement) + parseFloat(values.scp_senses) + parseFloat(values.scp_rhythm) + parseFloat(values.scp_visual) + parseFloat(values.scp_observation) + parseFloat(values.scp_communication) != 100) {
+
+        errors.invalid = toast.error("Total of all fields in work ability is not equal to 100.");
+    } 
     
 
     return errors;
