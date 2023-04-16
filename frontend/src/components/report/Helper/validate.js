@@ -72,13 +72,39 @@ export async function scpValidation(errors = {}, values){
 }
 
 
-export async function tpValidation(errors = {}, values){
+export async function tpValidation(errors = {}, values) {
 
-    // if((values.tp_right + values.tp_left) != 100) {
-    //     errors.username = toast.error("Thinking pattern value doesn't equal 100.");
-    // }
 
-    errors.tp = toast.error("The value in the fields of thinking pattern is not as follows, \"## + #X\".");
+    const format = /\d\d\s\+\s\dX/;
+
+    if(!format.test(values.tp_right) || !format.test(values.tp_left)) {
+        errors.tp = toast.error("The value in the fields of thinking pattern is not as follows, \"## + #X\".");
+
+        return errors;
+    }
+
+    const right = (values.tp_right).trim().split("+");
+    const tpr_val = right[0];
+    const tpr_count = right[1];
+    console.log(tpr_val);
+    console.log(tpr_count);
+
+    const left = (values.tp_left).trim().split("+");
+    const tpl_val = left[0];
+    const tpl_count = left[1];
+    console.log(tpl_val);
+    console.log(tpl_count);
+
+    if((tpr_val + tpl_val) != 100) {
+
+        errors.tp = toast.error("The thinking pattern field value total is not 100.");
+
+    }
+
+    else if(tpr_count >= 0 && tpr_count <= 5 && tpl_count >= 0 && tpl_count <= 5) {
+
+        errors.tp = toast.error("The count in thinking pattern field in not between 0 and 5.");
+    }
 
     return errors; 
 }
