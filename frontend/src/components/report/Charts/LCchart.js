@@ -1,18 +1,32 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
+import useFetch from "../../../hooks/useFetch";
 
 ChartJS.register (
   ArcElement, Tooltip, Legend, Title
 );
 
-function LCchart() {
+function LCchart(props) {
+
+  console.log(props.id);
+
+  // get report
+  let flag = false;
+  const [{ apiData }] = useFetch(props.id);
+  if (apiData) {
+    flag = true;
+  }
+
+  const lc_auditory = apiData?.rows?.[0]?.lc_auditory;
+  const lc_visual = apiData?.rows?.[0]?.lc_visual;
+  const lc_physical = apiData?.rows?.[0]?.lc_physical;
 
   const data = {
     labels: ['Auditory', 'Visual', 'Physical'],
     datasets: [{
       label: '',
-      data: [30, 32, 38],
+      data: [lc_auditory, lc_visual, lc_physical],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',

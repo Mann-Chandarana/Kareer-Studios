@@ -130,7 +130,6 @@ router.put('/updateReport/:student_id', verifyCounsellors, async(req, res) => {
             return;
         }
         else {
-            // validations remaining
 
             const { student_id } = req.params;
 

@@ -88,12 +88,12 @@ function Assessment() {
         });
 
         addPromise.then(function(){ 
-          navigate(`/assessment/${id}`) 
-        })
+          navigate(`/report/${id}`) 
+        });
 
       }
       
-      else {
+      else if(flag == true) {
         let updatePromise = updateReport(values, id);
 
         toast.promise(updatePromise, {
@@ -102,9 +102,9 @@ function Assessment() {
           error: <b>Could not update!</b>,
         });
 
-        updatePromise.then(function(){ 
-          navigate(`/assessment/${id}`) 
-        })
+        // updatePromise.then(function(){ 
+        //   navigate(`/report/${id}`) 
+        // });
 
       }
     },

@@ -1,18 +1,34 @@
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
+import useFetch from "../../../hooks/useFetch";
 
 ChartJS.register (
   ArcElement, Tooltip, Legend, Title
 );
 
-function WAchart() {
+function WAchart(props) {
+
+  console.log(props.id);
+
+  // get report
+  let flag = false;
+  const [{ apiData }] = useFetch(props.id);
+  if (apiData) {
+    flag = true;
+  }
+
+  const wa_intelligent = apiData?.rows?.[0]?.wa_intelligent;
+  const wa_emotional = apiData?.rows?.[0]?.wa_emotional;
+  const wa_visionary = apiData?.rows?.[0]?.wa_visionary;
+  const wa_creative = apiData?.rows?.[0]?.wa_creative;
+  const wa_adverse = apiData?.rows?.[0]?.wa_adverse;
 
   const data = {
     labels: ['Intelligent', 'Emotional', 'Visionary', 'Creative', 'Adverse'],
     datasets: [{
       label: '',
-      data: [16.95, 24.29, 21.47, 19.21, 18.08],
+      data: [wa_intelligent, wa_emotional, wa_visionary, wa_creative, wa_adverse],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
