@@ -78,18 +78,19 @@ export async function tpValidation(errors = {}, values) {
     const format = /\d\d\s\+\s\dX/;
 
     if(!format.test(values.tp_right) || !format.test(values.tp_left)) {
+        
         errors.tp = toast.error("The value in the fields of thinking pattern is not as follows, \"## + #X\".");
 
         return errors;
     }
 
-    const right = (values.tp_right).trim().split("+");
+    const right = (values.tp_right).trim().split(" + ");
     const tpr_val = right[0];
     const tpr_count = right[1];
     console.log(tpr_val);
     console.log(tpr_count);
 
-    const left = (values.tp_left).trim().split("+");
+    const left = (values.tp_left).trim().split(" + ");
     const tpl_val = left[0];
     const tpl_count = left[1];
     console.log(tpl_val);
