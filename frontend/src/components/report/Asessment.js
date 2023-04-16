@@ -74,7 +74,7 @@ function Assessment() {
     },
     
     enableReinitialize: true,
-    //validate: assessmentValidate,
+    validate: assessmentValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
@@ -87,7 +87,7 @@ function Assessment() {
         toast.promise(addPromise, {
           loading: "Adding...",
           success: <b>Added successfully...!</b>,
-          error: <b>Could not update!</b>,
+          error: <b>Could not add!</b>,
         });
 
       }
@@ -107,6 +107,8 @@ function Assessment() {
 
   return (
     <main id="main" className="main">
+
+      <Toaster position="top-center" reverseOrder={false}></Toaster>
       <br></br>
       <center>
         <h2>Assessment Report</h2>
@@ -239,7 +241,7 @@ function Assessment() {
           <CCol xs>
             <CInputGroup className="mb-3">
               <CInputGroupText>Thoughtful</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('as_thoughful')}/>
+              <CFormInput {...formik.getFieldProps('as_thoughtful')}/>
             </CInputGroup>
           </CCol>
         </CRow>
