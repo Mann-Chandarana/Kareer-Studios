@@ -1,9 +1,11 @@
 import client from "../../../api";
 
-export async function addReport(response){
+export async function addReport(response, id){
     try {
+
+        console.log(id);
         
-        const data = await client(`/reports/addReport/${response.student_id}`, response);
+        const data = await client.post(`/reports/addReport/${id}`, response);
 
         return Promise.resolve({ data })
 
@@ -13,10 +15,10 @@ export async function addReport(response){
 }
 
 
-export async function updateReport(response){
+export async function updateReport(response, id){
     try {
         
-        const data = await client(`/reports/updateReport/${response.student_id}`, response);
+        const data = await client.put(`/reports/updateReport/${id}`, response);
 
         return Promise.resolve({ data })
 

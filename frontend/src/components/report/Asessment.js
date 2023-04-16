@@ -28,41 +28,41 @@ function Assessment() {
   const [{apiData}] = useFetch(id);
   const navigate = useNavigate();
 
-  console.log(apiData.rows[0].scp_leadership);
+  ///console.log(apiData.rows[0]);
 
   const formik = useFormik({
     initialValues: {
-      student_id: apiData?.rows?.[0]?.student_id || "",
-      scp_leadership: apiData?.scp_leadership || "",
-      scp_management: apiData?.scp_management || "",
-      scp_bodybalance: apiData?.scp_bodybalance || "",
-      scp_logic: apiData?.scp_logic || "",
-      scp_bodymovement: apiData?.scp_bodymovement || "",
-      scp_senses: apiData?.scp_senses || "",
-      scp_rhythm: apiData?.scp_rhythm || "",
-      scp_visual: apiData?.scp_visual || "",
-      scp_observation: apiData?.scp_observation || "",
-      scp_communication: apiData?.scp_communication || "",
-      tp_right: apiData?.tp_right || "",
-      tp_left: apiData?.tp_left || "",
-      as_follower: apiData?.as_follower || "",
-      as_experimental: apiData?.as_experimental || "",
-      as_different: apiData?.as_different || "",
-      as_thoughtful: apiData?.as_thoughtful || "",
-      lc_auditory: apiData?.lc_auditory || "",
-      lc_visual: apiData?.lc_visual || "",
-      lc_physical: apiData?.lc_physical || "",
-      wa_intelligent: apiData?.wa_intelligent || "",
-      wa_emotional: apiData?.wa_emotional || "",
-      wa_visionary: apiData?.wa_visionary || "",
-      wa_creative: apiData?.wa_creative || "",
-      wa_adverse: apiData?.wa_adverse || "",
-      pt_name: apiData?.pt_name || "",
-      pt_info: apiData?.pt_info || "",
-      sc_careers: apiData?.sc_careers || "",
-      sc_stream: apiData?.sc_stream || "",
-      sc_subjects: apiData?.sc_subjects || "",
-      additional_note: apiData?.additional_note || "",
+      student_id: apiData?.rows?.[0]?.rows?.[0]?.student_id || "",
+      scp_leadership: apiData?.rows?.[0]?.scp_leadership || "",
+      scp_management: apiData?.rows?.[0]?.scp_management || "",
+      scp_bodybalance: apiData?.rows?.[0]?.scp_bodybalance || "",
+      scp_logic: apiData?.rows?.[0]?.scp_logic || "",
+      scp_bodymovement: apiData?.rows?.[0]?.scp_bodymovement || "",
+      scp_senses: apiData?.rows?.[0]?.scp_senses || "",
+      scp_rhythm: apiData?.rows?.[0]?.scp_rhythm || "",
+      scp_visual: apiData?.rows?.[0]?.scp_visual || "",
+      scp_observation: apiData?.rows?.[0]?.scp_observation || "",
+      scp_communication: apiData?.rows?.[0]?.scp_communication || "",
+      tp_right: apiData?.rows?.[0]?.tp_right || "",
+      tp_left: apiData?.rows?.[0]?.tp_left || "",
+      as_follower: apiData?.rows?.[0]?.as_follower || "",
+      as_experimental: apiData?.rows?.[0]?.as_experimental || "",
+      as_different: apiData?.rows?.[0]?.as_different || "",
+      as_thoughtful: apiData?.rows?.[0]?.as_thoughtful || "",
+      lc_auditory: apiData?.rows?.[0]?.lc_auditory || "",
+      lc_visual: apiData?.rows?.[0]?.lc_visual || "",
+      lc_physical: apiData?.rows?.[0]?.lc_physical || "",
+      wa_intelligent: apiData?.rows?.[0]?.wa_intelligent || "",
+      wa_emotional: apiData?.rows?.[0]?.wa_emotional || "",
+      wa_visionary: apiData?.rows?.[0]?.wa_visionary || "",
+      wa_creative: apiData?.rows?.[0]?.wa_creative || "",
+      wa_adverse: apiData?.rows?.[0]?.wa_adverse || "",
+      pt_name: apiData?.rows?.[0]?.pt_name || "",
+      pt_info: apiData?.rows?.[0]?.pt_info || "",
+      sc_careers: apiData?.rows?.[0]?.sc_careers || "",
+      sc_stream: apiData?.rows?.[0]?.sc_stream || "",
+      sc_subjects: apiData?.rows?.[0]?.sc_subjects || "",
+      additional_note: apiData?.rows?.[0]?.additional_note || "",
     },
     
     enableReinitialize: true,
@@ -72,7 +72,7 @@ function Assessment() {
     onSubmit: async (values) => {
       values = await Object.assign(values);
 
-      let addPromise = addReport(values);
+      let addPromise = addReport(values, id);
 
       toast.promise(addPromise, {
         loading: "Adding...",
@@ -80,7 +80,7 @@ function Assessment() {
         error: <b>Could not update!</b>,
       });
 
-      let updatePromise = updateReport(values);
+      let updatePromise = updateReport(values, id);
 
       toast.promise(updatePromise, {
         loading: "Updating...",
