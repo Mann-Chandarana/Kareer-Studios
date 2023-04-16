@@ -22,10 +22,18 @@ import useFetch from "../../hooks/useFetch";
 
 
 function Assessment() {
+
   let { id } = useParams();
 
-  // update report
+  // get report
+  let flag = false;
   const [{apiData}] = useFetch(id);
+  if (apiData) {
+    flag = true;
+  
+  }
+  console.log(flag);
+
   const navigate = useNavigate();
 
   ///console.log(apiData.rows[0]);
@@ -72,21 +80,28 @@ function Assessment() {
     onSubmit: async (values) => {
       values = await Object.assign(values);
 
-      let addPromise = addReport(values, id);
+      if(flag == false) 
+      {
+        let addPromise = addReport(values, id);
 
-      toast.promise(addPromise, {
-        loading: "Adding...",
-        success: <b>Added successfully...!</b>,
-        error: <b>Could not update!</b>,
-      });
+        toast.promise(addPromise, {
+          loading: "Adding...",
+          success: <b>Added successfully...!</b>,
+          error: <b>Could not update!</b>,
+        });
 
-      let updatePromise = updateReport(values, id);
+      }
+      
+      else {
+        let updatePromise = updateReport(values, id);
 
-      toast.promise(updatePromise, {
-        loading: "Updating...",
-        success: <b>Updated successfully...!</b>,
-        error: <b>Could not update!</b>,
-      });
+        toast.promise(updatePromise, {
+          loading: "Updating...",
+          success: <b>Updated successfully...!</b>,
+          error: <b>Could not update!</b>,
+        });
+
+      }
     },
   });
 
