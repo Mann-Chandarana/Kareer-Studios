@@ -87,6 +87,10 @@ function Assessment() {
           error: <b>Could not add!</b>,
         });
 
+        addPromise.then(function(){ 
+          navigate(`/assessment/${id}`) 
+        })
+
       }
       
       else {
@@ -97,6 +101,10 @@ function Assessment() {
           success: <b>Updated successfully...!</b>,
           error: <b>Could not update!</b>,
         });
+
+        updatePromise.then(function(){ 
+          navigate(`/assessment/${id}`) 
+        })
 
       }
     },

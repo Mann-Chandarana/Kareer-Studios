@@ -78,6 +78,8 @@ export async function tpValidation(errors = {}, values){
     //     errors.username = toast.error("Thinking pattern value doesn't equal 100.");
     // }
 
+    errors.tp = toast.error("The value in the fields of thinking pattern is not as follows, \"## + #X\".");
+
     return errors; 
 }
 
@@ -95,9 +97,9 @@ export async function asValidation(errors = {}, values){
 
 export async function lcValidation(errors = {}, values){
 
-    if(parseFloat(values.scp_leadership) + parseFloat(values.scp_management) + parseFloat(values.scp_bodybalance) + parseFloat(values.scp_logic) + parseFloat(values.scp_bodymovement) + parseFloat(values.scp_senses) + parseFloat(values.scp_rhythm) + parseFloat(values.scp_visual) + parseFloat(values.scp_observation) + parseFloat(values.scp_communication) != 100) {
+    if(parseFloat(values.lc_auditory) + parseFloat(values.lc_visual) + parseFloat(values.lc_physical) != 100) {
 
-        errors.invalid = toast.error("Total of all fields in learning and communication is not equal to 100.");
+        errors.lc = toast.error("Total of all fields in learning and communication is not equal to 100.");
     } 
     
 
@@ -107,11 +109,10 @@ export async function lcValidation(errors = {}, values){
 
 export async function waValidation(errors = {}, values){
 
-    if(parseFloat(values.scp_leadership) + parseFloat(values.scp_management) + parseFloat(values.scp_bodybalance) + parseFloat(values.scp_logic) + parseFloat(values.scp_bodymovement) + parseFloat(values.scp_senses) + parseFloat(values.scp_rhythm) + parseFloat(values.scp_visual) + parseFloat(values.scp_observation) + parseFloat(values.scp_communication) != 100) {
+    if(parseFloat(values.wa_intelligent) + parseFloat(values.wa_emotional) + parseFloat(values.wa_visionary) + parseFloat(values.wa_creative) + parseFloat(values.wa_adverse) != 100) {
 
-        errors.invalid = toast.error("Total of all fields in work ability is not equal to 100.");
-    } 
-    
+        errors.wa = toast.error("Total of all fields in work ability is not equal to 100.");
+    }     
 
     return errors;
 }
