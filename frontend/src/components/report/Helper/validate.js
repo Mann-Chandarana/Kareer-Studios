@@ -96,13 +96,14 @@ export async function tpValidation(errors = {}, values) {
     console.log(tpl_val);
     console.log(tpl_count);
 
-    if((tpr_val + tpl_val) != 100) {
+
+    if((parseFloat(tpr_val) + parseFloat(tpl_val)) != 100) {
 
         errors.tp = toast.error("The thinking pattern field value total is not 100.");
 
     }
 
-    else if(tpr_count >= 0 && tpr_count <= 5 && tpl_count >= 0 && tpl_count <= 5) {
+    else if(parseFloat(tpr_count) < 0 || parseFloat(tpr_count) > 5 ||parseFloat(tpl_count) < 0 || parseFloat(tpl_count) > 5) {
 
         errors.tp = toast.error("The count in thinking pattern field in not between 0 and 5.");
     }
