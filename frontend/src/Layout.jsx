@@ -72,6 +72,7 @@ function Layout() {
 						<Route path='/givefeedback' element={<GiveStudentFeedback />} />
 						<Route path='/viewfeedback' element={<ViewStudentFeedback />} />
 						<Route path='/report/:id' element={<Report />} />
+						<Route path='/assessment' element={<></>} />
 					</Routes>
 				</>
 			)}

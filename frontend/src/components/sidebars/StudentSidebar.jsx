@@ -76,6 +76,13 @@ function StudentSidebar() {
 							</NavLink>
 						</li>
 
+						<li className='nav-item'>
+							<NavLink className='nav-link' to='/assessment'>
+							<i class="fa-solid fa-chart-simple"></i>
+								<span>Assessment Report</span>
+							</NavLink>
+						</li>
+
 						<li style={{ marginTop: '3rem' }} className='nav-heading'>
 							Feedback
 						</li>
