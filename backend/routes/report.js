@@ -135,7 +135,8 @@ router.put('/updateReport/:student_id', verifyCounsellors, async(req, res) => {
 
             const { scp_leadership, scp_management, scp_bodybalance, scp_logic, scp_bodymovement, scp_senses, scp_rhythm, scp_visual, scp_observation, scp_communication, tp_right, tp_left, as_follower, as_experimental, as_different, as_thoughtful, lc_auditory, lc_visual, lc_physical, wa_intelligent, wa_emotional, wa_visionary, wa_creative, wa_adverse, pt_name, pt_info, sc_careers, sc_stream, sc_subjects, additional_note } = req.body;
 
-            console.log(req.body);
+            // console.log(req.body);
+            console.log("Hello")
 
             await reportHandler.updateReport(student_id, scp_leadership, scp_management, scp_bodybalance, scp_logic, scp_bodymovement, scp_senses, scp_rhythm, scp_visual, scp_observation, scp_communication, tp_right, tp_left, as_follower, as_experimental, as_different, as_thoughtful, lc_auditory, lc_visual, lc_physical, wa_intelligent, wa_emotional, wa_visionary, wa_creative, wa_adverse, pt_name, pt_info, sc_careers, sc_stream, sc_subjects, additional_note);
         

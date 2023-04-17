@@ -44,15 +44,16 @@ function Report() {
   const sc_subjects = apiData?.rows?.[0]?.sc_subjects;
   const additional_note = apiData?.rows?.[0]?.additional_note;
 
+
   return (
     <main id="main" className="main">
       {flag ? (
         <div>
           <br></br>
 
-          <div style={{ display: "flex", justifyContent: "right" }}>
-            <CButton type="submit" color="primary" variant="outline">
-              <Link to={"/assessment/" + id}>Edit assessment</Link>
+          <div  style={{ display: "flex", justifyContent: "right" }}>
+            <CButton  type="submit" color="primary" variant="outline">
+              <Link to={"/assessment/" + id}>Edit assessment </Link>
             </CButton>
             <br></br>
           </div>
@@ -72,7 +73,7 @@ function Report() {
                     </CCardTitle>
                     <br></br>
                     <center>
-                      <SCP1chart  id={id}/>
+                      <SCP1chart id={id} />
                     </center>
                     <br></br>
                     <br></br>
@@ -85,7 +86,7 @@ function Report() {
                     <CCardTitle>Study & Career Potential - High</CCardTitle>
                     <br></br>
                     <center>
-                      <SCP2chart id={id}/>
+                      <SCP2chart id={id} />
                     </center>
                     <br></br>
                     <br></br>
@@ -98,7 +99,7 @@ function Report() {
                     <CCardTitle>Study & Career Potential - Average</CCardTitle>
                     <br></br>
                     <center>
-                      <SCP3chart id={id}/>
+                      <SCP3chart id={id} />
                     </center>
                     <br></br>
                     <br></br>
@@ -115,7 +116,7 @@ function Report() {
                     <CCardTitle>Thinking Pattern</CCardTitle>
                     <CCardText></CCardText>
                     <center>
-                      <TPchart id={id}/>
+                      <TPchart id={id} />
                     </center>
                   </CCardBody>
                 </CCard>
@@ -127,7 +128,7 @@ function Report() {
                     <CCardTitle>Achievement Style</CCardTitle>
                     <CCardText></CCardText>
                     <center>
-                      <ASchart id={id}/>
+                      <ASchart id={id} />
                     </center>
                   </CCardBody>
                 </CCard>
@@ -141,7 +142,7 @@ function Report() {
                     <CCardTitle>Learning & Communication</CCardTitle>
                     <CCardText></CCardText>
                     <center>
-                      <LCchart id={id}/>
+                      <LCchart id={id} />
                     </center>
                   </CCardBody>
                 </CCard>
@@ -152,7 +153,7 @@ function Report() {
                     <CCardTitle>Work Ability</CCardTitle>
                     <CCardText></CCardText>
                     <center>
-                      <WAchart id={id}/>
+                      <WAchart id={id} />
                     </center>
                   </CCardBody>
                 </CCard>
@@ -222,7 +223,7 @@ function Report() {
 
           <div style={{ display: "flex", justifyContent: "right" }}>
             <CButton type="submit" color="primary" variant="outline">
-              <Link to={"/assessment/" + id}>Edit assessment</Link>
+              <Link to={"/assessment/" + id}>Add assessment</Link>
             </CButton>
             <br></br>
           </div>
