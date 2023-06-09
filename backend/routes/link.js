@@ -19,12 +19,14 @@ router.get('/generate', verifyCounsellors, async (req, res) => {
     try {
         const uniqueKey = counsellorId + '@' + uuid;
 
-        const encryptedId = cipher.encrypt(uniqueKey);
-        const encodedURI = encodeURIComponent(encryptedId);
+        // const encryptedId = cipher.encrypt(uniqueKey);
+        const encodedURI = encodeURIComponent(uniqueKey);
 
         const generatedLink = `http://localhost:3000/link/register/${encodedURI}`;
 
         await db.redisClient.SETEX(uniqueKey, 60 * 60, counsellorId);
+
+        console.log(encodedURI);
 
         res.status(200).send({ link: generatedLink });
     } catch (err) {
@@ -40,10 +42,11 @@ router.post('/register/:id', async (req, res) => {
 
     try {
         const decodedURI = decodeURIComponent(encryptedId);
-        const uniqueKey = cipher.decrypt(decodedURI);
-        const counsellorId = uniqueKey.split('@')[0];
+        //const uniqueKey = cipher.decrypt(decodedURI);
+        const counsellorId = decodedURI.split('@')[0];
 
-        const result = await db.redisClient.GET(uniqueKey);
+        const result = await db.redisClient.GET(decodedURI);
+        console.log(result)
         const isValid = counsellorId === result;
 
         if (isValid) {
@@ -69,7 +72,7 @@ router.post('/register/:id', async (req, res) => {
             // clear redis
             await db.redisClient.DEL(email);
             await db.redisClient.DEL(phone);
-            await db.redisClient.DEL(uniqueKey);
+            await db.redisClient.DEL(decodedURI);
 
 
             // send email and password to email

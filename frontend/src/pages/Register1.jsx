@@ -11,19 +11,27 @@ const Register1 = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // console.log(id);
+  console.log(id);
 
   const [show, setshow] = useState(false);
 
   const RegisterationBtn = () => {
     const { name, email, phone, mobileOtp, emailOtp } = user;
     if (name && email && phone && mobileOtp && emailOtp) {
-      toast.success("Registeration Successful",{
-        position:"top-center"
+
+      fetch('http://localhost:8000/api/link/register/' + id,
+      { method: 'POST',
+        body: JSON.stringify({name, email, phone, mobileOtp, emailOtp}),
+        headers: {
+          'Content-Type': 'json'
+        }
+      }).then(res => {
+        if(res.status === 202) {
+          toast.success("Registeration Successful",{
+            position:"top-center"
+          });
+        }
       });
-
-
-      // fetch('http://localhost:8000/api/link/register/' + id);
     }
     if ((name && email && phone) && !(mobileOtp && emailOtp)) {
       toast.warning("Please fill the fields with valid OTP",{
@@ -200,7 +208,7 @@ const Register1 = () => {
                         </div>
 
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button type="submit" className="btn btn-primary btn-lg" onClick={RegisterationBtn}>Register</button>
+                          <button type="submit" className="btn btn-primary btn-lg" onClick={handleSubmit}>Register</button>
                         </div>
                       </form>
 

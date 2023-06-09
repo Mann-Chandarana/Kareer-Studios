@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from 'react';
+import SessionContext from '../../contexts/SessionContext';
+import useCaptialize from '../../hooks/useCaptialize';
 import ASchart from "./Charts/ASchart";
 import LCchart from "./Charts/LCchart";
 import WAchart from "./Charts/WAchart";
@@ -28,6 +30,8 @@ import { Link, useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 
 function Report() {
+
+  const { user } = useContext(SessionContext);
   let { id } = useParams();
 
   // get report
@@ -50,13 +54,17 @@ function Report() {
       {flag ? (
         <div>
           <br></br>
-
+          {user.role === 'admin' && (          
+          
           <div  style={{ display: "flex", justifyContent: "right" }}>
             <CButton  type="submit" color="primary" variant="outline">
               <Link to={"/assessment/" + id}>Edit assessment </Link>
             </CButton>
             <br></br>
           </div>
+
+          )}
+
           <br></br>
 
           <center>
