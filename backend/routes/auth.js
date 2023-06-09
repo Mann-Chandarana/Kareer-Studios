@@ -78,12 +78,14 @@ router.post('/createUser', async (req, res) => {
 // Route-2 /api/auth/login --- for login
 router.post('/login', async (req, res) => {
     let { email, password } = req.body;
+    console.log()
     if (!email || !password) {
         return res.status(400).send({ error: "Invalid request body." });
     }
 
     try {
         let { result, role } = await getUserData(email);
+        console.log("Hello")
 
         if (!role) {
             return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });
@@ -101,9 +103,9 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Wrong Credentials!' });
         }
 
-        // if (role === 'student' && !user.paid) {
-        //     return res.status(400).json({ error: 'Payment not done!' });
-        // }
+        if (role === 'student' && !user.paid) {
+            return res.status(400).json({ error: 'Payment not done!' });
+        }
 
         user.role = role;
         delete user.password;

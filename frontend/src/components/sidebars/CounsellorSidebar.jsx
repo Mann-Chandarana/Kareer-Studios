@@ -35,6 +35,24 @@ function CounsellorSidebar() {
                     </NavLink>
                 </li>
 
+                <li style={{ marginTop: '3rem', marginBottom: '1rem' }} className='nav-heading'>
+                    Study Abroad
+                </li>
+
+                <li className='nav-item'>
+                    <NavLink className='nav-link' to='/givefeedback'>
+                        <i class="fa-solid fa-clipboard"></i>
+                        <span>Students Record</span>
+                    </NavLink>
+                </li>
+
+                <li className='nav-item'>
+                    <NavLink className='nav-link' to='/givefeedback'>
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Assign Program</span>
+                    </NavLink>
+                </li>
+
                 <li style={{ marginTop: '3rem' }} className="nav-heading">
                     Feedback
                 </li>

@@ -78,8 +78,33 @@ function StudentSidebar() {
 
 						<li className='nav-item'>
 							<NavLink className='nav-link' to={'/report/' + user.id}>
-							<i class="fa-solid fa-chart-simple"></i>
+								<i class="fa-solid fa-chart-simple"></i>
 								<span>Assessment Report</span>
+							</NavLink>
+						</li>
+
+						<li style={{ marginTop: '3rem',marginBottom:'1rem' }} className='nav-heading'>
+							Study Abroad
+						</li>
+
+						<li className='nav-item'>
+							<NavLink className='nav-link' to='/givefeedback'>
+							<i class="fa-solid fa-plus"></i>
+								<span>Add Record</span>
+							</NavLink>
+						</li>
+
+						<li className='nav-item'>
+							<NavLink className='nav-link' to='/givefeedback'>
+								<i class="fa-solid fa-list"></i>
+								<span>Suggested Programs</span>
+							</NavLink>
+						</li>
+
+						<li className='nav-item'>
+							<NavLink className='nav-link' to='/givefeedback'>
+								<i class="fa-solid fa-upload"></i>
+								<span>Document Upload</span>
 							</NavLink>
 						</li>
 
