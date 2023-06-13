@@ -11,12 +11,14 @@ export async function assessmentValidate(values) {
     asValidation(errors, values);
     lcValidation(errors, values);
     waValidation(errors, values);
+
+    console.log(errors);
     
     return errors;
 }
 
 
-export async function valueValidation(errors = {}, values) {
+function valueValidation(errors = {}, values) {
 
     if(values.scp_leadership == null || values.scp_management == null || values.scp_bodybalance == null || values.scp_logic == null || values.scp_bodymovement == null || values.scp_senses == null || values.scp_rhythm == null || values.scp_visual == null || values.scp_observation == null || values.scp_communication == null || values.tp_right == '' || values.tp_left == '' || values.as_follower == null || values.as_experimental == null || values.as_different == null || values.as_thoughtful == null || values.lc_auditory == null || values.lc_visual == null || values.lc_physical == null || values.wa_intelligent == null || values.wa_emotional == null || values.wa_visionary == null || values.wa_creative == null || values.wa_adverse == null || values.pt_name == '' || values.pt_info == '' || values.sc_careers == '' || values.sc_stream == '' || values.sc_subjects == '' || values.additional_note == '') {
 
@@ -61,7 +63,7 @@ export async function valueValidation(errors = {}, values) {
 }
 
 
-export async function scpValidation(errors = {}, values){
+function scpValidation(errors = {}, values){
 
     if(parseFloat(values.scp_leadership) + parseFloat(values.scp_management) + parseFloat(values.scp_bodybalance) + parseFloat(values.scp_logic) + parseFloat(values.scp_bodymovement) + parseFloat(values.scp_senses) + parseFloat(values.scp_rhythm) + parseFloat(values.scp_visual) + parseFloat(values.scp_observation) + parseFloat(values.scp_communication) != 100) {
 
@@ -72,7 +74,7 @@ export async function scpValidation(errors = {}, values){
 }
 
 
-export async function tpValidation(errors = {}, values) {
+function tpValidation(errors = {}, values) {
 
 
     const format = /\d\d\s\+\s\dX/;
@@ -112,7 +114,7 @@ export async function tpValidation(errors = {}, values) {
 }
 
 
-export async function asValidation(errors = {}, values){
+function asValidation(errors = {}, values){
     
     if(parseFloat(values.as_follower) + parseFloat(values.as_experimental) + parseFloat(values.as_different) + parseFloat(values.as_thoughtful) != 100) {
 
@@ -123,7 +125,7 @@ export async function asValidation(errors = {}, values){
 }
 
 
-export async function lcValidation(errors = {}, values){
+function lcValidation(errors = {}, values){
 
     if(parseFloat(values.lc_auditory) + parseFloat(values.lc_visual) + parseFloat(values.lc_physical) != 100) {
 
@@ -135,7 +137,7 @@ export async function lcValidation(errors = {}, values){
 }
 
 
-export async function waValidation(errors = {}, values){
+async function waValidation(errors = {}, values){
 
     const sum = (parseFloat(values.wa_intelligent) + parseFloat(values.wa_emotional) + parseFloat(values.wa_visionary) + parseFloat(values.wa_creative) + parseFloat(values.wa_adverse)).toFixed(2);
 

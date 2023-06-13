@@ -36,7 +36,7 @@ function Report() {
 
   // get report
   let flag = false;
-  const [{ apiData }] = useFetch(id);
+  const [{ apiData }] = useFetch(id, 'report');
   if (apiData) {
     flag = true;
   }
@@ -54,7 +54,7 @@ function Report() {
       {flag ? (
         <div>
           <br></br>
-          {user.role === 'admin' && (          
+          {user.role === 'counsellor' && (          
           
           <div  style={{ display: "flex", justifyContent: "right" }}>
             <CButton  type="submit" color="primary" variant="outline">
@@ -228,6 +228,7 @@ function Report() {
       ) : (
         <div>
           <br></br>
+          {user.role === 'counsellor' && ( 
 
           <div style={{ display: "flex", justifyContent: "right" }}>
             <CButton type="submit" color="primary" variant="outline">
@@ -235,6 +236,8 @@ function Report() {
             </CButton>
             <br></br>
           </div>
+          
+          )}
           <br></br>
 
           <center>

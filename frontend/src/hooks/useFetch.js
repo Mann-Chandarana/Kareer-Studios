@@ -2,23 +2,57 @@ import client from "../api";
 import { useEffect, useState } from "react";
 
 // custom hook
-export default function useFetch(query) {
-    const [getData, setData] = useState({apiData: undefined})
+export default function useFetch(id, type) {
+  const [getData, setData] = useState({ apiData: undefined });
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        switch (type) {
+          case "report":
+            const { report } = await client(`/reports/report/${id}`);
+            setData({ apiData: report });
+            break;
 
-        const fetchData = async () => {
-            try {                
-                const { data } = await client(`/reports/report/${query}`);
-                setData({ apiData: data });
+          case "academic":
+            const { academic } = await client(`/records/academic/${id}`);
+            setData({ apiData: academic });
+            break;
 
-            } catch (error) {
-                console.log("Error...");
-            }
-        };
-        fetchData()
+          case "ielts":
+            const { ielts } = await client(`/records/ielts/${id}`);
+            setData({ apiData: ielts });
+            break;
 
-    }, [query]);
+          case "pte":
+            const { pte } = await client(`/records/pte/${id}`);
+            setData({ apiData: pte });
+            break;
 
-    return [getData, setData];
+          case "gre":
+            const { gre } = await client(`/records/gre/${id}`);
+            setData({ apiData: gre });
+            break;
+
+          case "sat":
+            const { sat } = await client(`/records/sat/${id}`);
+            setData({ apiData: sat });
+            break;
+
+          case "gmat":
+            const { gmat } = await client(`/records/gmat/${id}`);
+            setData({ apiData: gmat });
+            break;
+
+          default:
+            throw new Error("Invalid type.");
+        }
+      } catch (error) {
+        console.log("Error...");
+      }
+    };
+    fetchData();
+  }, [id]);
+
+  return [getData, setData];
 }

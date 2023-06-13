@@ -32,6 +32,7 @@ app.use(PREFIX + '/students', require('./routes/students'));
 app.use(PREFIX + '/fees', require('./routes/fees'));
 app.use(PREFIX + '/feedbacks', require('./routes/feedbacks'));
 app.use(PREFIX + '/reports', require('./routes/report'));
+app.use(PREFIX + '/records', require('./routes/record'));
 
 
 if (isDevelopmentMode) {

@@ -173,3 +173,110 @@ CREATE TABLE IF NOT EXISTS reports(
     ON DELETE CASCADE
     
 );
+
+CREATE TABLE IF NOT EXISTS academic_scores (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+
+    ssc_board TEXT,
+    ssc_year TEXT,
+    ssc_score FLOAT,
+    ssc_backlog INTEGER,
+
+    hsc_board TEXT,
+    hsc_year TEXT,
+    hsc_score FLOAT,
+    hsc_backlog INTEGER,
+
+    diploma_uni TEXT,
+    diploma_year TEXT,
+    diploma_score FLOAT,
+    diploma_backlog INTEGER,
+    
+    ug_uni TEXT,
+    ug_year TEXT,
+    ug_score FLOAT,
+    ug_backlog INTEGER, 
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS ielts_scores (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+
+    ielts_listening_score float CHECK (ielts_listening_score >= 0 AND ielts_listening_score <= 9),
+    ielts_reading_score float CHECK (ielts_reading_score >= 0 AND ielts_reading_score <= 9),
+    ielts_writing_score float CHECK (ielts_writing_score >= 0 AND ielts_writing_score <= 9),
+    ielts_speaking_score float CHECK (ielts_speaking_score >= 0 AND ielts_speaking_score <= 9),
+    ielts_date DATE,
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS pte_scores (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+
+    pte_listening_score INTEGER NOT NULL CHECK (pte_listening_score BETWEEN 0 AND 90),
+    pte_reading_score INTEGER NOT NULL CHECK (pte_reading_score BETWEEN 0 AND 90),
+    pte_writing_score INTEGER NOT NULL CHECK (pte_writing_score BETWEEN 0 AND 90),
+    pte_speaking_score INTEGER NOT NULL CHECK (pte_speaking_score BETWEEN 0 AND 90),
+    pte_date DATE,
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS gre_scores (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+
+    gre_verbal_score INTEGER CHECK (gre_verbal_score >= 130 AND gre_verbal_score <= 170),
+    gre_quant_score INTEGER CHECK (gre_quant_score >= 130 AND gre_quant_score <= 170),
+    gre_writing_score DECIMAL(3, 1) CHECK (gre_writing_score >= 0 AND gre_writing_score <= 6),
+    gre_date DATE,
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS sat_scores (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+
+    sat_math_score INTEGER NOT NULL CHECK (sat_math_score >= 200 AND sat_math_score <= 800),
+    sat_english_score INTEGER NOT NULL CHECK (sat_english_score >= 200 AND sat_english_score <= 800),
+    sat_essay_score INTEGER CHECK (sat_essay_score >= 0 AND sat_essay_score <= 24),
+    sat_date DATE,
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS gmat_scores (
+  id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+
+  gmat_verbal_score INTEGER CHECK (gmat_verbal_score >= 0 AND gmat_verbal_score <= 60),
+  gmat_quant_score INTEGER CHECK (gmat_quant_score >= 0 AND gmat_quant_score <= 60),
+  gmat_writing_score INTEGER CHECK (gmat_writing_score >= 0 AND gmat_writing_score <= 6),
+  gmat_date DATE,
+
+  CONSTRAINT fk_student_id
+  FOREIGN KEY (student_id) 
+  REFERENCES students(id) 
+  ON DELETE CASCADE
+);

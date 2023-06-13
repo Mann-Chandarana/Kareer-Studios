@@ -23,6 +23,8 @@ import ViewStudentFeedback from './components/tables/students/ViewFeedback';
 import Report from './components/report/Report'
 import Assessment from './components/report/Asessment'
 import Register1 from './pages/Register1';
+import Record from './components/studyabroad/Record';
+import Score from './components/studyabroad/Score';
 
 function Layout() {
 	const { user } = useContext(SessionContext);
@@ -51,6 +53,7 @@ function Layout() {
 						<Route path='/givefeedback' element={<GiveFeedback />} />
 						<Route path='/report/:id' element={<Report />} />
 						<Route path='/assessment/:id' element={<Assessment />} />
+						<Route path='/record/:id' element={<Record />} />
 					</Routes>
 				</>
 			)}
@@ -71,6 +74,8 @@ function Layout() {
 						<Route path='/givefeedback' element={<GiveStudentFeedback />} />
 						<Route path='/viewfeedback' element={<ViewStudentFeedback />} />
 						<Route path='/report/:id' element={<Report />} />
+						<Route path='/record/:id' element={<Record />} />
+						<Route path='/score/:id' element={<Score />} />
 					</Routes>
 				</>
 			)}

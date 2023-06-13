@@ -88,7 +88,7 @@ function StudentSidebar() {
 						</li>
 
 						<li className='nav-item'>
-							<NavLink className='nav-link' to='/givefeedback'>
+							<NavLink className='nav-link' to={'/record/' + user.id}>
 							<i class="fa-solid fa-plus"></i>
 								<span>Add Record</span>
 							</NavLink>

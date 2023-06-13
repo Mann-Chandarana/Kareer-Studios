@@ -18,13 +18,13 @@ import { addReport, updateReport } from "./Helper/helper";
 import useFetch from "../../hooks/useFetch";
 
 
-function Assessment() {
+function Score() {
 
   let { id } = useParams();
 
   // get report
   let flag = false;
-  const [{apiData}] = useFetch(id, 'report');
+  const [{apiData}] = useFetch(id);
   if (apiData) {
     flag = true;
   
@@ -395,4 +395,4 @@ function Assessment() {
   );
 }
 
-export default Assessment;
+export default Score;
