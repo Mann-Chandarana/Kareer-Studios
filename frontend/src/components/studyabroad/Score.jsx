@@ -13,8 +13,8 @@ import {
   CCol,
   CFormTextarea,
 } from "@coreui/react";
-import { assessmentValidate } from "./Helper/validate"
-import { addReport, updateReport } from "./Helper/helper";
+// import { assessmentValidate } from "./Helper/validate"
+// import { addReport, updateReport } from "./Helper/helper";
 import useFetch from "../../hooks/useFetch";
 
 
@@ -35,80 +35,80 @@ function Score() {
 
   ///console.log(apiData.rows[0]);
 
-  const formik = useFormik({
-    initialValues: {
-      student_id: apiData?.rows?.[0]?.rows?.[0]?.student_id || "",
-      scp_leadership: apiData?.rows?.[0]?.scp_leadership || "",
-      scp_management: apiData?.rows?.[0]?.scp_management || "",
-      scp_bodybalance: apiData?.rows?.[0]?.scp_bodybalance || "",
-      scp_logic: apiData?.rows?.[0]?.scp_logic || "",
-      scp_bodymovement: apiData?.rows?.[0]?.scp_bodymovement || "",
-      scp_senses: apiData?.rows?.[0]?.scp_senses || "",
-      scp_rhythm: apiData?.rows?.[0]?.scp_rhythm || "",
-      scp_visual: apiData?.rows?.[0]?.scp_visual || "",
-      scp_observation: apiData?.rows?.[0]?.scp_observation || "",
-      scp_communication: apiData?.rows?.[0]?.scp_communication || "",
-      tp_right: apiData?.rows?.[0]?.tp_right || "",
-      tp_left: apiData?.rows?.[0]?.tp_left || "",
-      as_follower: apiData?.rows?.[0]?.as_follower || "",
-      as_experimental: apiData?.rows?.[0]?.as_experimental || "",
-      as_different: apiData?.rows?.[0]?.as_different || "",
-      as_thoughtful: apiData?.rows?.[0]?.as_thoughtful || "",
-      lc_auditory: apiData?.rows?.[0]?.lc_auditory || "",
-      lc_visual: apiData?.rows?.[0]?.lc_visual || "",
-      lc_physical: apiData?.rows?.[0]?.lc_physical || "",
-      wa_intelligent: apiData?.rows?.[0]?.wa_intelligent || "",
-      wa_emotional: apiData?.rows?.[0]?.wa_emotional || "",
-      wa_visionary: apiData?.rows?.[0]?.wa_visionary || "",
-      wa_creative: apiData?.rows?.[0]?.wa_creative || "",
-      wa_adverse: apiData?.rows?.[0]?.wa_adverse || "",
-      pt_name: apiData?.rows?.[0]?.pt_name || "",
-      pt_info: apiData?.rows?.[0]?.pt_info || "",
-      sc_careers: apiData?.rows?.[0]?.sc_careers || "",
-      sc_stream: apiData?.rows?.[0]?.sc_stream || "",
-      sc_subjects: apiData?.rows?.[0]?.sc_subjects || "",
-      additional_note: apiData?.rows?.[0]?.additional_note || "",
-    },
+  // const formik = useFormik({
+  //   initialValues: {
+  //     student_id: apiData?.rows?.[0]?.rows?.[0]?.student_id || "",
+  //     scp_leadership: apiData?.rows?.[0]?.scp_leadership || "",
+  //     scp_management: apiData?.rows?.[0]?.scp_management || "",
+  //     scp_bodybalance: apiData?.rows?.[0]?.scp_bodybalance || "",
+  //     scp_logic: apiData?.rows?.[0]?.scp_logic || "",
+  //     scp_bodymovement: apiData?.rows?.[0]?.scp_bodymovement || "",
+  //     scp_senses: apiData?.rows?.[0]?.scp_senses || "",
+  //     scp_rhythm: apiData?.rows?.[0]?.scp_rhythm || "",
+  //     scp_visual: apiData?.rows?.[0]?.scp_visual || "",
+  //     scp_observation: apiData?.rows?.[0]?.scp_observation || "",
+  //     scp_communication: apiData?.rows?.[0]?.scp_communication || "",
+  //     tp_right: apiData?.rows?.[0]?.tp_right || "",
+  //     tp_left: apiData?.rows?.[0]?.tp_left || "",
+  //     as_follower: apiData?.rows?.[0]?.as_follower || "",
+  //     as_experimental: apiData?.rows?.[0]?.as_experimental || "",
+  //     as_different: apiData?.rows?.[0]?.as_different || "",
+  //     as_thoughtful: apiData?.rows?.[0]?.as_thoughtful || "",
+  //     lc_auditory: apiData?.rows?.[0]?.lc_auditory || "",
+  //     lc_visual: apiData?.rows?.[0]?.lc_visual || "",
+  //     lc_physical: apiData?.rows?.[0]?.lc_physical || "",
+  //     wa_intelligent: apiData?.rows?.[0]?.wa_intelligent || "",
+  //     wa_emotional: apiData?.rows?.[0]?.wa_emotional || "",
+  //     wa_visionary: apiData?.rows?.[0]?.wa_visionary || "",
+  //     wa_creative: apiData?.rows?.[0]?.wa_creative || "",
+  //     wa_adverse: apiData?.rows?.[0]?.wa_adverse || "",
+  //     pt_name: apiData?.rows?.[0]?.pt_name || "",
+  //     pt_info: apiData?.rows?.[0]?.pt_info || "",
+  //     sc_careers: apiData?.rows?.[0]?.sc_careers || "",
+  //     sc_stream: apiData?.rows?.[0]?.sc_stream || "",
+  //     sc_subjects: apiData?.rows?.[0]?.sc_subjects || "",
+  //     additional_note: apiData?.rows?.[0]?.additional_note || "",
+  //   },
     
-    enableReinitialize: true,
-    validate: assessmentValidate,
-    validateOnBlur: false,
-    validateOnChange: false,
-    onSubmit: async (values) => {
-      values = await Object.assign(values);
+  //   enableReinitialize: true,
+  //   validate: assessmentValidate,
+  //   validateOnBlur: false,
+  //   validateOnChange: false,
+  //   onSubmit: async (values) => {
+  //     values = await Object.assign(values);
 
-      if(flag == false) 
-      {
-        let addPromise = addReport(values, id);
+  //     if(flag == false) 
+  //     {
+  //       let addPromise = addReport(values, id);
 
-        toast.promise(addPromise, {
-          loading: "Adding...",
-          success: <b>Added successfully...!</b>,
-          error: <b>Could not add!</b>,
-        });
+  //       toast.promise(addPromise, {
+  //         loading: "Adding...",
+  //         success: <b>Added successfully...!</b>,
+  //         error: <b>Could not add!</b>,
+  //       });
 
-        addPromise.then(function(){ 
-          navigate(`/report/${id}`) 
-        });
+  //       addPromise.then(function(){ 
+  //         navigate(`/report/${id}`) 
+  //       });
 
-      }
+  //     }
       
-      if(flag == true) {
-        let updatePromise = updateReport(values, id);
+  //     if(flag == true) {
+  //       let updatePromise = updateReport(values, id);
 
-        toast.promise(updatePromise, {
-          loading: "Updating...",
-          success: <b>Updated successfully...!</b>,
-          error: <b>Could not update!</b>,
-        });
+  //       toast.promise(updatePromise, {
+  //         loading: "Updating...",
+  //         success: <b>Updated successfully...!</b>,
+  //         error: <b>Could not update!</b>,
+  //       });
 
-        // updatePromise.then(function(){ 
-        //   navigate(`/report/${id}`) 
-        // });
+  //       // updatePromise.then(function(){ 
+  //       //   navigate(`/report/${id}`) 
+  //       // });
 
-      }
-    },
-  });
+  //     }
+  //   },
+  // });
 
   return (
     <main id="main" className="main">
@@ -119,7 +119,7 @@ function Score() {
         <h2>Assessment Report</h2>
       </center>
       <br></br>
-      <CForm onSubmit={formik.handleSubmit}>
+      {/* <CForm onSubmit={formik.handleSubmit}>
         <CFormLabel style={{ fontSize: "20px" }}>
           Study & Career Potential
         </CFormLabel>
@@ -390,7 +390,7 @@ function Score() {
             Submit
           </CButton>
         </div>
-      </CForm>
+      </CForm> */}
     </main>
   );
 }
