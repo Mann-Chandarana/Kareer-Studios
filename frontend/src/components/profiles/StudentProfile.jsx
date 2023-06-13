@@ -20,6 +20,11 @@ const StudentProfile = () => {
             </div>
 
             <div className="row">
+                <div className="col-lg-3 col-md-4 label ">Your ID</div>
+                <div className="col-lg-9 col-md-8">{user.id}</div>
+            </div>
+
+            <div className="row">
                 <div className="col-lg-3 col-md-4 label">Role</div>
                 <div className="col-lg-9 col-md-8">{capitalizeFirstLetter(user.role)}</div>
             </div>

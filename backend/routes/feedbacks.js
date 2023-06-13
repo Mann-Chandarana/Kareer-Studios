@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post('/addCounsellorFeed',verifyCounsellors, async(req,res)=>{
 	try {
-		const {counsellor_id,student_id,performance,planning,feedback} = req.body;
-		await feedbackHandler.addcounsellorfeedback(counsellor_id,student_id,performance,planning,feedback);
+		const {counsellor_id,student_id,performance,comments,status,start_date} = req.body;
+		await feedbackHandler.addcounsellorfeedback(counsellor_id,student_id,performance,comments,status,start_date);
 		
 		res.status(200).send({message:"Feedback added successfully !"})
 	} catch (err) {
@@ -19,8 +19,8 @@ router.post('/addCounsellorFeed',verifyCounsellors, async(req,res)=>{
 
 router.patch('/updateCounsellorFeed',verifyCounsellors,async(req,res)=>{
 	try {
-		const {id,Performance,Planning,Feedback} = req.body;
-		await feedbackHandler.updatecounsellorfeedback(id,Performance,Planning,Feedback);
+		const {id,Performance,comments,status,start_date} = req.body;
+		await feedbackHandler.updatecounsellorfeedback(id,Performance,comments,status,start_date);
 
 		res.status(200).send({message:"Updated successfully !"})
 	} catch (err) {

@@ -107,9 +107,11 @@ CREATE TABLE IF NOT EXISTS counsellor_feedbacks(
     id SERIAL PRIMARY KEY,
     student_id INTEGER,
     counsellor_id INTEGER,
+    phone TEXT,
+    status BOOLEAN,
+    start_date TEXT,
     performance TEXT,
-    planning TEXT,
-    feedback TEXT,
+    comments TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)

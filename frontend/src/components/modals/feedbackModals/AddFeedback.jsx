@@ -9,8 +9,9 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
 		student_id: '',
 		counsellor_id: counsellor_id,
 		performance: '',
-		planning: '',
-		feedback: '',
+		comments: '',
+		status: false,
+		start_date:'',
 	});
 
 	const [loading, setloading] = useState(false);
@@ -32,8 +33,9 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
 				student_id: '',
 				counsellor_id: counsellor_id,
 				performance: '',
-				planning: '',
-				feedback: '',
+				comments: '',
+				status: false,
+				start_data:'',
 			});
 		} catch (error) {
 			console.log(error);
@@ -78,7 +80,7 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
 							<textarea
 								className='form-control'
 								style={{ fontSize: '14px', resize: 'vertical' }}
-								rows='3'
+								rows='2'
 								name='performance'
 								value={feedback.performance}
 								onChange={handleChange}
@@ -89,13 +91,13 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
 						</div>
 
 						<div className='floating-label-group mt-2'>
-							<label className='floating-label '>Planning</label>
+							<label className='floating-label '>Comments</label>
 							<textarea
 								className='form-control'
 								style={{ fontSize: '14px', resize: 'vertical' }}
-								rows='3'
-								name='planning'
-								value={feedback.planning}
+								rows='2'
+								name='comments'
+								value={feedback.comments}
 								onChange={handleChange}
 								autoComplete='off'
 								autoFocus
@@ -103,20 +105,30 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
 							></textarea>
 						</div>
 
-						<div className='floating-label-group mt-2'>
-							<label className='floating-label '>Feedback</label>
-							<textarea
-								className='form-control'
-								style={{ fontSize: '14px', resize: 'vertical' }}
-								rows='3'
-								name='feedback'
-								value={feedback.feedback}
-								onChange={handleChange}
-								autoComplete='off'
-								autoFocus
-								required
-							></textarea>
-						</div>
+						<div className="floating-label-group mt-2">
+                            <label className="form-check-label">Status: </label>
+                            <input
+                                onChange={handleChange}
+                                checked={feedback.status}
+                                type="checkbox"
+                                name="status"
+                                autoComplete="off"
+                                className="form-check-input mx-1"
+                            />
+                        </div>
+
+						<div className="floating-label-group mt-2">
+                            <label className=" form-check-label">Date: </label>
+                            <input
+                                onChange={handleChange}
+                                type="date"
+                                name="start_date"
+								value={feedback.start_date}
+                                autoComplete="off"
+                                className="form-check-input mx-1"
+								style={{width:"8rem",height:"20px"}}
+                            />
+                        </div>
 					</div>
 				</div>
 			</div>

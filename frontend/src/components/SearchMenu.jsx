@@ -6,7 +6,7 @@ export const SearchMenu = ({ handleQueryChange }) => {
             <input
                 type="text"
                 className="form-control"
-                placeholder="Enter ID, name, email"
+                placeholder="Enter Name or Email"
                 onChange={handleQueryChange}
             />
             <span className="btn btn-sm border disabled" type="button">

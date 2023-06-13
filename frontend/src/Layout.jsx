@@ -16,7 +16,6 @@ import ParentSidebar from './components/sidebars/ParentSidebar';
 import AddParent from './components/tables/students/AddParent';
 import { FeeReceipt } from './components/tables/students/FeeReceipt';
 import { AcademicDetails } from './components/tables/students/AcademicDetails';
-import Register from './pages/Register';
 import ViewFeedback from './components/tables/counsellor/ViewFeedback';
 import GiveFeedback from './components/tables/counsellor/GiveFeedback';
 import GiveStudentFeedback from './components/tables/students/GiveFeedback';
