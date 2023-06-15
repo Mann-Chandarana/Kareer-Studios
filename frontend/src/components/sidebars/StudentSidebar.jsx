@@ -95,14 +95,14 @@ function StudentSidebar() {
 						</li>
 
 						<li className='nav-item'>
-							<NavLink className='nav-link' to='/givefeedback'>
+							<NavLink className='nav-link' to='/suggestedProgram'>
 								<i class="fa-solid fa-list"></i>
 								<span>Suggested Programs</span>
 							</NavLink>
 						</li>
 
 						<li className='nav-item'>
-							<NavLink className='nav-link' to='/givefeedback'>
+							<NavLink className='nav-link' to='/DocumentUpload'>
 								<i class="fa-solid fa-upload"></i>
 								<span>Document Upload</span>
 							</NavLink>
