@@ -156,6 +156,7 @@ router.get('/academic/:student_id', async(req, res) => {
 
     try {
         const { rowCount, rows } = await recordHandler.getAcademicScore(req.params.student_id);
+        
         if (rowCount <= 0) {
             res.status(404).json({ error: 'Record does not exist, please add one.' });
             return;

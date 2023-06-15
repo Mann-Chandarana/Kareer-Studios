@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS ielts_scores (
     ielts_reading_score float CHECK (ielts_reading_score >= 0 AND ielts_reading_score <= 9),
     ielts_writing_score float CHECK (ielts_writing_score >= 0 AND ielts_writing_score <= 9),
     ielts_speaking_score float CHECK (ielts_speaking_score >= 0 AND ielts_speaking_score <= 9),
-    ielts_date DATE,
+    ielts_date TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS pte_scores (
     pte_reading_score INTEGER NOT NULL CHECK (pte_reading_score BETWEEN 0 AND 90),
     pte_writing_score INTEGER NOT NULL CHECK (pte_writing_score BETWEEN 0 AND 90),
     pte_speaking_score INTEGER NOT NULL CHECK (pte_speaking_score BETWEEN 0 AND 90),
-    pte_date DATE,
+    pte_date TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -243,7 +243,7 @@ CREATE TABLE IF NOT EXISTS gre_scores (
     gre_verbal_score INTEGER CHECK (gre_verbal_score >= 130 AND gre_verbal_score <= 170),
     gre_quant_score INTEGER CHECK (gre_quant_score >= 130 AND gre_quant_score <= 170),
     gre_writing_score DECIMAL(3, 1) CHECK (gre_writing_score >= 0 AND gre_writing_score <= 6),
-    gre_date DATE,
+    gre_date TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS sat_scores (
     sat_math_score INTEGER NOT NULL CHECK (sat_math_score >= 200 AND sat_math_score <= 800),
     sat_english_score INTEGER NOT NULL CHECK (sat_english_score >= 200 AND sat_english_score <= 800),
     sat_essay_score INTEGER CHECK (sat_essay_score >= 0 AND sat_essay_score <= 24),
-    sat_date DATE,
+    sat_date TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS gmat_scores (
   gmat_verbal_score INTEGER CHECK (gmat_verbal_score >= 0 AND gmat_verbal_score <= 60),
   gmat_quant_score INTEGER CHECK (gmat_quant_score >= 0 AND gmat_quant_score <= 60),
   gmat_writing_score INTEGER CHECK (gmat_writing_score >= 0 AND gmat_writing_score <= 6),
-  gmat_date DATE,
+  gmat_date TEXT,
 
   CONSTRAINT fk_student_id
   FOREIGN KEY (student_id) 

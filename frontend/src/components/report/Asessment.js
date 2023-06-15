@@ -102,9 +102,9 @@ function Assessment() {
           error: <b>Could not update!</b>,
         });
 
-        // updatePromise.then(function(){ 
-        //   navigate(`/report/${id}`) 
-        // });
+        updatePromise.then(function(){ 
+          navigate(`/report/${id}`) 
+        });
 
       }
     },

@@ -10,7 +10,7 @@ function TPchart(props) {
 
   // get report
   let flag = false;
-  const [{ apiData }] = useFetch(props.id);
+  const [{ apiData }] = useFetch(props.id, 'report');
   if (apiData) {
     flag = true;
   }

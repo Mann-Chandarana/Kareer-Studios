@@ -1,7 +1,5 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
-import { useFormik } from "formik";
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
   CFormLabel,
@@ -13,386 +11,649 @@ import {
   CCol,
   CFormTextarea,
 } from "@coreui/react";
+import toast, { Toaster } from "react-hot-toast";
+import { useFormik } from "formik";
 // import { assessmentValidate } from "./Helper/validate"
 // import { addReport, updateReport } from "./Helper/helper";
 import useFetch from "../../hooks/useFetch";
+import { addIeltsScore } from "./helper";
 
-
-function Score() {
-
+const Score = () => {
   let { id } = useParams();
-
-  // get report
-  let flag = false;
-  const [{apiData}] = useFetch(id);
-  if (apiData) {
-    flag = true;
-  
-  }
-  console.log(flag);
 
   const navigate = useNavigate();
 
-  ///console.log(apiData.rows[0]);
+  const [activeTab, setActiveTab] = useState("academic");
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     student_id: apiData?.rows?.[0]?.rows?.[0]?.student_id || "",
-  //     scp_leadership: apiData?.rows?.[0]?.scp_leadership || "",
-  //     scp_management: apiData?.rows?.[0]?.scp_management || "",
-  //     scp_bodybalance: apiData?.rows?.[0]?.scp_bodybalance || "",
-  //     scp_logic: apiData?.rows?.[0]?.scp_logic || "",
-  //     scp_bodymovement: apiData?.rows?.[0]?.scp_bodymovement || "",
-  //     scp_senses: apiData?.rows?.[0]?.scp_senses || "",
-  //     scp_rhythm: apiData?.rows?.[0]?.scp_rhythm || "",
-  //     scp_visual: apiData?.rows?.[0]?.scp_visual || "",
-  //     scp_observation: apiData?.rows?.[0]?.scp_observation || "",
-  //     scp_communication: apiData?.rows?.[0]?.scp_communication || "",
-  //     tp_right: apiData?.rows?.[0]?.tp_right || "",
-  //     tp_left: apiData?.rows?.[0]?.tp_left || "",
-  //     as_follower: apiData?.rows?.[0]?.as_follower || "",
-  //     as_experimental: apiData?.rows?.[0]?.as_experimental || "",
-  //     as_different: apiData?.rows?.[0]?.as_different || "",
-  //     as_thoughtful: apiData?.rows?.[0]?.as_thoughtful || "",
-  //     lc_auditory: apiData?.rows?.[0]?.lc_auditory || "",
-  //     lc_visual: apiData?.rows?.[0]?.lc_visual || "",
-  //     lc_physical: apiData?.rows?.[0]?.lc_physical || "",
-  //     wa_intelligent: apiData?.rows?.[0]?.wa_intelligent || "",
-  //     wa_emotional: apiData?.rows?.[0]?.wa_emotional || "",
-  //     wa_visionary: apiData?.rows?.[0]?.wa_visionary || "",
-  //     wa_creative: apiData?.rows?.[0]?.wa_creative || "",
-  //     wa_adverse: apiData?.rows?.[0]?.wa_adverse || "",
-  //     pt_name: apiData?.rows?.[0]?.pt_name || "",
-  //     pt_info: apiData?.rows?.[0]?.pt_info || "",
-  //     sc_careers: apiData?.rows?.[0]?.sc_careers || "",
-  //     sc_stream: apiData?.rows?.[0]?.sc_stream || "",
-  //     sc_subjects: apiData?.rows?.[0]?.sc_subjects || "",
-  //     additional_note: apiData?.rows?.[0]?.additional_note || "",
-  //   },
-    
-  //   enableReinitialize: true,
-  //   validate: assessmentValidate,
-  //   validateOnBlur: false,
-  //   validateOnChange: false,
-  //   onSubmit: async (values) => {
-  //     values = await Object.assign(values);
+  // Define formik forms for each tab
+  const academicForm = useFormik({
+    initialValues: {
+      ssc_board: "",
+      ssc_year: "",
+      ssc_score: "",
+      ssc_backlog: "",
 
-  //     if(flag == false) 
-  //     {
-  //       let addPromise = addReport(values, id);
+      hsc_board: "",
+      hsc_year: "",
+      hsc_score: "",
+      hsc_backlog: "",
 
-  //       toast.promise(addPromise, {
-  //         loading: "Adding...",
-  //         success: <b>Added successfully...!</b>,
-  //         error: <b>Could not add!</b>,
-  //       });
+      diploma_uni: "",
+      diploma_year: "",
+      diploma_score: "",
+      diploma_backlog: "",
 
-  //       addPromise.then(function(){ 
-  //         navigate(`/report/${id}`) 
-  //       });
+      ug_uni: "",
+      ug_year: "",
+      ug_score: "",
+      ug_backlog: "",
+      // ... other academic fields
+    },
+    onSubmit: (values) => {
+      // Handle form submission for academic scores
+      console.log("Academic Form Submitted:", values);
+    },
+  });
 
-  //     }
-      
-  //     if(flag == true) {
-  //       let updatePromise = updateReport(values, id);
+  const ieltsForm = useFormik({
+    initialValues: {
+      ielts_listening_score: "",
+      ielts_reading_score: "",
+      ielts_writing_score: "",
+      ielts_speaking_score: "",
+      ielts_date: "",
+    },
+    enableReinitialize: true,
+    //validate: assessmentValidate,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      values = await Object.assign(values);
 
-  //       toast.promise(updatePromise, {
-  //         loading: "Updating...",
-  //         success: <b>Updated successfully...!</b>,
-  //         error: <b>Could not update!</b>,
-  //       });
+      let addPromise = addIeltsScore(values, id);
 
-  //       // updatePromise.then(function(){ 
-  //       //   navigate(`/report/${id}`) 
-  //       // });
+      toast.promise(addPromise, {
+        loading: "Adding...",
+        success: <b>Added successfully...!</b>,
+        error: <b>Could not add!</b>,
+      });
 
-  //     }
-  //   },
-  // });
+      addPromise.then(function () {
+        navigate(`/record/${id}`);
+      });
+    },
+  });
+
+  const pteForm = useFormik({
+    initialValues: {
+      pte_listening_score: "",
+      pte_reading_score: "",
+      pte_writing_score: "",
+      pte_speaking_score: "",
+      pte_date: "",
+    },
+    onSubmit: (values) => {
+      // Handle form submission for IELTS scores
+      console.log("PTE Form Submitted:", values);
+    },
+  });
+
+  const greForm = useFormik({
+    initialValues: {
+      gre_verbal_score: "",
+      gre_quant_score: "",
+      gre_writing_score: "",
+      gre_date: "",
+    },
+    onSubmit: (values) => {
+      // Handle form submission for IELTS scores
+      console.log("GRE Form Submitted:", values);
+    },
+  });
+
+  const satForm = useFormik({
+    initialValues: {
+      sat_math_score: "",
+      sat_english_score: "",
+      sat_essay_score: "",
+      sat_date: "",
+    },
+    onSubmit: (values) => {
+      // Handle form submission for IELTS scores
+      console.log("SAT Form Submitted:", values);
+    },
+  });
+
+  const gmatForm = useFormik({
+    initialValues: {
+      gmat_verbal_score: "",
+      gmat_quant_score: "",
+      gmat_writing_score: "",
+      gmat_date: "",
+    },
+    onSubmit: (values) => {
+      // Handle form submission for IELTS scores
+      console.log("GMAT Form Submitted:", values);
+    },
+  });
+
+  // Define similar formik forms for PTE, GRE, SAT, and GMAT
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  //   e.preventDefault();
+  //   // Submit the form based on the active tab
+  //   switch (activeTab) {
+  //     case "academic":
+  //       academicForm.handleSubmit();
+  //       break;
+  //     case "ielts":
+  //       ieltsForm.handleSubmit();
+  //       break;
+  //     // Handle submission for other tabs
+  //     case "pte":
+  //       pteForm.handleSubmit();
+  //       break;
+  //     case "gre":
+  //       greForm.handleSubmit();
+  //       break;
+  //     case "sat":
+  //       satForm.handleSubmit();
+  //       break;
+  //     case "gmat":
+  //       gmatForm.handleSubmit();
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   return (
     <main id="main" className="main">
-
+      <div>
       <Toaster position="top-center" reverseOrder={false}></Toaster>
-      <br></br>
-      <center>
-        <h2>Assessment Report</h2>
-      </center>
-      <br></br>
-      {/* <CForm onSubmit={formik.handleSubmit}>
-        <CFormLabel style={{ fontSize: "20px" }}>
-          Study & Career Potential
-        </CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Leadership</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_leadership')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Management</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_management')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Body Balance</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_bodybalance')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Logic</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_logic')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Body Movement</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_bodymovement')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Senses</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_senses')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Rhythm</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_rhythm')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Visual</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_visual')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Observation</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_observation')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Communication</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('scp_communication')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
+      
         <br></br>
-
-        <CFormLabel style={{ fontSize: "20px" }}>Thinking Pattern</CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Right</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('tp_right')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Left</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('tp_left')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <br></br>
-
-        <CFormLabel style={{ fontSize: "20px" }}>Achievement Style</CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Follower</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('as_follower')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Experimental</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('as_experimental')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Different</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('as_different')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Thoughtful</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('as_thoughtful')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <br></br>
-
-        <CFormLabel style={{ fontSize: "20px" }}>
-          Learning & Communication
-        </CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Auditory</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('lc_auditory')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Visual</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('lc_visual')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Physical</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('lc_physical')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs></CCol>
-        </CRow>
-
-        <br></br>
-
-        <CFormLabel style={{ fontSize: "20px" }}>Work Ability</CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Intelligent</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('wa_intelligent')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Emotional</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('wa_emotional')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Visionary</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('wa_visionary')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Creative</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('wa_creative')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Adverse</CInputGroupText>
-              <CFormInput {...formik.getFieldProps('wa_adverse')}/>
-            </CInputGroup>
-          </CCol>
-
-          <CCol xs></CCol>
-        </CRow>
-        <br></br>
-
-        <CFormLabel style={{ fontSize: "20px" }}>Personality Type</CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Name</CInputGroupText>
-              <CFormTextarea {...formik.getFieldProps('pt_name')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Info.</CInputGroupText>
-              <CFormTextarea {...formik.getFieldProps('pt_info')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-
-        <br></br>
-        <CFormLabel style={{ fontSize: "20px" }}>Suggested Careers</CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Careers</CInputGroupText>
-              <CFormTextarea {...formik.getFieldProps('sc_careers')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Stream</CInputGroupText>
-              <CFormTextarea {...formik.getFieldProps('sc_stream')}/>
-            </CInputGroup>
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Subjects</CInputGroupText>
-              <CFormTextarea {...formik.getFieldProps('sc_subjects')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol></CCol>
-        </CRow>
-
-        <br></br>
-        <CFormLabel style={{ fontSize: "20px" }}>Additional Note</CFormLabel>
-
-        <CRow>
-          <CCol xs>
-            <CInputGroup className="mb-3">
-              <CInputGroupText>Note</CInputGroupText>
-              <CFormTextarea {...formik.getFieldProps('additional_note')}/>
-            </CInputGroup>
-          </CCol>
-          <CCol></CCol>
-        </CRow>
-
-        <br></br>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", justifyContent: "right" }}>
           <CButton type="submit" color="primary" variant="outline">
-            Submit
+            <Link to={"/record/" + id}>Back </Link>
           </CButton>
+          <br></br>
         </div>
-      </CForm> */}
+        <br></br>
+
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "academic" && "active"}`}
+              onClick={() => handleTabChange("academic")}
+            >
+              Academic
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "ielts" && "active"}`}
+              onClick={() => handleTabChange("ielts")}
+            >
+              IELTS
+            </button>
+          </li>
+          {/* Add tabs for PTE, GRE, SAT, and GMAT */}
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "pte" && "active"}`}
+              onClick={() => handleTabChange("pte")}
+            >
+              PTE
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "gre" && "active"}`}
+              onClick={() => handleTabChange("gre")}
+            >
+              GRE
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "sat" && "active"}`}
+              onClick={() => handleTabChange("sat")}
+            >
+              SAT
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "gmat" && "active"}`}
+              onClick={() => handleTabChange("gmat")}
+            >
+              GMAT
+            </button>
+          </li>
+        </ul>
+
+        <div className="tab-content">
+          <div className={`tab-pane ${activeTab === "academic" && "active"}`}>
+            <form onSubmit={academicForm.handleSubmit}>
+              {/* Render academic form fields */}
+              <br></br>
+
+              <CFormLabel style={{ fontSize: "20px" }}>SSC</CFormLabel>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Board</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("ssc_board")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Year of Passing</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("ssc_year")} />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Score</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("ssc_score")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Backlogs</CInputGroupText>
+                    <CFormInput
+                      {...academicForm.getFieldProps("ssc_backlog")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+              <CFormLabel style={{ fontSize: "20px" }}>HSC</CFormLabel>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Board</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("hsc_board")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Year of passing</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("hsc_year")} />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Score</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("hsc_score")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Backlogs</CInputGroupText>
+                    <CFormInput
+                      {...academicForm.getFieldProps("hsc_backlog")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CFormLabel style={{ fontSize: "20px" }}>Diploma</CFormLabel>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>University</CInputGroupText>
+                    <CFormInput
+                      {...academicForm.getFieldProps("diploma_uni")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Year of Passing</CInputGroupText>
+                    <CFormInput
+                      {...academicForm.getFieldProps("diploma_year")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Score</CInputGroupText>
+                    <CFormInput
+                      {...academicForm.getFieldProps("diploma_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Backlogs</CInputGroupText>
+                    <CFormInput
+                      {...academicForm.getFieldProps("diploma_backlog")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CFormLabel style={{ fontSize: "20px" }}>UG</CFormLabel>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>University</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("ug_uni")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Year of Passing</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("ug_year")} />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Score</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("ug_score")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Backlogs</CInputGroupText>
+                    <CFormInput {...academicForm.getFieldProps("ug_backlog")} />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <br></br>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CButton type="submit" color="primary" variant="outline">
+                  Submit
+                </CButton>
+              </div>
+            </form>
+          </div>
+
+          <div className={`tab-pane ${activeTab === "ielts" && "active"}`}>
+            <form onSubmit={ieltsForm.handleSubmit}>
+              {/* Render IELTS form fields */}
+              <br></br>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Listening</CInputGroupText>
+                    <CFormInput
+                      {...ieltsForm.getFieldProps("ielts_listening_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Reading</CInputGroupText>
+                    <CFormInput
+                      {...ieltsForm.getFieldProps("ielts_reading_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Writing</CInputGroupText>
+                    <CFormInput
+                      {...ieltsForm.getFieldProps("ielts_writing_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Speaking</CInputGroupText>
+                    <CFormInput
+                      {...ieltsForm.getFieldProps("ielts_speaking_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Date</CInputGroupText>
+                    <CFormInput {...ieltsForm.getFieldProps("ielts_date")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs></CCol>
+              </CRow>
+
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CButton type="submit" color="primary" variant="outline">
+                  Submit
+                </CButton>
+              </div>
+            </form>
+          </div>
+
+          {/* Add tab content for PTE, GRE, SAT, and GMAT */}
+          <div className={`tab-pane ${activeTab === "pte" && "active"}`}>
+            <form onSubmit={pteForm.handleSubmit}>
+              {/* Render PTE form fields */}
+              <br></br>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Listening</CInputGroupText>
+                    <CFormInput
+                      {...pteForm.getFieldProps("pte_listening_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Reading</CInputGroupText>
+                    <CFormInput
+                      {...pteForm.getFieldProps("pte_reading_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Writing</CInputGroupText>
+                    <CFormInput
+                      {...pteForm.getFieldProps("pte_writing_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Speaking</CInputGroupText>
+                    <CFormInput
+                      {...pteForm.getFieldProps("pte_speaking_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Date</CInputGroupText>
+                    <CFormInput {...pteForm.getFieldProps("pte_date")} />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs></CCol>
+              </CRow>
+
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CButton type="submit" color="primary" variant="outline">
+                  Submit
+                </CButton>
+              </div>
+            </form>
+          </div>
+
+          <div className={`tab-pane ${activeTab === "gre" && "active"}`}>
+            <form onSubmit={greForm.handleSubmit}>
+              {/* Render GRE form fields */}
+              <br></br>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Verbal Reasoning</CInputGroupText>
+                    <CFormInput
+                      {...greForm.getFieldProps("gre_verbal_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Quantitative Reasoning</CInputGroupText>
+                    <CFormInput
+                      {...greForm.getFieldProps("gre_quant_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Analytical Writing</CInputGroupText>
+                    <CFormInput
+                      {...greForm.getFieldProps("gre_writing_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Date</CInputGroupText>
+                    <CFormInput {...greForm.getFieldProps("gre_date")} />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CButton type="submit" color="primary" variant="outline">
+                  Submit
+                </CButton>
+              </div>
+            </form>
+          </div>
+
+          <div className={`tab-pane ${activeTab === "sat" && "active"}`}>
+            <form onSubmit={satForm.handleSubmit}>
+              {/* Render PTE form fields */}
+              <br></br>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Math</CInputGroupText>
+                    <CFormInput
+                      {...satForm.getFieldProps("sat_math_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>English</CInputGroupText>
+                    <CFormInput
+                      {...satForm.getFieldProps("sat_english_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Essay</CInputGroupText>
+                    <CFormInput
+                      {...satForm.getFieldProps("sat_essay_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Date</CInputGroupText>
+                    <CFormInput {...satForm.getFieldProps("sat_date")} />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CButton type="submit" color="primary" variant="outline">
+                  Submit
+                </CButton>
+              </div>
+            </form>
+          </div>
+
+          <div className={`tab-pane ${activeTab === "gmat" && "active"}`}>
+            <form onSubmit={gmatForm.handleSubmit}>
+              {/* Render GMAT form fields */}
+              <br></br>
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Verbal Reasoning</CInputGroupText>
+                    <CFormInput
+                      {...gmatForm.getFieldProps("gmat_verbal_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Quantitative Reasoning</CInputGroupText>
+                    <CFormInput
+                      {...gmatForm.getFieldProps("gmat_quant_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <CRow>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Analytical Writing</CInputGroupText>
+                    <CFormInput
+                      {...gmatForm.getFieldProps("gmat_writing_score")}
+                    />
+                  </CInputGroup>
+                </CCol>
+                <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Date</CInputGroupText>
+                    <CFormInput {...gmatForm.getFieldProps("gmat_date")} />
+                  </CInputGroup>
+                </CCol>
+              </CRow>
+
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CButton type="submit" color="primary" variant="outline">
+                  Submit
+                </CButton>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
   );
-}
+};
 
 export default Score;

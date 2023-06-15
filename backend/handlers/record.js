@@ -24,7 +24,7 @@ module.exports = {
 
     //ielts
     addIeltsScore: async (student_id, ielts_listening_score, ielts_reading_score, ielts_writing_score, ielts_speaking_score, ielts_date) => {
-        return db.query('INSERT INTO ielts_scores (student_id,ielts_listening_score, ielts_reading_score, ielts_writing_score, ielts_speaking_score, ielts_date) VALUES ($1, $2, $3, $4, $5, $6', [student_id,ielts_listening_score, ielts_reading_score, ielts_writing_score, ielts_speaking_score, ielts_date]);
+        return db.query('INSERT INTO ielts_scores (student_id,ielts_listening_score, ielts_reading_score, ielts_writing_score, ielts_speaking_score, ielts_date) VALUES ($1, $2, $3, $4, $5, $6)', [student_id,ielts_listening_score, ielts_reading_score, ielts_writing_score, ielts_speaking_score, ielts_date]);
     },
 
     getIeltsScore: async (student_id) => {

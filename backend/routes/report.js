@@ -77,6 +77,7 @@ router.get('/report/:student_id', async(req, res) => {
             return;
         }
         else {
+            //console.log({rowCount, rows: rows});
             res.status(200).json({ rowCount, rows: rows });
         }
     } catch (error) {
