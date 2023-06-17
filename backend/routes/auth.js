@@ -84,7 +84,6 @@ router.post('/login', async (req, res) => {
 
     try {
         let { result, role } = await getUserData(email);
-        console.log("Hello")
 
         if (!role) {
             return res.status(400).send({ error: "Role should be one of 'admin', 'student', 'parent', 'counsellor'" });

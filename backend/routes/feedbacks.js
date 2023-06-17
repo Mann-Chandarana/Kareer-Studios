@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post('/addCounsellorFeed',verifyCounsellors, async(req,res)=>{
 	try {
-		const {counsellor_id,student_id,performance,comments,status,start_date} = req.body;
-		await feedbackHandler.addcounsellorfeedback(counsellor_id,student_id,performance,comments,status,start_date);
+		const {counsellor_id,student_id,performance,comments,status,start_date,pdf} = req.body;
+		await feedbackHandler.addcounsellorfeedback(counsellor_id,student_id,performance,comments,status,start_date,pdf);
 		
 		res.status(200).send({message:"Feedback added successfully !"})
 	} catch (err) {

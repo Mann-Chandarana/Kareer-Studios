@@ -81,6 +81,7 @@ const GiveFeedback = () => {
                           <th scope="col">Start Date</th>
                           <th scope="col">Mobile No</th>
                           <th scope="col">Status</th>
+                          <th scope="col">File</th>
                           <th scope="col">Edit</th>
                         </>
                       )}
@@ -91,6 +92,13 @@ const GiveFeedback = () => {
                       <TableLoading />
                     ) : (
                       dummy.map((student, i) => {
+                        let fileURL = "";
+                        if (student.pdf != null) {
+                          let buffer = new Uint8Array(student.pdf.data);
+                          fileURL = URL.createObjectURL(
+                            new Blob([buffer], { type: "application/pdf" })
+                          );
+                        }
                         return (
                           <tr key={i}>
                             <th scope="row">{i + 1}</th>
@@ -113,6 +121,23 @@ const GiveFeedback = () => {
                                   Pending
                                 </span>
                               )}
+                            </td>
+                            <td>
+                              <a
+                                href={fileURL == "" ? null : fileURL}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <i
+                                  style={{
+                                    color: "red",
+                                    cursor: "pointer",
+                                    position: "relative",
+                                    left: "5px",
+                                  }}
+                                  className="fa-sharp fa-regular fa-file-lines fa-lg"
+                                ></i>
+                              </a>
                             </td>
                             <td>
                               <Modal id={"edit_s_feededit" + i}>

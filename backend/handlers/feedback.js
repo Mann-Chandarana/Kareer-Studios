@@ -5,12 +5,12 @@ module.exports = {
 		return db.query('SELECT * FROM student_feedbacks sd FULL OUTER JOIN students s ON sd.student_id=s.id where sd.counsellor_id =$1', [counsellor_id]);
 	},
 	getcounsellorfeedback:async(counsellor_id)=>{
-		return db.query('SELECT cf.id,cf.student_id,cf.counsellor_id,cf.performance,cf.comments,cf.status,cf.start_date,s.name,s.email,s.gender,s.phone FROM counsellor_feedbacks cf FULL OUTER JOIN students s on cf.student_id=s.id where cf.counsellor_id=$1',[counsellor_id])
+		return db.query('SELECT cf.id,cf.student_id,cf.counsellor_id,cf.performance,cf.comments,cf.status,cf.start_date,cf.pdf,s.name,s.email,s.gender,s.phone FROM counsellor_feedbacks cf FULL OUTER JOIN students s on cf.student_id=s.id where cf.counsellor_id=$1',[counsellor_id])
 	},
-	addcounsellorfeedback:async(counsellor_id,student_id,performance,comments,status,start_date)=>{
+	addcounsellorfeedback:async(counsellor_id,student_id,performance,comments,status,start_date,pdf)=>{
 		return db.query(
-			'INSERT INTO counsellor_feedbacks (counsellor_id,student_id,performance,comments,status,start_date) VALUES ($1,$2,$3,$4,$5,$6)',
-			[counsellor_id,student_id,performance,comments,status,start_date]
+			'INSERT INTO counsellor_feedbacks (counsellor_id,student_id,performance,comments,status,start_date,pdf) VALUES ($1,$2,$3,$4,$5,$6,$7)',
+			[counsellor_id,student_id,performance,comments,status,start_date,pdf]
 		);
 	},
 	updatecounsellorfeedback:async(id,performance,comments,status,start_date)=>{

@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS counsellor_feedbacks(
     start_date TEXT,
     performance TEXT,
     comments TEXT,
+    pdf BYTEA,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
