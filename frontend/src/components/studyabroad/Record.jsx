@@ -10,8 +10,7 @@ import GRE from "./records/GRE";
 import IELTS from "./records/IELTS";
 import PTE from "./records/PTE";
 import SAT from "./records/SAT";
-import Academic from "./records/Academic";
-import toast, { Toaster } from "react-hot-toast";
+
 
 function Record() {
   const { user } = useContext(SessionContext);
