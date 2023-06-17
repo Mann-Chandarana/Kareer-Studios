@@ -164,7 +164,7 @@ router.get('/academic/:student_id', async(req, res) => {
         else {
             res.status(200).json({ rowCount, rows: rows });
         }
-    } catch (error) {
+    } catch (error) {        
         res.status(500).send({ error: error.message });
     }
 
@@ -375,6 +375,7 @@ router.delete('/delAcademic/:id', verifyStudents, async(req, res) => {
     try {
 
         const { id } = req.params;
+        console.log("here");
 
         await recordHandler.deleteAcademicScore(id);
         
@@ -427,7 +428,7 @@ router.delete('/delGre/:id', verifyStudents, async(req, res) => {
 
         const { id } = req.params;
 
-        await recordHandler.deleteGrecScore(id);
+        await recordHandler.deleteGreScore(id);
         
         res.status(200).send({ message: 'Record deleted...'});  
 

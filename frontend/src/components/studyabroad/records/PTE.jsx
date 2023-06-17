@@ -3,31 +3,26 @@ import SessionContext from "../../../contexts/SessionContext";
 import { CButton } from "@coreui/react";
 import { Link, useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import toast, { Toaster } from "react-hot-toast";
+import client from "../../../api";
 
-function PTE() {
+function PTE({data, flag}) {
   const { user } = useContext(SessionContext);
   let { id } = useParams();
-
-  // get records
-const [{ apiData: pteData }] = useFetch(id, "pte");
-
-
-  let flagPte = false;
-  let pte = [];
-  if (pteData) {
-    flagPte = true;
-
-    pte = pteData.rows.map((row) => ({
-      pte_listening_score: row.pte_listening_score ?? "",
-      pte_reading_score: row.pte_reading_score ?? "",
-      pte_writing_score: row.pte_writing_score ?? "",
-      pte_speaking_score: row.pte_speaking_score ?? "",
-      pte_date: row.pte_date ?? "",
-    }));
-
-    console.log(pte);
-  }
-
+ 
+  const handleDelete = (row_id) => {
+    client
+      .delete(`/records/delPte/${row_id}`)
+      .then((response) => {
+        toast.success("Data deleted successfully.");
+        window.location.reload();        
+        // Handle any necessary state updates or notifications
+      })
+      .catch((error) => {
+        toast.error("Error deleting data: ", error);
+        // Handle error and display error message
+      });
+  };
 
   return (
    <>
@@ -46,18 +41,18 @@ const [{ apiData: pteData }] = useFetch(id, "pte");
               </tr>
             </thead>
             <tbody>
-              {flagPte && (
+              {flag && (
                 <>
-                  {pte.map((data, index) => (
+                  {data.map((row, index) => (
                     <tr key={index}>
-                      <td>{data.pte_listening_score}</td>
-                      <td>{data.pte_reading_score}</td>
-                      <td>{data.pte_writing_score}</td>
-                      <td>{data.pte_speaking_score}</td>
-                      <td>{data.pte_date}</td>
+                      <td>{row.pte_listening_score}</td>
+                      <td>{row.pte_reading_score}</td>
+                      <td>{row.pte_writing_score}</td>
+                      <td>{row.pte_speaking_score}</td>
+                      <td>{row.pte_date}</td>
                       <td className="d-flex flex-col justify-content-center gap-2">
                         <button className="btn btn-primary">E</button>
-                        <button className="btn btn-danger">D</button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(row.id)}>D</button>
                       </td>
                     </tr>
                   ))}

@@ -6,8 +6,17 @@ export async function addAcademicScore(response, id){
         console.log(id);
         console.log(response);
 
-        
-        // response.ielts_date = parseFloat(response.scp_leadership);
+        response.ssc_score = parseFloat(response.ssc_score);
+        response.ssc_backlog = parseInt(response.ssc_backlog);
+  
+        response.hsc_score = parseFloat(response.hsc_score);
+        response.hsc_backlog = parseInt(response.hsc_backlog);
+
+        response.diploma_score = parseFloat(response.diploma_score);
+        response.diploma_backlog = parseInt(response.diploma_backlog);
+
+        response.ug_score = parseFloat(response.ug_score);
+        response.ug_backlog = parseInt(response.ug_backlog);
   
         const data = await client.post(`/records/addAcademicScore/${id}`, response);
 
@@ -44,8 +53,10 @@ export async function addPteScore(response, id){
         console.log(id);
         console.log(response);
 
-        response.scp_leadership = parseFloat(response.scp_leadership);
-        response.scp_management = parseFloat(response.scp_management);
+        response.pte_listening_score = parseInt(response.pte_listening_score);
+        response.pte_reading_score = parseInt(response.pte_reading_score);
+        response.pte_writing_score = parseInt(response.pte_writing_score);
+        response.pte_speaking_score = parseInt(response.pte_speaking_score);
   
         const data = await client.post(`/records/addPteScore/${id}`, response);
 
@@ -62,8 +73,9 @@ export async function addGreScore(response, id){
         console.log(id);
         console.log(response);
 
-        response.scp_leadership = parseFloat(response.scp_leadership);
-        response.scp_management = parseFloat(response.scp_management);
+        response.gre_verbal_score = parseInt(response.gre_verbal_score);
+        response.gre_quant_score = parseInt(response.gre_quant_score);
+        response.gre_writing_score = parseFloat(response.gre_writing_score);
   
         const data = await client.post(`/records/addGreScore/${id}`, response);
 
@@ -80,8 +92,10 @@ export async function addSatScore(response, id){
         console.log(id);
         console.log(response);
 
-        response.scp_leadership = parseFloat(response.scp_leadership);
-        response.scp_management = parseFloat(response.scp_management);
+        response.sat_math_score = parseInt(response.sat_math_score);
+        response.sat_english_score = parseInt(response.sat_english_score);
+        response.sat_essay_score = parseInt(response.sat_essay_score);
+  
   
         const data = await client.post(`/records/addSatScore/${id}`, response);
 
@@ -98,8 +112,10 @@ export async function addGmatScore(response, id){
         console.log(id);
         console.log(response);
 
-        response.scp_leadership = parseFloat(response.scp_leadership);
-        response.scp_management = parseFloat(response.scp_management);
+        response.gmat_verbal_score = parseInt(response.gmat_verbal_score);
+        response.gmat_quant_score = parseInt(response.gmat_quant_score);
+        response.gmat_writing_score = parseInt(response.gmat_writing_score);
+  
   
         const data = await client.post(`/records/addGmatScore/${id}`, response);
 

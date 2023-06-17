@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import client from "../../api";
 import SessionContext from "../../contexts/SessionContext";
 import useCaptialize from "../../hooks/useCaptialize";
 import { CButton } from "@coreui/react";
@@ -9,50 +10,80 @@ import GRE from "./records/GRE";
 import IELTS from "./records/IELTS";
 import PTE from "./records/PTE";
 import SAT from "./records/SAT";
-
+import Academic from "./records/Academic";
+import toast, { Toaster } from "react-hot-toast";
 
 function Record() {
   const { user } = useContext(SessionContext);
   let { id } = useParams();
 
+  const [academicData, setacademicData] = useState([]);
+  const [ieltsData, setieltsData] = useState([]);
+  const [pteData, setpteData] = useState([]);
+  const [greData, setgreData] = useState([]);
+  const [gmatData, setgmatData] = useState([]);
+  const [satData, setsatData] = useState([]);
+
   // get records
-  const [{ apiData: academicData }] = useFetch(id, "academic");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data: academicData } = await client(`/records/academic/${id}`);
+        setacademicData(academicData.rows);
+      } catch (error) {
+        console.log(error);
+      }
 
-  console.log(academicData);
+      try {
+        const { data: ieltsData } = await client(`/records/ielts/${id}`);
+        setieltsData(ieltsData.rows);
+      } catch (error) {
+        console.log(error);
+      }
 
-  let flagAcademic = false;
-  let academic = [];
-  if (academicData) {
-    flagAcademic = true;
+      try {
+        const { data: pteData } = await client(`/records/pte/${id}`);
+        setpteData(pteData.rows);
+      } catch (error) {
+        console.log(error);
+      }
 
-    academic = academicData.rows.map((row) => ({
-      ssc_board: row.ssc_board ?? "",
-      ssc_year: row.ssc_year ?? "",
-      ssc_score: row.ssc_score ?? "",
-      ssc_backlog: row.ssc_backlog ?? "",
+      try {
+        const { data: greData } = await client(`/records/gre/${id}`);
+        setgreData(greData.rows);
+      } catch (error) {
+        console.log(error);
+      }
 
-      hsc_board: row.hsc_board ?? "",
-      hsc_year: row.hsc_year ?? "",
-      hsc_score: row.hsc_score ?? "",
-      hsc_backlog: row.hsc_backlog ?? "",
+      try {
+        const { data: gmatData } = await client(`/records/gmat/${id}`);
+        setgmatData(gmatData.rows);
+      } catch (error) {
+        console.log(error);
+      }
 
-      diploma_uni: row.diploma_uni ?? "",
-      diploma_year: row.diploma_year ?? "",
-      diploma_score: row.diploma_score ?? "",
-      diploma_backlog: row.diploma_backlog ?? "",
+      try {
+        const { data: satData } = await client(`/records/sat/${id}`);
+        setsatData(satData.rows);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-      ug_uni: row.ug_uni ?? "",
-      ug_year: row.ug_year ?? "",
-      ug_score: row.ug_score ?? "",
-      ug_backlog: row.ug_backlog ?? "",
-    }));
+    fetchData();
+  }, []);
 
-    console.log(typeof(academic));
-  }
-  
+  let flagAcademic = academicData ? true : false;
+  let flagIelts = ieltsData ? true : false;
+  let flagPte = pteData ? true : false;
+  let flagGre = greData ? true : false;
+  let flagSat = satData ? true : false;
+  let flagGmat = satData ? true : false;
+
   return (
     <main id="main" className="main">
       <div>
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
         <br></br>
         {user.role === "student" && (
           <div style={{ display: "flex", justifyContent: "right" }}>
@@ -72,93 +103,22 @@ function Record() {
 
         <div>
           {/* Academic Scores Table */}
-          <p className="mt-4">Academic Scores</p>
-          <table className="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Board/University</th>
-                <th>Year of Passing</th>
-                <th>Score</th>
-                <th>Backlogs?</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>SSC</th>
-                {flagAcademic && (
-                  <>
-                    <td>{academic[0].ssc_board}</td>
-                    <td>{academic[0].ssc_year}</td>
-                    <td>{academic[0].ssc_score}</td>
-                    <td>{academic[0].ssc_backlog}</td>
-                    <td
-                      className="align-middle text-center"
-                      style={{ verticalAlign: "middle" }}
-                      rowSpan="4"
-                    >
-                      <div className="d-flex flex-col justify-content-center gap-2">
-                        <button className="btn btn-primary">E</button>
-                        <button className="btn btn-danger">D</button>
-                      </div>
-                    </td>
-                  </>
-                )}
-              </tr>
-
-              <tr>
-                <th>HSC</th>
-                {flagAcademic && (
-                  <>
-                    <td>{academic[0].hsc_board}</td>
-                    <td>{academic[0].hsc_year}</td>
-                    <td>{academic[0].hsc_score}</td>
-                    <td>{academic[0].hsc_backlog}</td>
-                  </>
-                )}
-              </tr>
-
-              <tr>
-                <th>Diploma</th>
-                {flagAcademic && (
-                  <>
-                    <td>{academic[0].diploma_uni}</td>
-                    <td>{academic[0].diploma_year}</td>
-                    <td>{academic[0].diploma_score}</td>
-                    <td>{academic[0].diploma_backlog}</td>
-                  </>
-                )}
-              </tr>
-
-              <tr>
-                <th>UG</th>
-                {flagAcademic && (
-                  <>
-                    <td>{academic[0].ug_uni}</td>
-                    <td>{academic[0].ug_year}</td>
-                    <td>{academic[0].ug_score}</td>
-                    <td>{academic[0].ug_backlog}</td>
-                  </>
-                )}
-              </tr>
-            </tbody>
-          </table>
+          <Academic data={academicData} flag={flagAcademic}></Academic>
 
           {/* IELTS Scores Table */}
-          <IELTS></IELTS>
+          <IELTS data={ieltsData} flag={flagIelts}></IELTS>
 
           {/* PTE Scores Table */}
-          <PTE></PTE>
+          <PTE data={pteData} flag={flagPte}></PTE>
 
           {/* GRE Scores Table */}
-          <GRE></GRE>
+          <GRE data={greData} flag={flagGre}></GRE>
 
           {/* SAT Scores Table */}
-          <SAT></SAT>
+          <SAT data={satData} flag={flagSat}></SAT>
 
           {/* GMAT Scores Table */}
-          <GMAT></GMAT>
+          <GMAT data={gmatData} flag={flagGmat}></GMAT>
         </div>
       </div>
     </main>

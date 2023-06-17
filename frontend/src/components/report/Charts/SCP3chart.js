@@ -26,7 +26,7 @@ export default function SCP3chart(props) {
 
   // get report
   let flag = false;
-  const [{ apiData }] = useFetch(props.id, 'report');
+  const [{ apiData }] = useFetch(props.id);
   if (apiData) {
     flag = true;
   }

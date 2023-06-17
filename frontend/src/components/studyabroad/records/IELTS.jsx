@@ -3,33 +3,26 @@ import SessionContext from "../../../contexts/SessionContext";
 import { CButton } from "@coreui/react";
 import { Link, useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import toast, { Toaster } from "react-hot-toast";
+import client from "../../../api";
 
-function IELTS() {
+function IELTS({data, flag}) {
   const { user } = useContext(SessionContext);
   let { id } = useParams();
 
-  // get records
-  const [{ apiData: ieltsData }] = useFetch(id, "ielts");
-
-
-  console.log(ieltsData);
-
-  let flagIelts = false;
-  let ielts = [];
-  if (ieltsData) {
-    flagIelts = true;
-
-    ielts = ieltsData.rows.map((row) => ({
-      ielts_listening_score: row.ielts_listening_score ?? "",
-      ielts_reading_score: row.ielts_reading_score ?? "",
-      ielts_writing_score: row.ielts_writing_score ?? "",
-      ielts_speaking_score: row.ielts_speaking_score ?? "",
-      ielts_date: row.ielts_date ?? "",
-    }));
-
-    console.log(ielts);
-  }
-
+  const handleDelete = (row_id) => {
+    client
+      .delete(`/records/delIelts/${row_id}`)
+      .then((response) => {
+        toast.success("Data deleted successfully.");
+        window.location.reload();        
+        // Handle any necessary state updates or notifications
+      })
+      .catch((error) => {
+        toast.error("Error deleting data: ", error);
+        // Handle error and display error message
+      });
+  };
 
   return (
    <>
@@ -47,18 +40,18 @@ function IELTS() {
               </tr>
             </thead>
             <tbody>
-              {flagIelts && (
+              {flag && (
                 <>
-                  {ielts.map((data, index) => (
+                  {data.map((row, index) => (
                     <tr key={index}>
-                      <td>{data.ielts_listening_score}</td>
-                      <td>{data.ielts_reading_score}</td>
-                      <td>{data.ielts_writing_score}</td>
-                      <td>{data.ielts_speaking_score}</td>
-                      <td>{data.ielts_date}</td>
+                      <td>{row.ielts_listening_score}</td>
+                      <td>{row.ielts_reading_score}</td>
+                      <td>{row.ielts_writing_score}</td>
+                      <td>{row.ielts_speaking_score}</td>
+                      <td>{row.ielts_date}</td>
                       <td className="d-flex flex-col justify-content-center gap-2">
                         <button className="btn btn-primary">E</button>
-                        <button className="btn btn-danger">D</button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(row.id)}>D</button>
                       </td>
                     </tr>
                   ))}

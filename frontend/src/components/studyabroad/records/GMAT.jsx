@@ -3,28 +3,27 @@ import SessionContext from "../../../contexts/SessionContext";
 import { CButton } from "@coreui/react";
 import { Link, useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import toast, { Toaster } from "react-hot-toast";
+import client from "../../../api";
 
-function GMAT() {
+function GMAT({data, flag}) {
   const { user } = useContext(SessionContext);
   let { id } = useParams();
 
-  // get records
-  const [{ apiData: gmatData }] = useFetch(id, "gmat");
+  const handleDelete = (row_id) => {
+    client
+      .delete(`/records/delGmat/${row_id}`)
+      .then((response) => {
+        toast.success("Data deleted successfully.");
+        window.location.reload();        
+        // Handle any necessary state updates or notifications
+      })
+      .catch((error) => {
+        toast.error("Error deleting data: ", error);
+        // Handle error and display error message
+      });
+  };
 
-  let flagGmat = false;
-  let gmat = [];
-  if (gmatData) {
-    flagGmat = true;
-
-    gmat = gmatData.rows.map((row) => ({
-      gmat_verbal_score: row.gmat_verbal_score ?? "",
-      gmat_quant_score: row.gmat_quant_score ?? "",
-      gmat_writing_score: row.gmat_writing_score ?? "",
-      gmat_date: row.gmat_date ?? "",
-    }));
-
-    console.log(gmat);
-  }
 
   return (
     <>
@@ -42,17 +41,17 @@ function GMAT() {
               </tr>
             </thead>
             <tbody>
-              {flagGmat && (
+              {flag && (
                 <>
-                  {gmat.map((data, index) => (
+                  {data.map((row, index) => (
                     <tr key={index}>
-                      <td>{data.gmat_verbal_score}</td>
-                      <td>{data.gmat_quant_score}</td>
-                      <td>{data.gmat_writing_score}</td>
-                      <td>{data.gmat_date}</td>
+                      <td>{row.gmat_verbal_score}</td>
+                      <td>{row.gmat_quant_score}</td>
+                      <td>{row.gmat_writing_score}</td>
+                      <td>{row.gmat_date}</td>
                       <td className="d-flex flex-col justify-content-center gap-2">
                         <button className="btn btn-primary">E</button>
-                        <button className="btn btn-danger">D</button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(row.id)}>D</button>
                       </td>
                     </tr>
                   ))}

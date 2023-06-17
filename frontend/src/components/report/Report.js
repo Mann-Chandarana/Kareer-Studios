@@ -36,7 +36,7 @@ function Report() {
 
   // get report
   let flag = false;
-  const [{ apiData }] = useFetch(id, 'report');
+  const [{ apiData }] = useFetch(id);
   if (apiData) {
     flag = true;
   }

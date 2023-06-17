@@ -3,30 +3,26 @@ import SessionContext from "../../../contexts/SessionContext";
 import { CButton } from "@coreui/react";
 import { Link, useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
+import toast, { Toaster } from "react-hot-toast";
+import client from "../../../api";
 
-function GRE() {
+function GRE({data, flag}) {
   const { user } = useContext(SessionContext);
   let { id } = useParams();
 
-  // get records
-  const [{ apiData: greData }] = useFetch(id, "gre");
-
-
-  let flagGre = false;
-  let gre = [];
-  if (greData) {
-    flagGre = true;
-
-    gre = greData.rows.map((row) => ({
-      gre_verbal_score: row.gre_verbal_score ?? "",
-      gre_quant_score: row.gre_quant_score ?? "",
-      gre_writing_score: row.gre_writing_score ?? "",
-      gre_date: row.gre_date ?? "",
-    }));
-
-    console.log(gre);
-  }
-
+  const handleDelete = (row_id) => {
+    client
+      .delete(`/records/delGre/${row_id}`)
+      .then((response) => {
+        toast.success("Data deleted successfully.");
+        window.location.reload();        
+        // Handle any necessary state updates or notifications
+      })
+      .catch((error) => {
+        toast.error("Error deleting data: ", error);
+        // Handle error and display error message
+      });
+  };
 
 
   return (
@@ -45,17 +41,17 @@ function GRE() {
               </tr>
             </thead>
             <tbody>
-              {flagGre && (
+              {flag && (
                 <>
-                  {gre.map((data, index) => (
+                  {data.map((row, index) => (
                     <tr key={index}>
-                      <td>{data.gre_verbal_score}</td>
-                      <td>{data.gre_quant_score}</td>
-                      <td>{data.gre_writing_score}</td>
-                      <td>{data.gre_date}</td>
+                      <td>{row.gre_verbal_score}</td>
+                      <td>{row.gre_quant_score}</td>
+                      <td>{row.gre_writing_score}</td>
+                      <td>{row.gre_date}</td>
                       <td className="d-flex flex-col justify-content-center gap-2">
                         <button className="btn btn-primary">E</button>
-                        <button className="btn btn-danger">D</button>
+                        <button className="btn btn-danger" onClick={() => handleDelete(row.id)}>D</button>
                       </td>
                     </tr>
                   ))}
