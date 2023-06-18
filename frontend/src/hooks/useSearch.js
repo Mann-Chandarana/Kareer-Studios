@@ -16,7 +16,7 @@ const useSearch = (data) => {
             const isEmailMatch = v.email.toLowerCase().includes(value);
             const isIdMatch = v.id.toString().includes(value);
 
-            return isIdMatch || isNameMatch || isEmailMatch;
+            return isIdMatch || isNameMatch||isEmailMatch ;
         });
         setDummy(filtered);
     };

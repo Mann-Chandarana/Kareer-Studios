@@ -23,6 +23,10 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
     setfeedback({ ...feedback, [name]: value });
   };
 
+  const handleToggle = (e) => {
+    setfeedback({ ...feedback, status: !feedback.status });
+  };
+
   const fileUpdate = async (event) => {
     const { name } = event.target;
     const base64 = await covertToBase64(event.target.files[0]);
@@ -136,7 +140,7 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
             <div className="floating-label-group mt-3">
               <label className="form-check-label">Status: </label>
               <input
-                onChange={handleChange}
+                onChange={handleToggle}
                 checked={feedback.status}
                 type="checkbox"
                 name="status"

@@ -5,7 +5,7 @@ import Modal from "../../Modal";
 import AddStudentFeedback from "../../modals/feedbackModals/AddStudentFeedback";
 import ModalButton from "../../ModalButton";
 import useSearch from "../../../hooks/useSearch";
-import EditFeedback from "../../modals/feedbackModals/EditFeedback";
+import EditStudFeedback from "../../modals/feedbackModals/EditStudFeedback";
 import { TableLoading } from "../../TableLoading";
 
 const GiveFeedback = () => {
@@ -116,22 +116,19 @@ const GiveFeedback = () => {
                           <tr key={i}>
                             <th scope="row">{i + 1}</th>
                             <td>
-                              {new Date(student.date).toLocaleDateString(
-                                "en-GB"
-                              )}
+                              {student.date!==""?
+                                new Date(student.date).toLocaleDateString("en-GB")
+                                :new Date().toLocaleDateString("en-GB")}
                             </td>
                             <td>{user.counsellor_id}</td>
-                            <td>{student.comment.slice(0,20)}</td>
+                            <td>{student.comment.slice(0,25)}{(student.comment).length>25&&<span>......</span>}</td>
                             <td>{user.gender.toLowerCase()}</td>
                             <td>
                               <Modal id={"edit_s_feededit" + i}>
-                                <EditFeedback
+                                <EditStudFeedback
                                   id={student.id}
-                                  student_id={student.student_id}
-                                  Performance={student.performance}
-                                  comments={student.comments}
-                                  status={student.status}
-                                  start_date={student.start_date}
+                                  comment={student.comment}
+                                  date={student.date}
                                   Fetch_Feedback={Fetch_Feedback}
                                 />
                               </Modal>

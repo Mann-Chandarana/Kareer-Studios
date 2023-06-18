@@ -86,6 +86,18 @@ router.patch("/updateCounsellorFeed", verifyCounsellors, async (req, res) => {
   }
 });
 
+router.patch("/updateStudentFeed",verifyStudents,async(req,res)=>{
+  try {
+    const {id,comment,date} = req.body;
+
+    await feedbackHandler.updateStudentFeedback(id,comment,date);
+
+    res.status(200).send({message:"Updated Successfully !"})
+  } catch (err) {
+    return res.status(404).send({error:err.message});
+  }
+})
+
 router.get(
   "/counsellor/:counsellor_id",
   verifyCounsellors,

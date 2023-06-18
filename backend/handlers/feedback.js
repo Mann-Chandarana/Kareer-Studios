@@ -35,6 +35,8 @@ module.exports = {
       ]
     );
   },
+
+  /* Update in counsellor table in give feedback */
   updatecounsellorfeedback: async (
     id,
     performance,
@@ -47,6 +49,11 @@ module.exports = {
       [performance, comments, status, start_date, parseInt(id)]
     );
   },
+
+  updateStudentFeedback:async(id,comment,date)=>{
+    return db.query("UPDATE student_feedbacks SET comment=$1,date=$2 where id=$3",[comment,date,id]);
+  },
+
   addStudentFeedback: async (student_id, counsellor_id, comment, date) => {
     return db.query(
       "INSERT INTO student_feedbacks (student_id, counsellor_id, comment, date) VALUES ($1, $2, $3, $4)",
@@ -88,7 +95,7 @@ module.exports = {
   /* Student :- Give Feedback */
 
   getStudFeedback:async(student_id)=>{
-    return db.query("SELECT sf.id,sf.student_id,sf.counsellor_id,sf.comment,sf.date FROM student_feedbacks sf FULL OUTER JOIN students s on sf.student_id=s.id WHERE sf.student_id=$1 ",[student_id])
+    return db.query("SELECT sf.id,sf.student_id,sf.counsellor_id,sf.comment,sf.date,sf.pdf FROM student_feedbacks sf FULL OUTER JOIN students s on sf.student_id=s.id WHERE sf.student_id=$1 ",[student_id])
   },
 
   deleteFeedbackStudent:async (id)=>{
