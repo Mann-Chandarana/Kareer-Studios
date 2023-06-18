@@ -1,132 +1,183 @@
-import React, { useContext, useState } from 'react';
-import client from '../../../api';
-import SessionContext from '../../../contexts/SessionContext';
+import React, { useContext, useEffect, useState } from "react";
+import client from "../../../api";
+import SessionContext from "../../../contexts/SessionContext";
+import Modal from "../../Modal";
+import AddStudentFeedback from "../../modals/feedbackModals/AddStudentFeedback";
+import ModalButton from "../../ModalButton";
+import useSearch from "../../../hooks/useSearch";
+import EditFeedback from "../../modals/feedbackModals/EditFeedback";
+import { TableLoading } from "../../TableLoading";
 
 const GiveFeedback = () => {
-	const { user } = useContext(SessionContext);
+  const { user } = useContext(SessionContext);
+  const [list, setlist] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { dummy, setDummy, handleQueryChange } = useSearch(list);
 
-	const [feedback, setFeedback] = useState({
-		rating: '1',
-		referal: 'Walk in',
-		overall_experience: '',
-	});
-	const [submitted, setSubmitted] = useState(false);
+  const Fetch_Feedback = async () => {
+    try {
+      setLoading(true);
+      const { data } = await client.get(`/feedbacks/student_counsellor`);
 
-	const handleChange = (e) => {
-		const name = e.target.name;
-		const value = e.target.value;
+      if (data.rowCount > 0) {
+        setlist(data.rows);
+        setDummy(data.rows);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-		setFeedback({ ...feedback, [name]: value });
-	};
+  useEffect(() => {
+    Fetch_Feedback();
+  }, []);
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			await client.post('/feedbacks/student', {
-				...feedback,
-				student_id: user.id,
-				counsellor_id: user.counsellor_id,
-			});
-			setSubmitted(true);
-		} catch (err) {
-			console.error(err);
-		}
-	};
+  const delete_Feedback = async (id) => {
+    try {
+      await client.delete("feedbacks/deleteFeedbackStudents/" + id);
 
-	return (
-		<main id='main' className='d-flex align-items-center justify-content-center'>
-			<div className='card' style={{ width: '100%', maxWidth: '600px' }}>
-				<div style={{ background: '#4154f1' }} className='card-header '>
-					<h5 className='card-title text-white mt-2' id='exampleModalLabel'>
-						Feedback Form
-					</h5>
-				</div>
-				<div className='modal-body'>
-					<div className='text-center' style={{ padding: '2rem' }}>
-						<i style={{ color: '#4154f1' }} className='far fa-file-alt fa-4x mb-3'></i>
-						<p>
-							<strong>Give counsellor's feedback</strong>
-						</p>
-					</div>
+      setlist((prev) => {
+        return prev.filter((data) => {
+          return data.id != id;
+        });
+      });
 
-					<form className='px-4' onSubmit={handleSubmit}>
-						<div className='mb-3'>
-							<label htmlFor='rating' className='form-label d-flex align-items-center'>
-								Counsellor Rating:
-								<div className='d-flex justify-content-center align-items-center text-warning mx-2'>
-									{feedback.rating >= 1 && <i className='fa-solid fa-star'></i>}
-									{feedback.rating >= 2 && <i className='fa-solid fa-star'></i>}
-									{feedback.rating >= 3 && <i className='fa-solid fa-star'></i>}
-									{feedback.rating >= 4 && <i className='fa-solid fa-star'></i>}
-									{feedback.rating >= 5 && <i className='fa-solid fa-star'></i>}
-								</div>
-								({feedback.rating} {feedback.rating === '1' ? 'star' : 'stars'})
-							</label>
-							<input
-								type='range'
-								className='form-range'
-								min='1'
-								max='5'
-								step='1'
-								id='rating'
-								name='rating'
-								value={feedback.rating}
-								onChange={handleChange}
-							/>
-						</div>
-						<div className='mb-3'>
-							<label htmlFor='rating' className='form-label'>
-								Referal:
-							</label>
-							<select
-								className='form-select'
-								name='referal'
-								defaultValue={feedback.referal}
-								onChange={handleChange}
-							>
-								<option value='Walk in'>Walk in</option>
-								<option value='YouTube'>YouTube</option>
-								<option value='Staff'>Staff</option>
-								<option value='Facebook'>Facebook</option>
-								<option value='Facebook'>Facebook</option>
-								<option value='Instagram'>Instagram</option>
-								<option value='Friend'>Friend</option>
-								<option value='Event'>Event</option>
-								<option value='Others'>Others</option>
-							</select>
-						</div>
-						<hr />
+      setDummy((prev) => {
+        return prev.filter((data) => {
+          return data.id != id;
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-						<label htmlFor='form4Example3' className='text-center w-100 mb-2'>
-							<strong>How was your overall experience?</strong>
-						</label>
+  return (
+    <>
+      <Modal id="add-feedback">
+        <AddStudentFeedback
+          student_id={user.id}
+          counsellor_id={user.counsellor_id}
+		  Fetch_Feedback={Fetch_Feedback}
+        ></AddStudentFeedback>
+      </Modal>
+      <main id="main" className="main">
+        <div className="pagetitle">
+          <h1>Dashboard</h1>
+          <nav>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">Dashboard</li>
+              <li className="breadcrumb-item">Feedback</li>
+              <li className="breadcrumb-item active">Give feedback</li>
+            </ol>
+          </nav>
+        </div>
 
-						<div className='form-outline mb-4'>
-							<textarea
-								className='form-control'
-								style={{ fontSize: '14px', resize: 'vertical', minHeight: '100px' }}
-								name='overall_experience'
-								placeholder='Write your feedback here...'
-								value={feedback.overall_experience}
-								onChange={handleChange}
-								required
-							></textarea>
-						</div>
-						<div className='card-footer'>
-							<button
-								style={{ background: '#4154f1' }}
-								type='submit'
-								className='btn text-white'
-								disabled={submitted}
-							>
-								{submitted ? 'Submitted!' : 'Submit'}
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</main>
-	);
+        <section className="section dashboard">
+          <div className="col-12">
+            <div className="card top-selling overflow-auto">
+              <div className="filter d-flex align-items-center">
+                <ModalButton
+                  id="add-feedback"
+                  className="btn btn-success btn-sm mx-4 text-white"
+                >
+                  Add Feedback
+                </ModalButton>
+              </div>
+              <div className="card-body pb-0">
+                <h5 className="card-title">
+                  Add Feedback of students
+                  <br />
+                </h5>
+                <table className="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      {loading || (
+                        <>
+                          <th scope="col">ID</th>
+                          <th scope="col">date</th>
+                          <th scope="col">Counsellor Id</th>
+                          <th scope="col">Comment</th>
+                          <th scope="col">Gender</th>
+                          <th scope="col">Edit</th>
+                          <th scope="col">File</th>
+                          <th scope="col">Delete</th>
+                        </>
+                      )}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {loading ? (
+                      <TableLoading />
+                    ) : (
+                      dummy.map((student, i) => {
+                        return (
+                          <tr key={i}>
+                            <th scope="row">{i + 1}</th>
+                            <td>
+                              {new Date(student.date).toLocaleDateString(
+                                "en-GB"
+                              )}
+                            </td>
+                            <td>{user.counsellor_id}</td>
+                            <td>{student.comment.slice(0,20)}</td>
+                            <td>{user.gender.toLowerCase()}</td>
+                            <td>
+                              <Modal id={"edit_s_feededit" + i}>
+                                <EditFeedback
+                                  id={student.id}
+                                  student_id={student.student_id}
+                                  Performance={student.performance}
+                                  comments={student.comments}
+                                  status={student.status}
+                                  start_date={student.start_date}
+                                  Fetch_Feedback={Fetch_Feedback}
+                                />
+                              </Modal>
+                              <ModalButton
+                                id={"edit_s_feededit" + i}
+                                className="icon"
+                              >
+                                <i className="fa-solid fa-pen-to-square"></i>
+                              </ModalButton>
+                            </td>
+                            <td>
+                              <a target="_blank" rel="noreferrer">
+                                {student.pdf!==null?<i
+                                  style={{
+                                    color: "red",
+                                    cursor: "pointer",
+                                    position: "relative",
+                                    left: "5px",
+                                  }}
+                                  className="fa-sharp fa-regular fa-file-lines fa-lg"
+                                ></i>:<span className="fw-bold">No Item</span>}
+                              </a>
+                            </td>
+                            <td>
+                              <button className="icon"
+							  
+							   onClick={()=>{delete_Feedback(student.id)}} >
+                                <i
+                                  style={{ color: "red" }}
+                                  className="fa-solid fa-trash"
+                                ></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </>
+  );
 };
 
 export default GiveFeedback;

@@ -13,7 +13,7 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
     comments: "",
     status: false,
     start_date: "",
-    pdf:""
+    pdf: null,
   });
 
   const [loading, setloading] = useState(false);
@@ -24,14 +24,14 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
   };
 
   const fileUpdate = async (event) => {
-    const {name} = event.target;
+    const { name } = event.target;
     const base64 = await covertToBase64(event.target.files[0]);
 
-    setfeedback((prev)=>{
+    setfeedback((prev) => {
       return {
         ...prev,
-        [name]:base64
-      }
+        [name]: base64,
+      };
     });
   };
 
@@ -40,7 +40,20 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
     setloading(true);
 
     try {
-      await client.post("/feedbacks/addCounsellorFeed", feedback);
+      const { data } = await client.get(
+        "feedbacks/getCount/" + feedback.student_id
+      );
+
+      let obj = feedback;
+      for (let [key, value] of Object.entries(feedback)) {
+        obj.key = value;
+      }
+      obj.message = 0;
+
+      if (data.message.messages !== null) {
+        obj.message = data.message.messages;
+      }
+      await client.post("/feedbacks/addCounsellorFeed", obj);
       closeButton.current.click();
       Fetch_Feedback();
       setfeedback({
@@ -50,7 +63,7 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
         comments: "",
         status: false,
         start_data: "",
-        pdf:""
+        pdf:null,
       });
     } catch (error) {
       console.log(error);
