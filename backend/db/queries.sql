@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS students
     gender TEXT,
     paid BOOLEAN NOT NULL DEFAULT FALSE,
     createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    messages INTEGER,
     
     CONSTRAINT fk_counsellor_id
     FOREIGN KEY (counsellor_id)
@@ -88,9 +89,8 @@ CREATE TABLE IF NOT EXISTS student_feedbacks (
     student_id INTEGER,
     counsellor_id INTEGER,
     
-    referral TEXT,
-    rating INTEGER,
-    overall_experience TEXT,
+    comment TEXT,
+    pdf BYTEA,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -112,6 +112,7 @@ CREATE TABLE IF NOT EXISTS counsellor_feedbacks(
     start_date TEXT,
     performance TEXT,
     comments TEXT,
+    pdf BYTEA,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)

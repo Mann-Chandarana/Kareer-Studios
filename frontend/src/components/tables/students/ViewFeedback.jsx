@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import client from "../../../api";
 import { TableLoading } from "../../TableLoading";
+import SessionContext from "../../../contexts/SessionContext";
 
 const ViewFeedback = () => {
+  const { user,clearMessage } = useContext(SessionContext);
   const [feedback, setFeedback] = useState([]);
   const [loading, setloading] = useState(false);
 
@@ -17,6 +19,9 @@ const ViewFeedback = () => {
     } catch (err) {
       console.error(err);
     }
+    await client.put("feedbacks/clearMessage/" + user.id);
+    clearMessage()
+
     setloading(false);
   };
 
@@ -52,6 +57,7 @@ const ViewFeedback = () => {
                         <th scope="col">Feedback Assigned Date</th>
                         <th scope="col">Your Performance</th>
                         <th scope="col">Comments from your Counsellor</th>
+                        <th scope="col">Attachment</th>
                       </>
                     )}
                   </tr>
@@ -60,15 +66,49 @@ const ViewFeedback = () => {
                   {loading ? (
                     <TableLoading />
                   ) : (
-                    feedback.map((student,i) => {
-                        console.log(student)
+                    feedback.map((student, i) => {
+                      let fileURL = "";
+                      if (student.pdf != null) {
+                        let buffer = new Uint8Array(student.pdf.data);
+                        fileURL = URL.createObjectURL(
+                          new Blob([buffer], { type: "application/pdf" })
+                        );
+                      }
+                      console.log(fileURL)
                       return (
-                          <tr key={i}>
-                          <th scope="row">{i+1}</th>
-                          <td>{new Date(student.start_date).toLocaleDateString('en-GB')}</td>
+                        <tr key={i}>
+                          <th scope="row">{i + 1}</th>
+                          <td>
+                            {student.start_date ? (
+                              new Date(student.start_date).toLocaleDateString(
+                                "en-GB"
+                              )
+                            ) : (
+                              <span className="fw-bold">No Date</span>
+                            )}
+                          </td>
                           <td>{student.performance}</td>
-                          <td className="fw-bold">{student.comments}</td>
-                          
+                          <td>{student.comments}</td>
+                          <td>
+                            <a
+                              href={fileURL === "" ? null : fileURL}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {fileURL !== "" ? (
+                                <i
+                                  style={{
+                                    color: "red",
+                                    cursor: "pointer",
+                                    position: "relative",
+                                  }}
+                                  className="fa-sharp fa-regular fa-file-lines fa-lg"
+                                ></i>
+                              ) : (
+                                <span className="fw-bold">No Item</span>
+                              )}
+                            </a>
+                          </td>
                         </tr>
                       );
                     })

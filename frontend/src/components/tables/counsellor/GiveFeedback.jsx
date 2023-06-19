@@ -23,7 +23,6 @@ const GiveFeedback = () => {
       if (data.rowCount > 0) {
         setlist(data.rows);
         setDummy(data.rows);
-        console.log(dummy);
       }
       setLoading(false);
     } catch (error) {
@@ -35,10 +34,30 @@ const GiveFeedback = () => {
     Fetch_Feedback();
   }, []);
 
+  const delete_Feedback = async (id) => {
+    try {
+      await client.delete("feedbacks/delete_feedback/" + id);
+
+      setlist((prev) => {
+        return prev.filter((data) => {
+          return data.id != id;
+        });
+      });
+
+      setDummy((prev) => {
+        return prev.filter((data) => {
+          return data.id != id;
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Modal id="add-feedback">
-        <AddFeedback counsellor_id={user.id} Fetch_Feedback={Fetch_Feedback} />
+        <AddFeedback counsellor_id={user.counsellor_id} Fetch_Feedback={Fetch_Feedback} />
       </Modal>
       <main id="main" className="main">
         <div className="pagetitle">
@@ -76,12 +95,14 @@ const GiveFeedback = () => {
                         <>
                           <th scope="col">ID</th>
                           <th scope="col">Name</th>
-                          <th scope="col">Student_id</th>
-                          <th scope="col">email</th>
+                          <th scope="col">Student Id</th>
+                          <th scope="col">Email</th>
                           <th scope="col">Start Date</th>
                           <th scope="col">Mobile No</th>
                           <th scope="col">Status</th>
+                          <th scope="col">File</th>
                           <th scope="col">Edit</th>
+                          <th scope="col">Delete</th>
                         </>
                       )}
                     </tr>
@@ -91,6 +112,13 @@ const GiveFeedback = () => {
                       <TableLoading />
                     ) : (
                       dummy.map((student, i) => {
+                        let fileURL = "";
+                        if (student.pdf != null) {
+                          let buffer = new Uint8Array(student.pdf.data);
+                          fileURL = URL.createObjectURL(
+                            new Blob([buffer], { type: "application/pdf" })
+                          );
+                        }
                         return (
                           <tr key={i}>
                             <th scope="row">{i + 1}</th>
@@ -115,6 +143,23 @@ const GiveFeedback = () => {
                               )}
                             </td>
                             <td>
+                              <a
+                                href={fileURL == "" ? null : fileURL}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <i
+                                  style={{
+                                    color: "red",
+                                    cursor: "pointer",
+                                    position: "relative",
+                                    left: "5px",
+                                  }}
+                                  className="fa-sharp fa-regular fa-file-lines fa-lg"
+                                ></i>
+                              </a>
+                            </td>
+                            <td>
                               <Modal id={"edit_s_feededit" + i}>
                                 <EditFeedback
                                   id={student.id}
@@ -132,6 +177,19 @@ const GiveFeedback = () => {
                               >
                                 <i className="fa-solid fa-pen-to-square"></i>
                               </ModalButton>
+                            </td>
+                            <td>
+                              <button
+                                onClick={() => {
+                                  delete_Feedback(student.id);
+                                }}
+                                className="icon"
+                              >
+                                <i
+                                  style={{ color: "red" }}
+                                  className="fa-solid fa-trash"
+                                ></i>
+                              </button>
                             </td>
                           </tr>
                         );
