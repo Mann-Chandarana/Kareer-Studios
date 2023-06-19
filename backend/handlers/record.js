@@ -2,7 +2,6 @@ const db = require('../db');
 
 module.exports = {
 
-
     //academics
     addAcademicScore: async (student_id, ssc_board, ssc_year, ssc_score, ssc_backlog, hsc_board, hsc_year, hsc_score, hsc_backlog, diploma_uni, diploma_year, diploma_score, diploma_backlog, ug_uni, ug_year, ug_score, ug_backlog) => {
         return db.query('INSERT INTO academic_scores (student_id, ssc_board, ssc_year, ssc_score, ssc_backlog, hsc_board, hsc_year, hsc_score, hsc_backlog, diploma_uni, diploma_year, diploma_score, diploma_backlog, ug_uni, ug_year, ug_score, ug_backlog) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)', [student_id, ssc_board, ssc_year, ssc_score, ssc_backlog, hsc_board, hsc_year, hsc_score, hsc_backlog, diploma_uni, diploma_year, diploma_score, diploma_backlog, ug_uni, ug_year, ug_score, ug_backlog]);

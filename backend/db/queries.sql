@@ -177,27 +177,35 @@ CREATE TABLE IF NOT EXISTS reports(
 
 CREATE TABLE IF NOT EXISTS academic_scores (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER,
+    student_id INTEGER not null,
 
-    ssc_board TEXT,
-    ssc_year TEXT,
-    ssc_score FLOAT,
-    ssc_backlog INTEGER,
+    ssc_board TEXT not null,
+    ssc_school TEXT not null,
+    ssc_year TEXT not null,
+    ssc_score FLOAT not null,
+    ssc_type TEXT not null,
+    ssc_backlog INTEGER not null,
 
-    hsc_board TEXT,
-    hsc_year TEXT,
-    hsc_score FLOAT,
-    hsc_backlog INTEGER,
+    hsc_board TEXT not null,
+    hsc_school TEXT not null,
+    hsc_year TEXT not null,
+    hsc_score FLOAT not null,
+    hsc_type TEXT not null,
+    hsc_backlog INTEGER not null,
 
-    diploma_uni TEXT,
-    diploma_year TEXT,
-    diploma_score FLOAT,
-    diploma_backlog INTEGER,
+    diploma_uni TEXT not null,
+    diploma_college TEXT not null,
+    diploma_year TEXT not null,
+    diploma_score FLOAT not null,
+    diploma_type TEXT not null,
+    diploma_backlog INTEGER not null,
     
-    ug_uni TEXT,
-    ug_year TEXT,
-    ug_score FLOAT,
-    ug_backlog INTEGER, 
+    ug_uni TEXT not null,
+    ug_college TEXT not null,
+    ug_year TEXT not null,
+    ug_score FLOAT not null,
+    ug_type TEXT not null,
+    ug_backlog INTEGER not null, 
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -207,13 +215,13 @@ CREATE TABLE IF NOT EXISTS academic_scores (
 
 CREATE TABLE IF NOT EXISTS ielts_scores (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER,
+    student_id INTEGER not null,
 
-    ielts_listening_score float CHECK (ielts_listening_score >= 0 AND ielts_listening_score <= 9),
-    ielts_reading_score float CHECK (ielts_reading_score >= 0 AND ielts_reading_score <= 9),
-    ielts_writing_score float CHECK (ielts_writing_score >= 0 AND ielts_writing_score <= 9),
-    ielts_speaking_score float CHECK (ielts_speaking_score >= 0 AND ielts_speaking_score <= 9),
-    ielts_date TEXT,
+    ielts_listening_score float not null CHECK (ielts_listening_score >= 0 AND ielts_listening_score <= 9),
+    ielts_reading_score float not null CHECK (ielts_reading_score >= 0 AND ielts_reading_score <= 9),
+    ielts_writing_score float not null CHECK (ielts_writing_score >= 0 AND ielts_writing_score <= 9),
+    ielts_speaking_score float not null CHECK (ielts_speaking_score >= 0 AND ielts_speaking_score <= 9),
+    ielts_date not null TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -223,13 +231,13 @@ CREATE TABLE IF NOT EXISTS ielts_scores (
 
 CREATE TABLE IF NOT EXISTS pte_scores (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER,
+    student_id INTEGER not null,
 
     pte_listening_score INTEGER NOT NULL CHECK (pte_listening_score BETWEEN 0 AND 90),
     pte_reading_score INTEGER NOT NULL CHECK (pte_reading_score BETWEEN 0 AND 90),
     pte_writing_score INTEGER NOT NULL CHECK (pte_writing_score BETWEEN 0 AND 90),
     pte_speaking_score INTEGER NOT NULL CHECK (pte_speaking_score BETWEEN 0 AND 90),
-    pte_date TEXT,
+    pte_date not null TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -239,12 +247,12 @@ CREATE TABLE IF NOT EXISTS pte_scores (
 
 CREATE TABLE IF NOT EXISTS gre_scores (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER,
+    student_id INTEGER not null,
 
-    gre_verbal_score INTEGER CHECK (gre_verbal_score >= 130 AND gre_verbal_score <= 170),
-    gre_quant_score INTEGER CHECK (gre_quant_score >= 130 AND gre_quant_score <= 170),
-    gre_writing_score DECIMAL(3, 1) CHECK (gre_writing_score >= 0 AND gre_writing_score <= 6),
-    gre_date TEXT,
+    gre_verbal_score INTEGER not null CHECK (gre_verbal_score >= 130 AND gre_verbal_score <= 170),
+    gre_quant_score INTEGER not null CHECK (gre_quant_score >= 130 AND gre_quant_score <= 170),
+    gre_writing_score DECIMAL(3, 1) not null CHECK (gre_writing_score >= 0 AND gre_writing_score <= 6),
+    gre_date not null TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -254,12 +262,12 @@ CREATE TABLE IF NOT EXISTS gre_scores (
 
 CREATE TABLE IF NOT EXISTS sat_scores (
     id SERIAL PRIMARY KEY,
-    student_id INTEGER,
+    student_id INTEGER not null,
 
     sat_math_score INTEGER NOT NULL CHECK (sat_math_score >= 200 AND sat_math_score <= 800),
     sat_english_score INTEGER NOT NULL CHECK (sat_english_score >= 200 AND sat_english_score <= 800),
-    sat_essay_score INTEGER CHECK (sat_essay_score >= 0 AND sat_essay_score <= 24),
-    sat_date TEXT,
+    sat_essay_score INTEGER not null CHECK (sat_essay_score >= 0 AND sat_essay_score <= 24),
+    sat_date not null TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -269,12 +277,12 @@ CREATE TABLE IF NOT EXISTS sat_scores (
 
 CREATE TABLE IF NOT EXISTS gmat_scores (
   id SERIAL PRIMARY KEY,
-    student_id INTEGER,
+    student_id INTEGER not null,
 
-  gmat_verbal_score INTEGER CHECK (gmat_verbal_score >= 0 AND gmat_verbal_score <= 60),
-  gmat_quant_score INTEGER CHECK (gmat_quant_score >= 0 AND gmat_quant_score <= 60),
-  gmat_writing_score INTEGER CHECK (gmat_writing_score >= 0 AND gmat_writing_score <= 6),
-  gmat_date TEXT,
+  gmat_verbal_score INTEGER not null CHECK (gmat_verbal_score >= 0 AND gmat_verbal_score <= 60),
+  gmat_quant_score INTEGER not null CHECK (gmat_quant_score >= 0 AND gmat_quant_score <= 60),
+  gmat_writing_score INTEGER not null CHECK (gmat_writing_score >= 0 AND gmat_writing_score <= 6),
+  gmat_date not null TEXT,
 
   CONSTRAINT fk_student_id
   FOREIGN KEY (student_id) 
