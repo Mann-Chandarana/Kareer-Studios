@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import SmallSpinner from "../../SmallSpinner";
 import client from "../../../api";
 
-const AddFeedback = ({ counsellor_id, student_id ,Fetch_Feedback}) => {
+const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
   const closeButton = useRef();
 
   const [feedback, setfeedback] = useState({
@@ -25,7 +25,19 @@ const AddFeedback = ({ counsellor_id, student_id ,Fetch_Feedback}) => {
     setloading(true);
 
     try {
-      await client.post("/feedbacks/student", feedback);
+      const { data } = await client.get("feedbacks/getCounCount/" + feedback.counsellor_id);
+      console.log(data);
+
+      let obj = feedback;
+      for (let [key, value] of Object.entries(feedback)) {
+        obj.key = value;
+      }
+      obj.message = 0;
+
+      if (data.message.messages !== null) {
+        obj.message = data.message.messages;
+      }
+      await client.post("/feedbacks/student", obj);
       closeButton.current.click();
       setfeedback({
         student_id: student_id,

@@ -67,7 +67,7 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
         comments: "",
         status: false,
         start_data: "",
-        pdf:null,
+        pdf: null,
       });
     } catch (error) {
       console.log(error);

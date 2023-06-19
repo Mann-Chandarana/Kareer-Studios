@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import SessionContext from "../../contexts/SessionContext";
 
 function CounsellorSidebar() {
+  const { user } = useContext(SessionContext);
   return (
     <aside id="sidebar" className="sidebar">
       <ul className="sidebar-nav" id="sidebar-nav">
@@ -70,7 +72,12 @@ function CounsellorSidebar() {
         <li className="nav-item">
           <NavLink className="nav-link" to="/viewfeedback">
             <i className="fa-regular fa-comments"></i>
-            <span>View Feedback</span>
+            <span>
+              View Feedback{" "}
+              {user.messages !== null && user.messages !== 0 && (
+                <span>+{user.messages}</span>
+              )}
+            </span>
           </NavLink>
         </li>
       </ul>

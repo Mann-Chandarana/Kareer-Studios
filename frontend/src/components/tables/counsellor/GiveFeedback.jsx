@@ -57,7 +57,7 @@ const GiveFeedback = () => {
   return (
     <>
       <Modal id="add-feedback">
-        <AddFeedback counsellor_id={user.counsellor_id} Fetch_Feedback={Fetch_Feedback} />
+        <AddFeedback counsellor_id={user.id} Fetch_Feedback={Fetch_Feedback} />
       </Modal>
       <main id="main" className="main">
         <div className="pagetitle">
