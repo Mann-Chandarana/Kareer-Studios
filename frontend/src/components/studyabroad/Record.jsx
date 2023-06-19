@@ -5,6 +5,8 @@ import useCaptialize from "../../hooks/useCaptialize";
 import { CButton } from "@coreui/react";
 import { Link, useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import toast, { Toaster } from "react-hot-toast";
+import Academic from "./records/Academic";
 import GMAT from "./records/GMAT";
 import GRE from "./records/GRE";
 import IELTS from "./records/IELTS";
