@@ -47,6 +47,8 @@ router.delete("/delete_feedback/:id", verifyCounsellors, async (req, res) => {
   }
 });
 
+/* Clearnig message for students */
+
 router.put("/clearMessage/:student_id", async (req, res) => {
   try {
     await feedbackHandler.messageclear(req.params.student_id);
@@ -56,6 +58,18 @@ router.put("/clearMessage/:student_id", async (req, res) => {
     console.log(error);
   }
 });
+
+router.put("/clearCounMessage/:counsellor_id", async (req, res) => {
+  try {
+    await feedbackHandler.messageCounclear(req.params.counsellor_id);
+
+    res.status(200).send("Cleared successfully");
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+/* Fetching count of the students */
 
 router.get("/getCount/:student_id", verifyCounsellors, async (req, res) => {
   try {
@@ -68,6 +82,19 @@ router.get("/getCount/:student_id", verifyCounsellors, async (req, res) => {
     return res.status(400).send({ error: err.message });
   }
 });
+
+/* Fetching count of the counsellor */
+
+router.get("/getCounCount/:counsellor_id",verifyStudents,async (req, res) => {
+    try {
+      const { rowCount, rows } = await feedbackHandler.fetchingcount(req.params.counsellor_id);
+
+      return res.status(200).json({ message: rows[0] });
+    } catch (err) {
+      return res.status(400).send({ error: err.message });
+    }
+  }
+);
 
 router.patch("/updateCounsellorFeed", verifyCounsellors, async (req, res) => {
   try {
@@ -86,17 +113,17 @@ router.patch("/updateCounsellorFeed", verifyCounsellors, async (req, res) => {
   }
 });
 
-router.patch("/updateStudentFeed",verifyStudents,async(req,res)=>{
+router.patch("/updateStudentFeed", verifyStudents, async (req, res) => {
   try {
-    const {id,comment,date} = req.body;
+    const { id, comment, date } = req.body;
 
-    await feedbackHandler.updateStudentFeedback(id,comment,date);
+    await feedbackHandler.updateStudentFeedback(id, comment, date);
 
-    res.status(200).send({message:"Updated Successfully !"})
+    res.status(200).send({ message: "Updated Successfully !" });
   } catch (err) {
-    return res.status(404).send({error:err.message});
+    return res.status(404).send({ error: err.message });
   }
-})
+});
 
 router.get(
   "/counsellor/:counsellor_id",
@@ -134,16 +161,15 @@ router.get("/student/:counsellor_id", verifyCounsellors, async (req, res) => {
   }
 });
 
+/* Adding Feedback for students */
+
 router.post("/student", verifyStudents, async (req, res) => {
   try {
-    const { student_id, counsellor_id, comment, date } = req.body;
+    const { student_id, counsellor_id, comment, date, message } = req.body;
 
-    await feedbackHandler.addStudentFeedback(
-      student_id,
-      counsellor_id,
-      comment,
-      date
-    );
+    await feedbackHandler.addStudentFeedback(student_id,counsellor_id,comment,date);
+
+    await feedbackHandler.updateCounsellormessage(counsellor_id, message);
 
     res.status(202).send({ message: "Feedback added!" });
   } catch (err) {

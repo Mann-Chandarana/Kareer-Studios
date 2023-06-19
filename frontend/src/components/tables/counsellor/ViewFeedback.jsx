@@ -9,7 +9,7 @@ import { SearchMenu } from "../../SearchMenu";
 import useSearch from "../../../hooks/useSearch";
 
 function ViewFeedback() {
-  const { user } = useContext(SessionContext);
+  const { user,clearMessage } = useContext(SessionContext);
   const [list, setlist] = useState([]);
   const [loading, setLoading] = useState(false);
   const { dummy, setDummy, handleQueryChange } = useSearch(list);
@@ -26,6 +26,8 @@ function ViewFeedback() {
     } catch (error) {
       console.log(error);
     }
+    await client.put("feedbacks/clearCounMessage/" + user.id);
+    clearMessage();
   };
   useEffect(() => {
     Fetch_Feedback();

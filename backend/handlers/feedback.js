@@ -65,15 +65,34 @@ module.exports = {
       student_id,
     ]);
   },
+
+  /* Fetching count for students */
+
   increaseMessage: async (student_id) => {
     return db.query("SELECT messages from students WHERE id=$1", [student_id]);
   },
+
+  /*Fetching count for counsellor */
+
+  fetchingcount:async(counsellor_id)=>{
+    return db.query("SELECT messages from counsellors WHERE id=$1",[counsellor_id])
+  },
+
+  /* Updating message for student */
+
   updateStudentmessage: async (student_id, message) => {
     const value = message + 1;
     return db.query("UPDATE students SET messages=$1 WHERE id=$2", [
       value,
       student_id,
     ]);
+  },
+  
+  /* Updating message for counsellor */
+
+  updateCounsellormessage: async (counsellor_id, message) => {
+    const value = message + 1;
+    return db.query("UPDATE counsellors SET messages=$1 WHERE id=$2", [value,counsellor_id,]);
   },
 
   /* For student notification */
@@ -83,6 +102,16 @@ module.exports = {
     return db.query("UPDATE students SET messages=$1 where id=$2", [
       value,
       student_id,
+    ]);
+  },
+
+  /* Clearing message for counsellor */
+
+  messageCounclear: async (counsellor_id) => {
+    const value = 0;
+    return db.query("UPDATE counsellors SET messages=$1 where id=$2", [
+      value,
+      counsellor_id,
     ]);
   },
   
