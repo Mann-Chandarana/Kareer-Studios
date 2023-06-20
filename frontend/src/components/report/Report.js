@@ -68,7 +68,7 @@ function Report() {
           <br></br>
 
           <center>
-            <h4 className="heading">ASSESSMENT REPORT</h4>
+            <h4 className="heading">BRAINOGRAPHY ASSESSMENT REPORT</h4>
           </center>
           <br></br>
           <center>

@@ -116,7 +116,7 @@ function Assessment() {
       <Toaster position="top-center" reverseOrder={false}></Toaster>
       <br></br>
       <center>
-        <h2>Assessment Report</h2>
+        <h2>Brainography Assessment Report</h2>
       </center>
       <br></br>
       <CForm onSubmit={formik.handleSubmit}>

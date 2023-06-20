@@ -5,15 +5,15 @@ import { Link, useParams } from "react-router-dom";
 import useFetch from "../../../hooks/useFetch";
 import toast, { Toaster } from "react-hot-toast";
 import client from "../../../api";
-import EditGRE from "../modals/EditGRE";
+import EditTOEFL from "../modals/EditTOEFL";
 
-function GRE({data, flag}) {
+function TOEFL({data, flag}) {
   const { user } = useContext(SessionContext);
   let { id } = useParams();
 
   const handleDelete = (row_id) => {
     client
-      .delete(`/records/delGre/${row_id}`)
+      .delete(`/records/delToefl/${row_id}`)
       .then((response) => {
         toast.success("Data deleted successfully.");
         window.location.reload();        
@@ -40,18 +40,18 @@ function GRE({data, flag}) {
 
   console.log(selectedData);
 
-
   return (
-    <>
-       {isOpen && <EditGRE data={selectedData} onClose={closeModal}></EditGRE>}
-          {/* GRE Scores Table */}
-          <h5 className="mt-4 fw-bold">GRE Scores</h5>
+   <>
+   {isOpen && <EditTOEFL data={selectedData} onClose={closeModal}></EditTOEFL>}
+          {/* TOEFL Scores Table */}
+          <h5 className="mt-4 fw-bold">TOEFL Scores</h5>
           <table className="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <th>Verbal Reasoning</th>
-                <th>Quantitative Reasoning</th>
-                <th>Analytical Writing</th>
+                <th>Listening</th>
+                <th>Reading</th>
+                <th>Writing</th>
+                <th>Speaking</th>
                 <th>Overall</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -62,11 +62,12 @@ function GRE({data, flag}) {
                 <>
                   {data.map((row, index) => (
                     <tr key={index}>
-                      <td>{row.gre_verbal_score}</td>
-                      <td>{row.gre_quant_score}</td>
-                      <td>{row.gre_writing_score}</td>
-                      <td>{row.gre_overall}</td>
-                      <td>{row.gre_date}</td>
+                      <td>{row.toefl_listening_score}</td>
+                      <td>{row.toefl_reading_score}</td>
+                      <td>{row.toefl_writing_score}</td>
+                      <td>{row.toefl_speaking_score}</td>
+                      <td>{row.toefl_overall}</td>
+                      <td>{row.toefl_date}</td>
                       <td className="d-flex flex-col justify-content-center gap-2">
                         <button className="btn btn-primary" onClick={() => openModal(row.id)}>E</button>
                         <button className="btn btn-danger" onClick={() => handleDelete(row.id)}>D</button>
@@ -77,9 +78,9 @@ function GRE({data, flag}) {
               )}
             </tbody>
           </table>
-
 </>
+       
   );
 }
 
-export default GRE;
+export default TOEFL;

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import client from "../../../api";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -9,26 +10,28 @@ import {
   CInputGroupText,
   CRow,
   CCol,
-  CFormTextarea,
+  CFormSelect,
 } from "@coreui/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
-import { addSatScore } from "../helper";
+import useFetch from "../../../hooks/useFetch";
+import { updateSatScore } from "../helper";
 import { satValidate } from "../validate";
 
-const SAT = () => {
-  let { id } = useParams();
+const EditSAT = ({data, onClose}) => {
 
   const navigate = useNavigate();
 
- 
+  console.log(data.id);
+
+  // Define formik forms for each tab
   const satForm = useFormik({
     initialValues: {
-      sat_math_score: "",
-      sat_english_score: "",
-      sat_essay_score: "",
-      sat_overall: "",
-      sat_date: "",
+        sat_math_score: data?.sat_math_score || "",
+      sat_english_score: data?.sat_english_score || "",
+      sat_essay_score: data?.sat_essay_score || "",
+      sat_overall: data?.sat_overall || "",
+      sat_date: data?.sat_date || "",
     },
     enableReinitialize: true,
     validate: satValidate,
@@ -37,28 +40,36 @@ const SAT = () => {
     onSubmit: async (values) => {
       values = await Object.assign(values);
 
-      let addPromise = addSatScore(values, id);
+        let updatePromise = updateSatScore(values, data.id);
 
-      toast.promise(addPromise, {
-        loading: "Adding...",
-        success: <b>Added successfully...!</b>,
-        error: <b>Could not add!</b>,
-      });
+        toast.promise(updatePromise, {
+          loading: "Updating...",
+          success: <b>Updated successfully...!</b>,
+          error: <b>Could not update!</b>,
+        });
 
-      addPromise.then(function () {
-        navigate(`/record/${id}`);
-      });
+        updatePromise.then(function () {
+          onClose();
+          window.location.reload();
+        });
     },
   });
-
- 
+  
 
   return (
-   <>
-
-       
-
-<form onSubmit={satForm.handleSubmit}>
+    <div className="modal position-fixed top-50 start-50 translate-middle bg-dark bg-opacity-25 w-100 h-100 d-flex align-items-center justify-content-center">
+    <div className="bg-white p-4" style={{ maxWidth: "1000px", maxHeight: "500px", overflowY: "auto" }}>
+    <div className="d-flex justify-content-between">
+        <h4>Edit SAT Score</h4>
+      <button
+        type="button"
+        className=" h-50 btn btn-sm btn-danger"
+        onClick={onClose}
+      >
+        <span>X</span>
+      </button>
+    </div>
+    <form onSubmit={satForm.handleSubmit}>
               {/* Render PTE form fields */}
               <br></br>
               <CRow>
@@ -110,9 +121,9 @@ const SAT = () => {
                 </CButton>
               </div>
             </form>
-
-          </>
+  </div>
+  </div>
   );
 };
 
-export default SAT;
+export default EditSAT;

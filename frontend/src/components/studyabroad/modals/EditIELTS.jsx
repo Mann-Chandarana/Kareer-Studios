@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import client from "../../../api";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   CForm,
@@ -9,64 +10,75 @@ import {
   CInputGroupText,
   CRow,
   CCol,
-  CFormTextarea,
+  CFormSelect,
 } from "@coreui/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
-import { addPteScore } from "../helper";
-import { pteValidate } from "../validate";
+import useFetch from "../../../hooks/useFetch";
+import { updateIeltsScore } from "../helper";
+import { ieltsValidate } from "../validate";
 
-const PTE = () => {
-  let { id } = useParams();
+const EditIELTS = ({data, onClose}) => {
 
   const navigate = useNavigate();
 
- 
-  const pteForm = useFormik({
+  console.log(data.id);
+
+  // Define formik forms for each tab
+  const ieltsForm = useFormik({
     initialValues: {
-      pte_listening_score: "",
-      pte_reading_score: "",
-      pte_writing_score: "",
-      pte_speaking_score: "",
-      pte_overall: "",
-      pte_date: "",
+        ielts_listening_score: data?.ielts_listening_score || "",
+      ielts_reading_score: data?.ielts_reading_score || "",
+      ielts_writing_score: data?.ielts_writing_score || "",
+      ielts_speaking_score: data?.ielts_speaking_score || "",
+      ielts_overall: data?.ielts_overall || "",
+      ielts_date: data?.ielts_date || "",   
     },
     enableReinitialize: true,
-    validate: pteValidate,
+    validate: ieltsValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
       values = await Object.assign(values);
 
-      let addPromise = addPteScore(values, id);
+        let updatePromise = updateIeltsScore(values, data.id);
 
-      toast.promise(addPromise, {
-        loading: "Adding...",
-        success: <b>Added successfully...!</b>,
-        error: <b>Could not add!</b>,
-      });
+        toast.promise(updatePromise, {
+          loading: "Updating...",
+          success: <b>Updated successfully...!</b>,
+          error: <b>Could not update!</b>,
+        });
 
-      addPromise.then(function () {
-        navigate(`/record/${id}`);
-      });
+        updatePromise.then(function () {
+          onClose();
+          window.location.reload();
+        });
     },
   });
+  
 
   return (
-   <>
-
-       
-
-      
-<form onSubmit={pteForm.handleSubmit}>
-              {/* Render PTE form fields */}
+    <div className="modal position-fixed top-50 start-50 translate-middle bg-dark bg-opacity-25 w-100 h-100 d-flex align-items-center justify-content-center">
+    <div className="bg-white p-4" style={{ maxWidth: "1000px", maxHeight: "500px", overflowY: "auto" }}>
+    <div className="d-flex justify-content-between">
+        <h4>Edit IELTS Score</h4>
+      <button
+        type="button"
+        className=" h-50 btn btn-sm btn-danger"
+        onClick={onClose}
+      >
+        <span>X</span>
+      </button>
+    </div>
+    <form onSubmit={ieltsForm.handleSubmit}>
+              {/* Render IELTS form fields */}
               <br></br>
               <CRow>
                 <CCol xs>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>Listening</CInputGroupText>
                     <CFormInput
-                      {...pteForm.getFieldProps("pte_listening_score")}
+                      {...ieltsForm.getFieldProps("ielts_listening_score")}
                     />
                   </CInputGroup>
                 </CCol>
@@ -74,7 +86,7 @@ const PTE = () => {
                   <CInputGroup className="mb-3">
                     <CInputGroupText>Reading</CInputGroupText>
                     <CFormInput
-                      {...pteForm.getFieldProps("pte_reading_score")}
+                      {...ieltsForm.getFieldProps("ielts_reading_score")}
                     />
                   </CInputGroup>
                 </CCol>
@@ -85,7 +97,7 @@ const PTE = () => {
                   <CInputGroup className="mb-3">
                     <CInputGroupText>Writing</CInputGroupText>
                     <CFormInput
-                      {...pteForm.getFieldProps("pte_writing_score")}
+                      {...ieltsForm.getFieldProps("ielts_writing_score")}
                     />
                   </CInputGroup>
                 </CCol>
@@ -93,7 +105,7 @@ const PTE = () => {
                   <CInputGroup className="mb-3">
                     <CInputGroupText>Speaking</CInputGroupText>
                     <CFormInput
-                      {...pteForm.getFieldProps("pte_speaking_score")}
+                      {...ieltsForm.getFieldProps("ielts_speaking_score")}
                     />
                   </CInputGroup>
                 </CCol>
@@ -104,16 +116,16 @@ const PTE = () => {
                   <CInputGroup className="mb-3">
                     <CInputGroupText>Overall</CInputGroupText>
                     <CFormInput
-                      {...pteForm.getFieldProps("pte_overall")}
+                      {...ieltsForm.getFieldProps("ielts_overall")}
                     />
                   </CInputGroup>
                 </CCol>
                 <CCol xs>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>Date</CInputGroupText>
-                    <CFormInput placeholder="DD/MM/YYYY" {...pteForm.getFieldProps("pte_date")} />
+                    <CFormInput placeholder="DD/MM/YYYY" {...ieltsForm.getFieldProps("ielts_date")} />
                   </CInputGroup>
-                </CCol>                
+                </CCol>
               </CRow>
 
               <div style={{ display: "flex", justifyContent: "center" }}>
@@ -122,9 +134,9 @@ const PTE = () => {
                 </CButton>
               </div>
             </form>
-
-          </>
+  </div>
+  </div>
   );
 };
 
-export default PTE;
+export default EditIELTS;

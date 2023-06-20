@@ -12,6 +12,7 @@ import GRE from "./records/GRE";
 import IELTS from "./records/IELTS";
 import PTE from "./records/PTE";
 import SAT from "./records/SAT";
+import TOEFL from "./records/TOEFL";
 
 
 function Record() {
@@ -24,6 +25,7 @@ function Record() {
   const [greData, setgreData] = useState([]);
   const [gmatData, setgmatData] = useState([]);
   const [satData, setsatData] = useState([]);
+  const [toeflData, settoeflData] = useState([]);
 
   // get records
   useEffect(() => {
@@ -69,6 +71,13 @@ function Record() {
       } catch (error) {
         console.log(error);
       }
+
+      try {
+        const { data: toeflData } = await client(`/records/toefl/${id}`);
+        settoeflData(toeflData.rows);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchData();
@@ -80,6 +89,8 @@ function Record() {
   let flagGre = greData ? true : false;
   let flagSat = satData ? true : false;
   let flagGmat = satData ? true : false;
+  let flagToefl = toeflData ? true : false;
+  
 
   return (
     <main id="main" className="main">
@@ -98,7 +109,7 @@ function Record() {
         <br></br>
 
         <center>
-          <h4 className="heading">RECORDS</h4>
+          <h4 className="heading fw-bold">ACADEMIC RECORDS</h4>
         </center>
         <br></br>
 
@@ -120,6 +131,10 @@ function Record() {
 
           {/* GMAT Scores Table */}
           <GMAT data={gmatData} flag={flagGmat}></GMAT>
+
+          {/* TOEFL Scores Table */}
+          <TOEFL data={toeflData} flag={flagToefl}></TOEFL>
+
         </div>
       </div>
     </main>

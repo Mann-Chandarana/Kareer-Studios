@@ -14,6 +14,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { addIeltsScore } from "../helper";
+import { ieltsValidate } from "../validate";
 
 const IELTS = () => {
   let { id } = useParams();
@@ -26,10 +27,11 @@ const IELTS = () => {
       ielts_reading_score: "",
       ielts_writing_score: "",
       ielts_speaking_score: "",
+      ielts_overall: "",
       ielts_date: "",
     },
     enableReinitialize: true,
-    //validate: ieltsValidate,
+    validate: ieltsValidate,
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
@@ -99,13 +101,20 @@ const IELTS = () => {
               </CRow>
 
               <CRow>
+              <CCol xs>
+                  <CInputGroup className="mb-3">
+                    <CInputGroupText>Overall</CInputGroupText>
+                    <CFormInput
+                      {...ieltsForm.getFieldProps("ielts_overall")}
+                    />
+                  </CInputGroup>
+                </CCol>
                 <CCol xs>
                   <CInputGroup className="mb-3">
                     <CInputGroupText>Date</CInputGroupText>
-                    <CFormInput {...ieltsForm.getFieldProps("ielts_date")} />
+                    <CFormInput placeholder="DD/MM/YYYY" {...ieltsForm.getFieldProps("ielts_date")} />
                   </CInputGroup>
                 </CCol>
-                <CCol xs></CCol>
               </CRow>
 
               <div style={{ display: "flex", justifyContent: "center" }}>

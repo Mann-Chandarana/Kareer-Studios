@@ -22,6 +22,7 @@ import PTE from "./scores/PTE";
 import GRE from "./scores/GRE";
 import SAT from "./scores/SAT";
 import GMAT from "./scores/GMAT";
+import TOEFL from "./scores/TOEFL";
 
 const Score = () => {
   let { id } = useParams();
@@ -30,38 +31,9 @@ const Score = () => {
 
   const [activeTab, setActiveTab] = useState("academic");
 
-  // Define similar formik forms for PTE, GRE, SAT, and GMAT
-
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-
-  //   e.preventDefault();
-  //   // Submit the form based on the active tab
-  //   switch (activeTab) {
-  //     case "academic":
-  //       academicForm.handleSubmit();
-  //       break;
-  //     case "ielts":
-  //       ieltsForm.handleSubmit();
-  //       break;
-  //     // Handle submission for other tabs
-  //     case "pte":
-  //       pteForm.handleSubmit();
-  //       break;
-  //     case "gre":
-  //       greForm.handleSubmit();
-  //       break;
-  //     case "sat":
-  //       satForm.handleSubmit();
-  //       break;
-  //     case "gmat":
-  //       gmatForm.handleSubmit();
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
 
   return (
     <main id="main" className="main">
@@ -127,6 +99,14 @@ const Score = () => {
               GMAT
             </button>
           </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${activeTab === "toefl" && "active"}`}
+              onClick={() => handleTabChange("toefl")}
+            >
+              TOEFL
+            </button>
+          </li>
         </ul>
 
         <div className="tab-content">
@@ -153,6 +133,10 @@ const Score = () => {
 
           <div className={`tab-pane ${activeTab === "gmat" && "active"}`}>
             <GMAT></GMAT>
+          </div>
+
+          <div className={`tab-pane ${activeTab === "toefl" && "active"}`}>
+            <TOEFL></TOEFL>
           </div>
         </div>
       </div>
