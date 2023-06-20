@@ -95,6 +95,7 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
           <div className="col-xs-4 col-xs-offset-4">
             <div className="floating-label-group">
               <label className="floating-label mb-1">Student ID</label>
+
               <input
                 type="text"
                 pattern="^[a-z A-Z]*$"
