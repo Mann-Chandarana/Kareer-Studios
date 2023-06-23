@@ -5,6 +5,7 @@ import { TableLoading } from '../../TableLoading';
 import { CounsellorInfo } from '../../modals/infoModals/CounsellorInfo';
 import Modal from '../../Modal';
 import ModalButton from '../../ModalButton';
+import { toast } from "react-toastify";
 
 function YourCounsellor() {
     const { user } = useContext(SessionContext);
@@ -25,6 +26,13 @@ function YourCounsellor() {
     };
 
     useEffect(() => {
+        if (user.messages !== null && user.messages !== 0) {
+            toast.success(`You have ${user.messages} new comments from counsellor`, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: true,
+              });
+        }
         getCounsellors();
         // eslint-disable-next-line
     }, []);

@@ -41,8 +41,8 @@ function ViewFeedback() {
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Dashboard</li>
-              <li className="breadcrumb-item">Feedback</li>
-              <li className="breadcrumb-item active">View feedback</li>
+              <li className="breadcrumb-item">Comments</li>
+              <li className="breadcrumb-item active">View Comments</li>
             </ol>
           </nav>
         </div>
@@ -53,7 +53,7 @@ function ViewFeedback() {
               <div className="card-body pb-0">
                 <div className="d-flex">
                   <h5 style={{ width: "80%" }} className="card-title">
-                    Feed back of students
+                    Comments of students
                   </h5>
                   <div className="mt-3">
                     <SearchMenu handleQueryChange={handleQueryChange} />
@@ -85,7 +85,7 @@ function ViewFeedback() {
                             <td>{student.name}</td>
                             <td>{student.email}</td>
                             <td>
-                              {student.date!==null?new Date(student.date).toLocaleDateString(
+                              {student.date!==""?new Date(student.date).toLocaleDateString(
                                 "en-GB"
                               ):new Date().toLocaleDateString('en-GB')}
                             </td>

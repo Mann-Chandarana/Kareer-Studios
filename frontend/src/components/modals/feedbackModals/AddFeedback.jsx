@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import SmallSpinner from "../../SmallSpinner";
 import client from "../../../api";
 import covertToBase64 from "../../../Binary";
+import { toast } from "react-toastify";
 
 const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
   const closeButton = useRef();
@@ -69,6 +70,12 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
         start_data: "",
         pdf: null,
       });
+
+      toast.success("Comment added successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: true,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +86,7 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
     <form className="modal-content" noValidate onSubmit={handlesubmit}>
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
-          <p className="h3">Add Feedback</p>
+          <p className="h3">Add Comment</p>
         </h5>
         <button
           type="button"

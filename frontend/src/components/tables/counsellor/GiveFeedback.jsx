@@ -65,8 +65,8 @@ const GiveFeedback = () => {
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Dashboard</li>
-              <li className="breadcrumb-item">Feedback</li>
-              <li className="breadcrumb-item active">Give feedback</li>
+              <li className="breadcrumb-item">Commnets</li>
+              <li className="breadcrumb-item active">Give Comments</li>
             </ol>
           </nav>
         </div>
@@ -80,12 +80,12 @@ const GiveFeedback = () => {
                   id="add-feedback"
                   className="btn btn-success btn-sm mx-4 text-white"
                 >
-                  Add Feedback
+                  Add Comment
                 </ModalButton>
               </div>
               <div className="card-body pb-0">
                 <h5 className="card-title">
-                  Add Feedback of students
+                  Add Comments of students
                   <br />
                 </h5>
                 <table className="table table-bordered table-hover">
@@ -126,9 +126,9 @@ const GiveFeedback = () => {
                             <th scope="row">{student.student_id}</th>
                             <td>{student.email}</td>
                             <td>
-                              {new Date(student.start_date).toLocaleDateString(
+                              {student.start_date!==""?new Date(student.start_date).toLocaleDateString(
                                 "en-GB"
-                              )}
+                              ):new Date().toLocaleDateString('en-GB')}
                             </td>
                             <td>{student.phone}</td>
                             <td>

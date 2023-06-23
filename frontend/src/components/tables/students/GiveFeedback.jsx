@@ -68,8 +68,8 @@ const GiveFeedback = () => {
           <nav>
             <ol className="breadcrumb">
               <li className="breadcrumb-item">Dashboard</li>
-              <li className="breadcrumb-item">Feedback</li>
-              <li className="breadcrumb-item active">Give feedback</li>
+              <li className="breadcrumb-item">Comments</li>
+              <li className="breadcrumb-item active">Give Comment</li>
             </ol>
           </nav>
         </div>
@@ -82,12 +82,12 @@ const GiveFeedback = () => {
                   id="add-feedback"
                   className="btn btn-success btn-sm mx-4 text-white"
                 >
-                  Add Feedback
+                  Add Comment
                 </ModalButton>
               </div>
               <div className="card-body pb-0">
                 <h5 className="card-title">
-                  Add Feedback of students
+                  Add Comment of students
                   <br />
                 </h5>
                 <table className="table table-bordered table-hover">
@@ -99,7 +99,6 @@ const GiveFeedback = () => {
                           <th scope="col">date</th>
                           <th scope="col">Counsellor Id</th>
                           <th scope="col">Comment</th>
-                          <th scope="col">Gender</th>
                           <th scope="col">Edit</th>
                           <th scope="col">File</th>
                           <th scope="col">Delete</th>
@@ -108,7 +107,8 @@ const GiveFeedback = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {loading ? (
+                    {console.log(dummy)}
+                    {loading? (
                       <TableLoading />
                     ) : (
                       dummy.map((student, i) => {
@@ -122,7 +122,6 @@ const GiveFeedback = () => {
                             </td>
                             <td>{user.counsellor_id}</td>
                             <td>{student.comment.slice(0,25)}{(student.comment).length>25&&<span>......</span>}</td>
-                            <td>{user.gender.toLowerCase()}</td>
                             <td>
                               <Modal id={"edit_s_feededit" + i}>
                                 <EditStudFeedback

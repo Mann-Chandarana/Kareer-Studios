@@ -37,7 +37,7 @@ const EditStudFeedback = ({id,comment,date,Fetch_Feedback}) => {
     <form className="modal-content" noValidate onSubmit={handleSubmit}>
       <div className="modal-header">
         <h5 className="modal-title" id="exampleModalLabel">
-          <p className="h3">Edit Feedback</p>
+          <p className="h3">Edit Comment</p>
         </h5>
         <button
           type="button"

@@ -68,13 +68,13 @@ function StudentSidebar() {
             </li>
 
             <li style={{ marginTop: "3rem" }} className="nav-heading">
-              Feedback
+              Comments
             </li>
 
             <li className="nav-item">
               <NavLink className="nav-link" to="/givefeedback">
                 <i className="fa-solid fa-pen"></i>
-                <span>Give Feedback</span>
+                <span>Give Comments</span>
               </NavLink>
             </li>
 
@@ -82,7 +82,7 @@ function StudentSidebar() {
               <NavLink className="nav-link" to="/viewfeedback">
                 <i className="fa-regular fa-comments"></i>
                 <span>
-                  View Feedback{" "}
+                  View Comments{" "}
                   {user.messages !== null && user.messages !== 0 && (
                     <span>+{user.messages}</span>
                   )}

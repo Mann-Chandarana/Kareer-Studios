@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import SmallSpinner from "../../SmallSpinner";
 import client from "../../../api";
-import { ToastContainer,toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
   const closeButton = useRef();
@@ -39,7 +39,7 @@ const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
       if (data.message.messages !== null) {
         obj.message = data.message.messages;
       }
-      
+
       await client.post("/feedbacks/student", obj);
 
       closeButton.current.click();
@@ -49,6 +49,11 @@ const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
         comment: "",
         date: "",
         pdf: null,
+      });
+      toast.success("Comment added successfully!", {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: true,
       });
       Fetch_Feedback();
     } catch (error) {
@@ -60,10 +65,9 @@ const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
   return (
     <>
       <form className="modal-content" noValidate onSubmit={handlesubmit}>
-      <ToastContainer position="top-center" />
         <div className="modal-header">
           <h5 className="modal-title" id="exampleModalLabel">
-            <p className="h3">Add Feedback</p>
+            <p className="h3">Add Comment</p>
           </h5>
           <button
             type="button"

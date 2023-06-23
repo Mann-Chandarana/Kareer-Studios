@@ -36,8 +36,8 @@ const ViewFeedback = () => {
         <nav>
           <ol className="breadcrumb">
             <li className="breadcrumb-item">Dashboard</li>
-            <li className="breadcrumb-item">Feedback</li>
-            <li className="breadcrumb-item active">View Feedback</li>
+            <li className="breadcrumb-item">Comments</li>
+            <li className="breadcrumb-item active">View comments</li>
           </ol>
         </nav>
       </div>
@@ -54,7 +54,7 @@ const ViewFeedback = () => {
                     {loading || (
                       <>
                         <th scope="col">ID</th>
-                        <th scope="col">Feedback Assigned Date</th>
+                        <th scope="col"> Date</th>
                         <th scope="col">Your Performance</th>
                         <th scope="col">Comments from your Counsellor</th>
                         <th scope="col">Attachment</th>
