@@ -21,6 +21,7 @@
         "html-pdf": "^3.0.1",
         "instamojo-nodejs": "^0.0.5",
         "jsonwebtoken": "^9.0.0",
+        "multer": "^1.4.5-lts.1",
         "nodemailer": "^6.9.1",
         "pg": "^8.8.0",
         "redis": "^4.6.3",

@@ -1,343 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-
+        <meta charset="utf-8" />
+        <title>INVOICE</title>
         <style>
-            * {
-                margin: 0;
-                padding: 0;
-                font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-                box-sizing: border-box;
-                font-size: 14px;
-            }
-
-            img {
-                max-width: 100%;
-            }
-
-            body {
-                -webkit-font-smoothing: antialiased;
-                -webkit-text-size-adjust: none;
-                width: 100% !important;
-                height: 100%;
-                line-height: 1.6;
-            }
-
-            /* Let's make sure all tables have defaults */
-            table td {
-                vertical-align: top;
-            }
-            body {
-                background: #fff;
-                height: 100vh;
-            }
-
-            .body-wrap {
-                width: 100%;
-            }
-
-            .container {
-                display: block !important;
-                max-width: 600px !important;
-                margin: 0 auto !important;
-                /* makes it centered */
-                clear: both !important;
-            }
-
-            .content {
-                max-width: 600px;
-                margin: 0 auto;
-                display: block;
-                padding: 20px;
-            }
-
-            /* -------------------------------------
-    HEADER, FOOTER, MAIN
-------------------------------------- */
-            .main {
-                background-color: #f6f6f6;
-                border: 1px solid #e9e9e9;
-                border-radius: 3px;
-            }
-
-            .content-wrap {
-                padding: 20px;
-            }
-
-            .content-block {
-                padding: 0 0 20px;
-            }
-
-            .header {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-
-            /* -------------------------------------
-    TYPOGRAPHY
-------------------------------------- */
-            h1,
-            h2,
-            h3 {
-                font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-                color: #000;
-                margin: 40px 0 0;
-                line-height: 1.2;
-                font-weight: 400;
-            }
-
-            h1 {
-                font-size: 32px;
-                font-weight: 500;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            h3 {
-                font-size: 18px;
-            }
-
-            h4 {
-                font-size: 14px;
-                font-weight: 600;
-            }
-
-            p,
-            ul,
-            ol {
-                margin-bottom: 10px;
-                font-weight: normal;
-            }
-            p li,
-            ul li,
-            ol li {
-                margin-left: 5px;
-                list-style-position: inside;
-            }
-
-            /* -------------------------------------
-    LINKS & BUTTONS
-------------------------------------- */
-            a {
-                color: #1ab394;
-                text-decoration: underline;
-            }
-
-            .btn-primary {
-                text-decoration: none;
-                color: #fff;
-                background-color: #1ab394;
-                border: solid #1ab394;
-                border-width: 5px 10px;
-                line-height: 2;
-                font-weight: bold;
-                text-align: center;
-                cursor: pointer;
-                display: inline-block;
-                border-radius: 5px;
-                text-transform: capitalize;
-            }
-
-            /* -------------------------------------
-    OTHER STYLES THAT MIGHT BE USEFUL
-------------------------------------- */
-            .last {
-                margin-bottom: 0;
-            }
-
-            .first {
-                margin-top: 0;
-            }
-
-            .aligncenter {
-                text-align: center;
-            }
-
-            .alignright {
-                text-align: right;
-            }
-
-            .alignleft {
-                text-align: left;
-            }
-
-            .clear {
+            .clearfix:after {
+                content: '';
+                display: table;
                 clear: both;
             }
 
-            /* -------------------------------------
-    ALERTS
-    Change the class depending on warning email, good email or bad email
-------------------------------------- */
-            .alert {
-                font-size: 16px;
-                color: #fff;
-                font-weight: 500;
-                padding: 20px;
-                text-align: center;
-                border-radius: 3px 3px 0 0;
-            }
-            .alert a {
-                color: #fff;
-                text-decoration: none;
-                font-weight: 500;
-                font-size: 16px;
-            }
-            .alert.alert-warning {
-                background: #f8ac59;
-            }
-            .alert.alert-bad {
-                background: #ed5565;
-            }
-            .alert.alert-good {
-                background: #1ab394;
+            a {
+                color: #5d6975;
+                text-decoration: underline;
             }
 
-            /* -------------------------------------
-    INVOICE
-    Styles for the billing table
-------------------------------------- */
-            .invoice {
-                margin: 40px auto;
-                text-align: left;
-                width: 80%;
+            body {
+                display: grid;
+                place-items: center;
             }
-            .invoice td {
-                padding: 5px 0;
-            }
-            .invoice .invoice-items {
+
+            .container {
+                position: relative;
                 width: 100%;
+                height: 21.7cm;
+                margin: 0 auto;
+                color: #001028;
+                background: #ffffff;
+                font-family: Arial, sans-serif;
+                font-size: 12px;
+                font-family: Arial;
+
+                border: 1px solid black;
             }
-            .invoice .invoice-items td {
-                border-top: #eee 1px solid;
-            }
-            .invoice .invoice-items .total td {
-                border-top: 2px solid #333;
-                border-bottom: 2px solid #333;
-                font-weight: 700;
+
+            header {
+                padding: 10px 0;
+                margin-bottom: 30px;
             }
 
-            /* -------------------------------------
-    RESPONSIVE AND MOBILE FRIENDLY STYLES
-------------------------------------- */
-            @media only screen and (max-width: 640px) {
-                h1,
-                h2,
-                h3,
-                h4 {
-                    font-weight: 600 !important;
-                    margin: 20px 0 5px !important;
-                }
+            #logo {
+                text-align: center;
+                margin-bottom: 10px;
+            }
 
-                h1 {
-                    font-size: 22px !important;
-                }
+            h1 {
+                border-top: 1px solid #5d6975;
+                border-bottom: 1px solid #5d6975;
+                color: #5d6975;
+                font-size: 2.4em;
+                line-height: 1.4em;
+                font-weight: normal;
+                text-align: center;
+                margin: 0 0 20px 0;
+                background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
+                    url('data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAACsAAAAyCAMAAADyWtKhAAAAOVBMVEXu7u7////v7+/x8fHw8PD+/v79/f38/Pz29vb39/fy8vL09PTt7e319fX6+vr5+fn4+Pjz8/P7+/sjQsgnAAABrklEQVR4Xu2Wy2pkMQxET0ny+z77/z92EHRIM4RJejeLeGGMJbkKu1QYt0vVbajkJJWjTw+f/SiSBl40zKsuc5hVDzjVjEtlOB/DR9GFNZ3wUJ1wFmkRVQe0NoFYffQVwGwNDtVgSeUkgdh2acePAM9iZcghDidDG0mPetzgVdXwgJ6ZpeRcOoRjVdXhPipu4E1aYHBJOpeHr1PSBUbiNwdzDNtrbhvQpXbDtm1wN6kDxiXV3XJx1DzBCGMWtQDfx+4QTWVigSVaPS4kqS2IbpwqNySM6g530Yn1gNUkidLOFeCtExmjSypK/KwNenOwdbaCG7msurclLbyorlhVxcmN7VZdBphjZr4/pBJbz/iucm9sd9GedX2LIj12NzNi9uSXueNZEFjyGdvHlPz7jHfO/eQ7+ZIv85Nv3oP97B7eud/nu41/vtt4vttTDwPbYPylhwGbMZ56eNUZX+iMF5296nd+od/5ot93+uKtfrOXPj5VRvAxYhSdL31sBFcWDqUgEvvRZ6RKHkV6aiJhL+I1l+9y7cdeYv+pl/x6ya+X/HoJP/YSXv8afPPX+AONyic1BlYxVgAAAABJRU5ErkJggg==');
+            }
 
-                h2 {
-                    font-size: 18px !important;
-                }
+            #project {
+                float: left;
+                margin-left: 1rem;
+            }
 
-                h3 {
-                    font-size: 16px !important;
-                }
+            #project span {
+                color: #5d6975;
+                text-align: right;
+                width: 52px;
+                margin-right: 10px;
+                display: inline-block;
+                font-size: 0.8em;
+            }
 
-                .container {
-                    width: 100% !important;
-                }
+            #company {
+                float: right;
+                text-align: right;
+                margin-right: 1rem;
+            }
 
-                .content,
-                .content-wrap {
-                    padding: 10px !important;
-                }
+            #project div,
+            #company div {
+                white-space: nowrap;
+            }
 
-                .invoice {
-                    width: 100% !important;
-                }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                border-spacing: 0;
+                margin-bottom: 20px;
+            }
+
+            table tr:nth-child(2n-1) td {
+                background: #f5f5f5;
+            }
+
+            table th,
+            table td {
+                text-align: center;
+            }
+
+            table th {
+                padding: 5px 20px;
+                color: #5d6975;
+                border-bottom: 1px solid #c1ced9;
+                white-space: nowrap;
+                font-weight: normal;
+            }
+
+            table .service,
+            table .desc {
+                text-align: left;
+            }
+
+            table td {
+                padding: 20px;
+                text-align: right;
+            }
+
+            table td.service,
+            table td.desc {
+                vertical-align: top;
+            }
+
+            table td.unit,
+            table td.qty,
+            table td.total {
+                font-size: 1.2em;
+            }
+
+            table td.grand {
+                border-top: 1px solid #5d6975;
+            }
+
+            #notices .notice {
+                color: #5d6975;
+                font-size: 1.2em;
+            }
+
+            footer {
+                color: #5d6975;
+                width: 100%;
+                height: 30px;
+                position: absolute;
+                bottom: 0;
+                border-top: 1px solid #c1ced9;
+                padding: 8px 0;
+                text-align: center;
             }
         </style>
     </head>
     <body>
-        <table class="body-wrap">
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td class="container" width="600">
-                        <div class="content">
-                            <table class="main" width="100%" cellpadding="0" cellspacing="0">
-                                <tbody>
-                                    <tr>
-                                        <td class="content-wrap aligncenter">
-                                            <table width="100%" cellpadding="0" cellspacing="0">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="content-block">
-                                                            <h2>Thank you! for registering at KarrerStudio</h2>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="content-block">
-                                                            <table class="invoice">
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <%- email %> <br />
-                                                                            Invoice #<%- order_id -%> <br />
-                                                                            <%- date -%>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <table
-                                                                                class="invoice-items"
-                                                                                cellpadding="0"
-                                                                                cellspacing="0"
-                                                                            >
-                                                                                <tbody>
-                                                                                    <tr>
-                                                                                        <td>Registration fees</td>
-                                                                                        <td class="alignright">
-                                                                                            ₹ <%- amount -%>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                    <tr class="total">
-                                                                                        <td
-                                                                                            class="alignright"
-                                                                                            width="80%"
-                                                                                        >
-                                                                                            Total
-                                                                                        </td>
-                                                                                        <td class="alignright">
-                                                                                            ₹ <%- amount -%>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="content-block">
-                                                            &copy; Copyright KarrerStudio. All Rights Reserved
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="container">
+            <header class="clearfix">
+                <div id="logo">
+                    <img
+                        src="data:image/gif;base64,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"
+                    />
+                </div>
+                <h1>INVOICE CUM RECEIPT</h1>
+                <div id="company" class="clearfix">
+                    <div style="font-weight: bold">KAREER STUDIO</div>
+                    <div>
+                        Suite # 303, Rajeshree Center, <br />
+                        Near Kalaghoda, Sayajigunj, <br />
+                        Vadodara - 390020
+                    </div>
+                    <div>
+                        <a href="mailto:advisor@kareerstudio.org">advisor@kareerstudio.org</a>
+                    </div>
+                </div>
+                <div id="project">
+                    <div style="font-weight: bold; margin-bottom: 10px">
+                        INVOICE ID:
+                        <span style="font-weight: 600; font-size: 14px"><%- order_id %></span>
+                    </div>
+                    <div><span>STUDENT ID</span> <%- name %></div>
+                    <div><span>EMAIL</span> <%- email %></div>
+                    <div><span>PHONE</span> <%- phone %></div>
+                    <div><span>DATE</span> <%- date %></div>
+                </div>
+            </header>
+            <main>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="desc">DESCRIPTION</th>
+                            <th style="text-align: right">PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="desc"><%- purpose %></td>
+                            <td class="unit">₹<%- amount %></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">TAX 0%</td>
+                            <td class="total">₹0</td>
+                        </tr>
+                        <tr>
+                            <td class="grand total">GRAND TOTAL</td>
+                            <td class="grand total" style="font-weight: bold">₹<%- amount %></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="notices">
+                    <div style="font-weight: bold; font-size: 20px; margin-left: 10px">TERMS & CONDITIONS</div>
+                    <ol class="notice">
+                        <li>CHEQUES SUBJECT TO REALIZATION</li>
+                        <li>FEES ONCE PAID ARE NOT REFUNDABLE</li>
+                        <li>NDIAN BANK - SAYAJIGUNJ BRANCH</li>
+                        <li>Account No.7373930258 | IFSC Code: IDIB000S536</li>
+                        <li>PAN NO. AAZFK7452R</li>
+                    </ol>
+                </div>
+            </main>
+            <footer>Thank You For Your Business!</footer>
+        </div>
     </body>
 </html>

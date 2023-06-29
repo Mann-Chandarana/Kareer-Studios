@@ -12,15 +12,19 @@ const PREFIX = '/api';
 const isDevelopmentMode = process.env.ENV === 'development';
 
 if (isDevelopmentMode) {
-    app.use(cors({
-        origin: ['http://localhost:3000'],
-        credentials: true
-    }));
+    app.use(
+        cors({
+            origin: ['http://localhost:3000'],
+            credentials: true,
+        })
+    );
 }
 
-app.use(express.json({limit:"15mb"}));
+app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use('/static', express.static('static'));
 
 app.use(PREFIX + '/auth', require('./routes/auth'));
 app.use(PREFIX + '/link', require('./routes/link'));
@@ -33,7 +37,7 @@ app.use(PREFIX + '/fees', require('./routes/fees'));
 app.use(PREFIX + '/feedbacks', require('./routes/feedbacks'));
 app.use(PREFIX + '/reports', require('./routes/report'));
 app.use(PREFIX + '/records', require('./routes/record'));
-
+app.use(PREFIX + '/suggestprograms', require('./routes/suggestPrograms'));
 
 if (isDevelopmentMode) {
     app.get('*', (req, res) => {

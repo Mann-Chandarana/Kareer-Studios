@@ -2,7 +2,7 @@ const db = require('../db');
 
 module.exports = {
     getStudentbycounsellorid: async (counsellor_id) => {
-        return db.query('SELECT * FROM students WHERE counsellor_id = $1', [counsellor_id]);
+        return db.query('SELECT * FROM students LEFT JOIN suggested_programs ON (students.id = suggested_programs.student_id)  WHERE counsellor_id = $1', [counsellor_id]);
     },
     getStudentbyparentid: async (parent_id) => {
         return db.query('SELECT * FROM students WHERE id IN (SELECT student_id FROM parents WHERE id =$1)', [parent_id]);
@@ -38,5 +38,5 @@ module.exports = {
     },
     changePassword: async (id, newPassword) => {
         return db.query('UPDATE students SET password=$1 WHERE id=$2', [newPassword, id]);
-    }
+    },
 };

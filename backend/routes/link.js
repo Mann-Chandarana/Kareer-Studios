@@ -26,27 +26,22 @@ router.get('/generate', verifyCounsellors, async (req, res) => {
 
         await db.redisClient.SETEX(uniqueKey, 60 * 60, counsellorId);
 
-        console.log(encodedURI);
-
         res.status(200).send({ link: generatedLink });
     } catch (err) {
         res.status(500).send({ error: err.message });
     }
-
 });
-
 
 router.post('/register/:id', async (req, res) => {
     const { name, email, phone, mobileOtp, emailOtp } = req.body;
     const encryptedId = req.params.id;
 
     try {
-        const decodedURI = decodeURIComponent(encryptedId);
-        //const uniqueKey = cipher.decrypt(decodedURI);
-        const counsellorId = decodedURI.split('@')[0];
+        const uniqueKey = decodeURIComponent(encryptedId);
+        // const uniqueKey = cipher.decrypt(decodedURI);
+        const counsellorId = uniqueKey.split('@')[0];
 
-        const result = await db.redisClient.GET(decodedURI);
-        console.log(result)
+        const result = await db.redisClient.GET(uniqueKey);
         const isValid = counsellorId === result;
 
         if (isValid) {
@@ -63,8 +58,14 @@ router.post('/register/:id', async (req, res) => {
             }
 
             // generate password
-            const password = generatePassword({ length: 8, lowercase: true, uppercase: true, numbers: true, symbols: false });
-            const encryptedPass = await encryptPassword(password);
+            const password = generatePassword({
+                length: 8,
+                lowercase: true,
+                uppercase: true,
+                numbers: true,
+                symbols: false,
+            });
+            const encryptedPass = encryptPassword(password);
 
             // create student
             await studentHandler.addStudent(name, email, phone, encryptedPass, counsellorId);
@@ -72,8 +73,7 @@ router.post('/register/:id', async (req, res) => {
             // clear redis
             await db.redisClient.DEL(email);
             await db.redisClient.DEL(phone);
-            await db.redisClient.DEL(decodedURI);
-
+            await db.redisClient.DEL(uniqueKey);
 
             // send email and password to email
             emailService.sendEmail(email, 'Email and Passwords', JSON.stringify({ email, password }));
