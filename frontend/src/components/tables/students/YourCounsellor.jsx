@@ -70,6 +70,7 @@ function YourCounsellor() {
                                                 <th scope='col'>Counsellor Email</th>
                                                 <th scope='col'>Counsellor No.</th>
                                                 <th scope='col'>Info</th>
+                                                <th scope='col'>Programs Suggested</th>
                                             </>
                                         )}
                                     </tr>

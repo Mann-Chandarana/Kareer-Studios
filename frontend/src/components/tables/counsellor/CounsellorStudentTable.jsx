@@ -96,7 +96,7 @@ function CounsellorStudentTable() {
                                                     <th scope='col'>ID</th>
                                                     <th scope='col'>Name</th>
                                                     <th scope='col'>Email</th>
-                                                    <th scope='col'>Counsellor</th>
+                                                    <th scope='col'>Phone</th>
                                                     <th scope='col'>Member since</th>
                                                     <th scope='col'>Reg. fees</th>
                                                     <th scope='col'>Edit</th>
@@ -117,7 +117,7 @@ function CounsellorStudentTable() {
                                                         <th scope='row'>{student.id}</th>
                                                         <td>{student.name}</td>
                                                         <td>{student.email}</td>
-                                                        <td className='fw-bold'>{user.name}</td>
+                                                        <td>{student.phone}</td>
                                                         <td>{new Date(student.createdat).toLocaleDateString()}</td>
                                                         <td>{student.paid ? <span className='badge rounded-pill text-bg-success'>Paid</span> : <span className='badge rounded-pill text-bg-danger'>Pending</span>}</td>
                                                         <td>
