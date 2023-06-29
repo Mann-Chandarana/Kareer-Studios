@@ -1,0 +1,12 @@
+{
+    "name": "karrerstudio",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "react-native-popup-menu": "^0.16.1"
+    },
+    "scripts": {
+        "start:server": "cd backend && npm run start",
+        "start:client": "cd frontend && npm run start"
+    }
+}
