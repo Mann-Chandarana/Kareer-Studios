@@ -65,10 +65,12 @@ if (isDevelopmentMode) {
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(PORT, () => {
-    console.log(`Successfully started on http://localhost:${PORT}`);
-});
-
-httpsServer.listen(443, () => {
-    console.log(`Successfully started on https://localhost`);
-});
+if (isDevelopmentMode) {
+    httpServer.listen(PORT, () => {
+        console.log(`Successfully started on http://localhost:${PORT}`);
+    });
+} else {
+    httpsServer.listen(443, () => {
+        console.log(`Successfully started on https://localhost`);
+    });
+}
