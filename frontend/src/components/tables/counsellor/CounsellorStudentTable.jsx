@@ -130,7 +130,7 @@ function CounsellorStudentTable() {
                                                         </td>
                                                         <td>
                                                             <Modal id={'view_s_' + student.id} large>
-                                                                <StudentInfo studentData={student} />
+                                                                <StudentInfo studentData={student} refreshData={getStudents} />
                                                             </Modal>
                                                             <ModalButton id={'view_s_' + student.id} className='btn btn-sm btn-info text-white'>
                                                                 View
