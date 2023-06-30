@@ -56,5 +56,5 @@ if (isDevelopmentMode) {
 }
 
 app.listen(PORT, () => {
-    console.log(`Successfully started on https://localhost:${PORT}`);
+    console.log(`Successfully started on http://localhost:${PORT}`);
 });
