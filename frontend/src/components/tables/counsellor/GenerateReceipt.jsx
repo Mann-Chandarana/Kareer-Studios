@@ -29,7 +29,7 @@ function GenerateReceipt() {
     try {
       const payload = {
         student_id: receiptData.student_id,
-        redirect_url: 'http://localhost:3000/payment/verify',
+        redirect_url: window.location.origin + '/payment/verify',
         purpose: receiptData.serviceName,
         amount: receiptData.amount,
         sendWhatsApp: true,

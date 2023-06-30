@@ -22,7 +22,7 @@ router.get('/generate', verifyCounsellors, async (req, res) => {
         // const encryptedId = cipher.encrypt(uniqueKey);
         const encodedURI = encodeURIComponent(uniqueKey);
 
-        const generatedLink = `http://localhost:3000/link/register/${encodedURI}`;
+        const generatedLink = `/link/register/${encodedURI}`;
 
         await db.redisClient.SETEX(uniqueKey, 60 * 60, counsellorId);
 

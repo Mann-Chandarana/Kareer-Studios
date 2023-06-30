@@ -119,10 +119,10 @@ const AddFeedback = ({ counsellor_id, Fetch_Feedback }) => {
                         </div>
 
                         <div className='floating-label-group mt-4'>
-                            <label for='form-check-label' class='form-label'>
+                            <label for='form-check-label' className='form-label'>
                                 Upload attachment:
                             </label>
-                            <input name='pdf' value={feedback.file} class='form-control-sm' type='file' style={{ marginLeft: '10px' }} onChange={fileUpdate} />
+                            <input name='pdf' value={feedback.file} className='form-control-sm' type='file' style={{ marginLeft: '10px' }} onChange={fileUpdate} />
                         </div>
                     </div>
                 </div>

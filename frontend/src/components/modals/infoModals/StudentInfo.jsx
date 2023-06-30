@@ -64,9 +64,10 @@ function StudentInfo({ studentData, refreshData }) {
                                     <button type='button' className='btn btn-danger'>
                                         Non-Academics
                                     </button>
-
-                                    <Link className='btn btn-warning text-white' to={'/report/' + studentData.id}>
-                                        Report
+                                    <Link to={'/report/' + studentData.id}>
+                                        <button type='button' className='btn btn-warning text-white' data-bs-dismiss='modal' aria-label='Close'>
+                                            Report
+                                        </button>
                                     </Link>
 
                                     <label type='button' className='btn text-white btn-info'>

@@ -57,7 +57,7 @@ export const Payment = ({ user, renewUser, logout }) => {
             const res = await client.post('/payment/create', {
                 amount,
                 student_id: user.id,
-                redirect_url: 'http://localhost:3000/',
+                redirect_url: window.location.origin + '/',
                 purpose: 'Registration Fees',
             });
 

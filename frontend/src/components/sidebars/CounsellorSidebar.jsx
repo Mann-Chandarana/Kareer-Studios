@@ -50,14 +50,14 @@ function CounsellorSidebar() {
 
                 <li className='nav-item'>
                     <NavLink className='nav-link' to='/record'>
-                        <i class='fa-solid fa-clipboard'></i>
+                        <i className='fa-solid fa-clipboard'></i>
                         <span>Students Record</span>
                     </NavLink>
                 </li>
 
                 <li className='nav-item'>
                     <NavLink className='nav-link' to='/program'>
-                        <i class='fa-solid fa-plus'></i>
+                        <i className='fa-solid fa-plus'></i>
                         <span>Assign Program</span>
                     </NavLink>
                 </li>
@@ -68,7 +68,7 @@ function CounsellorSidebar() {
 
                 <li className='nav-item'>
                     <NavLink className='nav-link' to='/givefeedback'>
-                        <i class='fa-solid fa-pen'></i>
+                        <i className='fa-solid fa-pen'></i>
                         <span>Give Comment</span>
                     </NavLink>
                 </li>

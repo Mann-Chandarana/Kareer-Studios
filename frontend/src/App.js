@@ -9,14 +9,14 @@ import { Payment } from './pages/Payment';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import PaymentVerify from './pages/PaymentVerify';
+import Loading from './pages/Loading';
 
 function App() {
     const session = useSession();
-
     const [toShow, setToShow] = useState(true);
 
     if (session.status === 'loading') {
-        return <h1>Loading...</h1>;
+        return <Loading />;
     }
 
     if (window.location.pathname === '/payment/verify') {
