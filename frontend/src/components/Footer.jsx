@@ -3,16 +3,16 @@ import React from 'react';
 function Footer() {
     return (
         <>
-            <footer id="footer" className="footer">
-                <div className="copyright">
+            <footer id='footer' className='footer'>
+                <div className='copyright'>
                     &copy; Copyright{' '}
                     <strong>
-                        <span>Karrer Studio</span>
+                        <span>Kareer Studio</span>
                     </strong>
                     . All Rights Reserved
                 </div>
-                <div className="credits">
-                    Designed by <a href="/">Charusat University</a>
+                <div className='credits'>
+                    Designed by <a href='/'>Charusat University</a>
                 </div>
             </footer>
         </>
