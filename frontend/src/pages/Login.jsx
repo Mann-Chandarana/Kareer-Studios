@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import client from '../api';
 
 const customstyle = {
     paddingLeft: '2.5rem',
@@ -31,7 +32,7 @@ const Login = () => {
         const toastId = toast.loading('Loggin In...');
 
         try {
-            const response = await axios.post('http://localhost:8000/api/auth/login', {
+            const response = await client.post('/auth/login', {
                 email,
                 password,
             });

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from 'react-router-dom';
+import client from '../api';
 
 const Register = () => {
     const { id } = useParams();
@@ -58,7 +59,7 @@ const Register = () => {
         const toastId = toast.loading('Sending OTP...');
 
         try {
-            await axios.post('http://localhost:8000/api/otp/send', {
+            await client.post('/api/otp/send', {
                 email,
                 phoneNumber: phone,
             });
@@ -95,7 +96,7 @@ const Register = () => {
         const { name, email, phone, mobileOtp, emailOtp } = user;
         const toatId = toast.loading('Registering new user...');
         try {
-            await axios.post('http://localhost:8000/api/link/register/' + id, {
+            await client.post('/link/register/' + id, {
                 name,
                 email,
                 phone,
