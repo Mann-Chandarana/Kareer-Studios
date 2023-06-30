@@ -10,7 +10,7 @@ const { sendSMS } = require('../services/twilio');
 const router = express.Router();
 
 Instamojo.setKeys(process.env.instamojo_key, process.env.instamojo_secret);
-Instamojo.isSandboxMode(true);
+Instamojo.isSandboxMode(process.env.ENV === 'development' ? true : false);
 
 // http://localhost:8000/api/payment/create -- Payment create route
 router.post('/create', async (req, res) => {
