@@ -1,10 +1,17 @@
 require('dotenv').config();
 require('./db').connect();
 
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+
+const privateKey = fs.readFileSync('sslcert/host.key', 'utf8');
+const certificate = fs.readFileSync('sslcert/host.cert', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -55,6 +62,13 @@ if (isDevelopmentMode) {
     });
 }
 
-app.listen(PORT, () => {
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(PORT, () => {
     console.log(`Successfully started on http://localhost:${PORT}`);
+});
+
+httpsServer.listen(443, () => {
+    console.log(`Successfully started on https://localhost`);
 });
