@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS counsellors
     bank_ac TEXT,
     bank_micr TEXT,
     phone TEXT,
-    experience INTEGER,
+    experience INTEGER DEFAULT 0,
     qualifiction TEXT,
     createdat TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

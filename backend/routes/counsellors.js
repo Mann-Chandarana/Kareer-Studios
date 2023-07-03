@@ -17,8 +17,7 @@ router.get('/student/:student_id', verifyStudents, async (req, res) => {
         if (rowCount <= 0) {
             res.status(404).json({ error: 'Counsellor not found!' });
             return;
-        }
-        else {
+        } else {
             delete rows[0].password;
             res.status(200).json({ rowCount, rows: rows });
         }
@@ -31,12 +30,12 @@ router.get('/student/:student_id', verifyStudents, async (req, res) => {
 router.get('/', verifyAdmin, async (req, res) => {
     try {
         const { rowCount, rows } = await counsellorHandler.getAllCounsellors();
-        const data = rows.map(row => {
+        const data = rows.map((row) => {
             delete row.password;
             return row;
         });
 
-        /// 
+        ///
 
         res.status(200).json({ rowCount, rows: data });
     } catch (err) {
@@ -44,14 +43,13 @@ router.get('/', verifyAdmin, async (req, res) => {
     }
 });
 
-
 // GET counsellor by id
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
         const { rowCount, rows } = await counsellorHandler.getCounsellor(id);
-        const data = rows.map(row => {
+        const data = rows.map((row) => {
             delete row.password;
             return row;
         });
@@ -87,13 +85,12 @@ router.post('/', verifyAdmin, async (req, res) => {
     }
 });
 
-
 // UPDATE counsellor
 router.patch('/:id', verifyAdmin, async (req, res) => {
     const { id } = req.params;
 
     try {
-
+        console.log(newCounsellor);
         const newCounsellor = req.body;
         await counsellorHandler.updateCounsellor(id, newCounsellor);
         res.status(200).send({ message: 'Updated Counsellor!' });
@@ -101,7 +98,6 @@ router.patch('/:id', verifyAdmin, async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
 
 // DELETE counsellor
 router.delete('/:id', verifyAdmin, async (req, res) => {
@@ -115,6 +111,5 @@ router.delete('/:id', verifyAdmin, async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 });
-
 
 module.exports = router;
