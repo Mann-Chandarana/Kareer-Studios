@@ -8,6 +8,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const { sendEmail } = require('./services/nodemailer');
 
 const privateKey = fs.readFileSync('sslcert/host.key', 'utf8');
 const certificate = fs.readFileSync('sslcert/host.cert', 'utf8');
