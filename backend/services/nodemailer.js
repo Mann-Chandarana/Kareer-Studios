@@ -27,7 +27,7 @@ const sendEmail = (email, subject, body, attachments = null) => {
     return new Promise((resolve, reject) => {
         transporter.sendMail(
             {
-                from: `"Kareer Studio" <${mailerEmail}>`,
+                from: `Kareer Studio <${mailerEmail}>`,
                 to: email,
                 subject,
                 html: body,
