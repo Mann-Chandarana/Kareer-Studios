@@ -280,19 +280,19 @@ CREATE TABLE IF NOT EXISTS sat_scores (
 );
 
 CREATE TABLE IF NOT EXISTS gmat_scores (
-  id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     student_id INTEGER not null,
 
-  gmat_verbal_score INTEGER not null CHECK (gmat_verbal_score >= 0 AND gmat_verbal_score <= 60),
-  gmat_quant_score INTEGER not null CHECK (gmat_quant_score >= 0 AND gmat_quant_score <= 60),
-  gmat_writing_score float not null CHECK (gmat_writing_score >= 0 AND gmat_writing_score <= 6),
-  gmat_overall float not null,
-  gmat_date TEXT not null,
+    gmat_verbal_score INTEGER not null CHECK (gmat_verbal_score >= 0 AND gmat_verbal_score <= 60),
+    gmat_quant_score INTEGER not null CHECK (gmat_quant_score >= 0 AND gmat_quant_score <= 60),
+    gmat_writing_score float not null CHECK (gmat_writing_score >= 0 AND gmat_writing_score <= 6),
+    gmat_overall float not null,
+    gmat_date TEXT not null,
 
-  CONSTRAINT fk_student_id
-  FOREIGN KEY (student_id) 
-  REFERENCES students(id) 
-  ON DELETE CASCADE
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id) 
+    REFERENCES students(id) 
+    ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS toefl_scores (
