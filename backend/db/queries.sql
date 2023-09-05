@@ -90,7 +90,8 @@ CREATE TABLE IF NOT EXISTS student_feedbacks (
     counsellor_id INTEGER,
     
     comment TEXT,
-    pdf BYTEA,
+    filename TEXT,
+    file TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)
@@ -112,7 +113,8 @@ CREATE TABLE IF NOT EXISTS counsellor_feedbacks(
     start_date TEXT,
     performance TEXT,
     comments TEXT,
-    pdf BYTEA,
+    filename TEXT,
+    file TEXT,
 
     CONSTRAINT fk_student_id
     FOREIGN KEY (student_id)

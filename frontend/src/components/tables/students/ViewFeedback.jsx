@@ -67,14 +67,7 @@ const ViewFeedback = () => {
                     <TableLoading />
                   ) : (
                     feedback.map((student, i) => {
-                      let fileURL = "";
-                      if (student.pdf != null) {
-                        let buffer = new Uint8Array(student.pdf.data);
-                        fileURL = URL.createObjectURL(
-                          new Blob([buffer], { type: "application/pdf" })
-                        );
-                      }
-                      console.log(fileURL)
+                    
                       return (
                         <tr key={i}>
                           <th scope="row">{i + 1}</th>
@@ -90,24 +83,21 @@ const ViewFeedback = () => {
                           <td>{student.performance}</td>
                           <td>{student.comments}</td>
                           <td>
-                            <a
-                              href={fileURL === "" ? null : fileURL}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              {fileURL !== "" ? (
+                          {student.filename !== null ? (
+                            <a href={student.fileurl} target='_blank' rel='noreferrer'>
                                 <i
-                                  style={{
-                                    color: "red",
-                                    cursor: "pointer",
-                                    position: "relative",
-                                  }}
-                                  className="fa-sharp fa-regular fa-file-lines fa-lg"
+                                    style={{
+                                        color: 'red',
+                                        cursor: 'pointer',
+                                        position: 'relative',
+                                        left: '5px',
+                                    }}
+                                    className='fa-sharp fa-regular fa-file-lines fa-lg'
                                 ></i>
-                              ) : (
-                                <span className="fw-bold">No Item</span>
-                              )}
                             </a>
+                        ) : (
+                            <span className='fw-bold'>No Item</span>
+                        )}
                           </td>
                         </tr>
                       );

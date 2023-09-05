@@ -1,12 +1,13 @@
 const express = require("express");
 const feedbackHandler = require("../handlers/feedback");
+const upload = require('../db/multer');
 const { verifyStudents, verifyCounsellors } = require("../middleware/verify");
 
 const router = express.Router();
 
 /* Counsellor Feedback section */
 
-router.post("/addCounsellorFeed", verifyCounsellors, async (req, res) => {
+router.post("/addCounsellorFeed", verifyCounsellors,upload.single('file'), async (req, res) => {
   try {
     const {
       counsellor_id,
@@ -15,8 +16,9 @@ router.post("/addCounsellorFeed", verifyCounsellors, async (req, res) => {
       comments,
       status,
       start_date,
-      pdf,
       message,
+      fileurl,
+      fileName
     } = req.body;
     await feedbackHandler.addcounsellorfeedback(
       counsellor_id,
@@ -25,7 +27,8 @@ router.post("/addCounsellorFeed", verifyCounsellors, async (req, res) => {
       comments,
       status,
       start_date,
-      pdf
+      fileurl,
+      fileName
     );
     await feedbackHandler.updateStudentmessage(student_id, message);
 
@@ -163,11 +166,11 @@ router.get("/student/:counsellor_id", verifyCounsellors, async (req, res) => {
 
 /* Adding Feedback for students */
 
-router.post("/student", verifyStudents, async (req, res) => {
+router.post("/student", verifyStudents, upload.single('file'), async (req, res) => {
   try {
-    const { student_id, counsellor_id, comment, date, message } = req.body;
+    const { student_id, counsellor_id, comment, date, message,fileurl,filename } = req.body;
 
-    await feedbackHandler.addStudentFeedback(student_id,counsellor_id,comment,date);
+    await feedbackHandler.addStudentFeedback(student_id,counsellor_id,comment,date,filename,fileurl);
 
     await feedbackHandler.updateCounsellormessage(counsellor_id, message);
 
@@ -196,9 +199,7 @@ router.get("/student_counsellor", verifyStudents, async (req, res) => {
   try {
     const student_id = req.user.id;
 
-    const { rows, rowCount } = await feedbackHandler.getStudFeedback(
-      student_id
-    );
+    const { rows, rowCount } = await feedbackHandler.getStudFeedback(student_id);
 
     res.status(200).send({ rows, rowCount });
   } catch (err) {

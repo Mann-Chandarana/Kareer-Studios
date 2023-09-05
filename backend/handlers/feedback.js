@@ -9,7 +9,7 @@ module.exports = {
   },
   getcounsellorfeedback: async (counsellor_id) => {
     return db.query(
-      "SELECT cf.id,cf.student_id,cf.counsellor_id,cf.performance,cf.comments,cf.status,cf.start_date,cf.pdf,s.name,s.email,s.gender,s.phone FROM counsellor_feedbacks cf FULL OUTER JOIN students s on cf.student_id=s.id where cf.counsellor_id=$1",
+      "SELECT cf.id,cf.student_id,cf.counsellor_id,cf.performance,cf.comments,cf.status,cf.start_date,cf.fileName,cf.fileurl,s.name,s.email,s.gender,s.phone FROM counsellor_feedbacks cf FULL OUTER JOIN students s on cf.student_id=s.id where cf.counsellor_id=$1",
       [counsellor_id]
     );
   },
@@ -20,10 +20,11 @@ module.exports = {
     comments,
     status,
     start_date,
-    pdf
+    fileurl,
+    filename
   ) => {
     return db.query(
-      "INSERT INTO counsellor_feedbacks (counsellor_id,student_id,performance,comments,status,start_date,pdf) VALUES ($1,$2,$3,$4,$5,$6,$7)",
+      "INSERT INTO counsellor_feedbacks (counsellor_id,student_id,performance,comments,status,start_date,fileurl,filename) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)",
       [
         counsellor_id,
         student_id,
@@ -31,7 +32,8 @@ module.exports = {
         comments,
         status,
         start_date,
-        pdf,
+        fileurl,
+        filename
       ]
     );
   },
@@ -54,10 +56,10 @@ module.exports = {
     return db.query("UPDATE student_feedbacks SET comment=$1,date=$2 where id=$3",[comment,date,id]);
   },
 
-  addStudentFeedback: async (student_id, counsellor_id, comment, date) => {
+  addStudentFeedback: async (student_id, counsellor_id, comment, date,filename,fileurl) => {
     return db.query(
-      "INSERT INTO student_feedbacks (student_id, counsellor_id, comment, date) VALUES ($1, $2, $3, $4)",
-      [student_id, counsellor_id, comment, date]
+      "INSERT INTO student_feedbacks (student_id, counsellor_id, comment, date,filename,fileurl) VALUES ($1, $2, $3, $4,$5,$6)",
+      [student_id, counsellor_id, comment, date,filename,fileurl]
     );
   },
   getCounsellorFeedback: async (student_id) => {
@@ -81,7 +83,7 @@ module.exports = {
   /* Updating message for student */
 
   updateStudentmessage: async (student_id, message) => {
-    const value = message + 1;
+    const value = parseInt(message) + 1;
     return db.query("UPDATE students SET messages=$1 WHERE id=$2", [
       value,
       student_id,
@@ -91,7 +93,7 @@ module.exports = {
   /* Updating message for counsellor */
 
   updateCounsellormessage: async (counsellor_id, message) => {
-    const value = message + 1;
+    const value = parseInt(message) + 1;
     return db.query("UPDATE counsellors SET messages=$1 WHERE id=$2", [value,counsellor_id,]);
   },
 
@@ -124,7 +126,7 @@ module.exports = {
   /* Student :- Give Feedback */
 
   getStudFeedback:async(student_id)=>{
-    return db.query("SELECT sf.id,sf.student_id,sf.counsellor_id,sf.comment,sf.date,sf.pdf FROM student_feedbacks sf FULL OUTER JOIN students s on sf.student_id=s.id WHERE sf.student_id=$1 ",[student_id])
+    return db.query("SELECT sf.id,sf.student_id,sf.counsellor_id,sf.comment,sf.date,sf.fileName,sf.fileurl FROM student_feedbacks sf FULL OUTER JOIN students s on sf.student_id=s.id WHERE sf.student_id=$1 ",[student_id])
   },
 
   deleteFeedbackStudent:async (id)=>{

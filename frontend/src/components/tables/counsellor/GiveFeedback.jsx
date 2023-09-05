@@ -110,11 +110,6 @@ const GiveFeedback = () => {
                                             <TableLoading />
                                         ) : (
                                             dummy.map((student, i) => {
-                                                let fileURL = '';
-                                                if (student.pdf != null) {
-                                                    let buffer = new Uint8Array(student.pdf.data);
-                                                    fileURL = URL.createObjectURL(new Blob([buffer], { type: 'application/pdf' }));
-                                                }
                                                 return (
                                                     <tr key={i}>
                                                         <th scope='row'>{i + 1}</th>
@@ -125,17 +120,17 @@ const GiveFeedback = () => {
                                                         <td>{student.phone}</td>
                                                         <td>{student.status ? <span className='badge rounded-pill text-bg-success'>Completed</span> : <span className='badge rounded-pill text-bg-danger'>Pending</span>}</td>
                                                         <td>
-                                                            <a href={fileURL == '' ? null : fileURL} target='_blank' rel='noreferrer'>
-                                                                <i
-                                                                    style={{
-                                                                        color: 'red',
-                                                                        cursor: 'pointer',
-                                                                        position: 'relative',
-                                                                        left: '5px',
-                                                                    }}
-                                                                    className='fa-sharp fa-regular fa-file-lines fa-lg'
-                                                                ></i>
-                                                            </a>
+                                                        <a href={student.fileurl} target='_blank' rel="noreferrer">
+                                                        {student.filename!==null?<i
+                                                          style={{
+                                                            color: "red",
+                                                            cursor: "pointer",
+                                                            position: "relative",
+                                                            left: "5px",
+                                                          }}
+                                                          className="fa-sharp fa-regular fa-file-lines fa-lg"
+                                                        ></i>:<span className="fw-bold">No Item</span>}
+                                                      </a>
                                                         </td>
                                                         <td>
                                                             <Modal id={'edit_s_feededit' + i}>

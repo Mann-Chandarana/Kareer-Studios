@@ -107,7 +107,6 @@ const GiveFeedback = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(dummy)}
                     {loading? (
                       <TableLoading />
                     ) : (
@@ -139,8 +138,8 @@ const GiveFeedback = () => {
                               </ModalButton>
                             </td>
                             <td>
-                              <a target="_blank" rel="noreferrer">
-                                {student.pdf!==null?<i
+                              <a href={student.fileurl} target='_blank' rel="noreferrer">
+                                {student.filename!==null?<i
                                   style={{
                                     color: "red",
                                     cursor: "pointer",

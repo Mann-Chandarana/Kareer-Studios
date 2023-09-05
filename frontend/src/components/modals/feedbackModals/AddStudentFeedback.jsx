@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 
 const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
     const closeButton = useRef();
+    const inputField = useRef();
 
     const [feedback, setfeedback] = useState({
         student_id: student_id,
         counsellor_id: counsellor_id,
         comment: '',
         date: '',
-        pdf: null,
     });
 
     const [loading, setloading] = useState(false);
@@ -21,9 +21,22 @@ const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
         setfeedback({ ...feedback, [name]: value });
     };
 
+    const formData = new FormData()
+
+    const handleFileChange = (event)=>{
+        const file = event.target.files[0];
+        formData.set('file', file);
+        formData.set('filename', file.name);
+    }
+
     const handlesubmit = async (event) => {
         event.preventDefault();
         setloading(true);
+
+        formData.set('student_id', feedback.student_id);
+        formData.set('counsellor_id', feedback.counsellor_id);
+        formData.set('comment', feedback.comment);
+        formData.set('date', feedback.date);
 
         try {
             const { data } = await client.get('feedbacks/getCounCount/' + feedback.counsellor_id);
@@ -36,11 +49,13 @@ const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
 
             if (data.message.messages !== null) {
                 obj.message = data.message.messages;
+                formData.set('message',parseInt(data.message.messages));
             }
 
-            await client.post('/feedbacks/student', obj);
+            await client.post('/feedbacks/student', formData);
 
             closeButton.current.click();
+            inputField.current.value = null
             setfeedback({
                 student_id: student_id,
                 counsellor_id: counsellor_id,
@@ -91,11 +106,11 @@ const AddFeedback = ({ counsellor_id, student_id, Fetch_Feedback }) => {
                                     </label>
                                     <input
                                         name='pdf'
-                                        value={feedback.pdf}
+                                        ref={inputField}
                                         className='form-control-sm'
                                         type='file'
                                         style={{ marginLeft: '10px' }}
-                                        //   onChange={fileUpdate}
+                                          onChange={handleFileChange}
                                     />
                                 </div>
                             </div>

@@ -86,8 +86,8 @@ function ViewFeedback() {
                                                         <td>{student.email}</td>
                                                         <td>{student.date !== '' ? new Date(student.date).toLocaleDateString('en-GB') : new Date().toLocaleDateString('en-GB')}</td>
                                                         <td>
-                                                            {student.pdf !== null ? (
-                                                                <a target='_blank' rel='noreferrer'>
+                                                            {student.filename !== null ? (
+                                                                <a href={student.fileurl} target='_blank' rel='noreferrer'>
                                                                     <i
                                                                         style={{
                                                                             color: 'red',
