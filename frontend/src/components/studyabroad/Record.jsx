@@ -14,7 +14,6 @@ import PTE from "./records/PTE";
 import SAT from "./records/SAT";
 import TOEFL from "./records/TOEFL";
 
-
 function Record() {
   const { user } = useContext(SessionContext);
   let { id } = useParams();
@@ -90,23 +89,25 @@ function Record() {
   let flagSat = satData ? true : false;
   let flagGmat = satData ? true : false;
   let flagToefl = toeflData ? true : false;
-  
 
   return (
     <main id="main" className="main">
       <div>
-        <Toaster position="top-center" reverseOrder={false}></Toaster>
         <br></br>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <CButton type="submit" color="primary" variant="outline">
+          <Link to={"/"}>Back</Link>
+        </CButton>
+        <Toaster position="top-center" reverseOrder={false}></Toaster>
+        
         {user.role === "student" && (
-          <div style={{ display: "flex", justifyContent: "right" }}>
+         
             <CButton type="submit" color="primary" variant="outline">
               <Link to={"/score/" + id}>Add scores </Link>
             </CButton>
-            <br></br>
-          </div>
+         
         )}
-
-        <br></br>
+ </div>
 
         <center>
           <h4 className="heading fw-bold">ACADEMIC RECORDS</h4>
@@ -134,7 +135,6 @@ function Record() {
 
           {/* TOEFL Scores Table */}
           <TOEFL data={toeflData} flag={flagToefl}></TOEFL>
-
         </div>
       </div>
     </main>

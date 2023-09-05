@@ -326,3 +326,55 @@ CREATE TABLE IF NOT EXISTS suggested_programs (
     REFERENCES students(id)
     ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS documents (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER not null,
+
+    doc1name TEXT,
+    doc1url TEXT,
+
+    doc2name TEXT,
+    doc2url TEXT,
+
+    doc3name TEXT,
+    doc3url TEXT, 
+    
+    doc4name TEXT,
+    doc4url TEXT, 
+    
+    doc5name TEXT,
+    doc5url TEXT, 
+    
+    doc6name TEXT,
+    doc6url TEXT, 
+    
+    doc7name TEXT,
+    doc7url TEXT, 
+    
+    doc8name TEXT,
+    doc8url TEXT, 
+    
+    doc9name TEXT,
+    doc9url TEXT, 
+    
+    doc10name TEXT,
+    doc10url TEXT, 
+    
+    doc11name TEXT,
+    doc11url TEXT, 
+
+    doc12name TEXT,
+    doc12url TEXT, 
+    
+    doc13name TEXT,
+    doc13url TEXT, 
+    
+    doc14name TEXT,
+    doc14url TEXT,
+
+    CONSTRAINT fk_student_id
+    FOREIGN KEY (student_id)
+    REFERENCES students(id)
+    ON DELETE CASCADE
+);

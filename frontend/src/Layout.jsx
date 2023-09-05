@@ -25,6 +25,9 @@ import Assessment from './components/report/Asessment';
 import Record from './components/studyabroad/Record';
 import Score from './components/studyabroad/Score';
 import GenerateReceipt from './components/tables/counsellor/GenerateReceipt';
+import StudentRecordTable from './components/studyabroad/StudentRecordTable';
+import StudentDocumentTable from './components/studyabroad/StudentDocumentTable';
+import Document from './components/studyabroad/Document';
 
 function Layout() {
     const { user } = useContext(SessionContext);
@@ -54,6 +57,9 @@ function Layout() {
                         <Route path='/report/:id' element={<Report />} />
                         <Route path='/assessment/:id' element={<Assessment />} />
                         <Route path='/record/:id' element={<Record />} />
+                        <Route path='/record' element={<StudentRecordTable />} />
+                        <Route path='/document' element={<StudentDocumentTable />} />
+                        <Route path='/document/:id' element={<Document />} />
                         <Route path='/generatereceipt' element={<GenerateReceipt />} />
                     </Routes>
                 </>
@@ -77,6 +83,7 @@ function Layout() {
                         <Route path='/report/:id' element={<Report />} />
                         <Route path='/record/:id' element={<Record />} />
                         <Route path='/score/:id' element={<Score />} />
+                        <Route path='/document/:id' element={<Document />} />
                     </Routes>
                 </>
             )}

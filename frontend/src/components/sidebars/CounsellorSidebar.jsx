@@ -56,9 +56,9 @@ function CounsellorSidebar() {
                 </li>
 
                 <li className='nav-item'>
-                    <NavLink className='nav-link' to='/program'>
+                    <NavLink className='nav-link' to='/document'>
                         <i className='fa-solid fa-plus'></i>
-                        <span>Assign Program</span>
+                        <span>Students Document</span>
                     </NavLink>
                 </li>
 

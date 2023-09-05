@@ -43,11 +43,13 @@ function Report() {
                 <div>
                     <br></br>
                     {user.role === 'counsellor' && (
-                        <div style={{ display: 'flex', justifyContent: 'right' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                             <CButton type='submit' color='primary' variant='outline'>
+                                <Link to={'/'}>Back</Link>
+                            </CButton>
                             <CButton type='submit' color='primary' variant='outline'>
                                 <Link to={'/assessment/' + id}>Edit assessment </Link>
                             </CButton>
-                            <br></br>
                         </div>
                     )}
 
