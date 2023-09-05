@@ -113,7 +113,7 @@ function StudentSidebar() {
                         </li>
 
                         <li className='nav-item'>
-                            <NavLink className='nav-link' to='/DocumentUpload'>
+                            <NavLink className='nav-link' to={'/document/' + user.id}>
                                 <i className='fa-solid fa-upload'></i>
                                 <span>Document Upload</span>
                             </NavLink>
