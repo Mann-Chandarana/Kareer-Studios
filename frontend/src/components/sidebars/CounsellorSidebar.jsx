@@ -76,7 +76,10 @@ function CounsellorSidebar() {
                 <li className='nav-item'>
                     <NavLink className='nav-link' to='/viewfeedback'>
                         <i className='fa-regular fa-comments'></i>
-                        <span>View Comments {user.messages !== null && user.messages !== 0 && <span>+{user.messages}</span>}</span>
+                        <span className='d-flex align-items-center justify-content-center'>
+                            View Comments
+                            {user.messages !== null && user.messages !== 0 && <span class='badge text-bg-danger mx-2'>+ {user.messages}</span>}
+                        </span>
                     </NavLink>
                 </li>
             </ul>
